@@ -1,0 +1,26 @@
+/* 
+    Author  : Cueblocks
+*/
+.error{ color: #FF0000; }
+.success{ color: #14803A; }
+
+.ink_image{
+  margin: 50px 0px 0px 40px;
+}
+
+.image_path{
+    width : 200px !important;
+}
+
+#upload_image{
+    width : 100px;
+}
+
+#show_upload_preview{
+    margin-bottom: 20px;
+}
+
+#remove_image{
+     width : 100px;
+   
+}
