@@ -1,3 +1,4 @@
+AddType application/x-httpd-php70 .php
 
 # BEGIN WordPress
 <IfModule mod_rewrite.c>
