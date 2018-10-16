@@ -9,6 +9,7 @@ class N2SmartsliderConflictsModel extends N2SmartsliderConflictsModelAbstract {
         $this->testPluginForgetAboutShortcodeButtons();
         $this->testPluginWPHideAndSecurity();
         $this->testPluginNetbaseWidgetsForSiteOrigin();
+        $this->testPluginNavMenuAddonForElementor();
     }
 
     /**
@@ -51,4 +52,16 @@ class N2SmartsliderConflictsModel extends N2SmartsliderConflictsModelAbstract {
 
         }
     }
+
+    /**
+     * NavMenu Addon For Elementor
+     * @url https://wordpress.org/plugins/navmenu-addon-for-elementor/
+     */
+    private function testPluginNavMenuAddonForElementor() {
+        if (defined('ELEMENTOR_MENUS_VERSION')) {
+            $this->displayConflict('NavMenu Addon For Elementor', n2_('This plugin has a JavaScript error which might break Smart Slider.'), 'https://wordpress.org/support/topic/plugin-causes-javascript-error-and-breaks-others/');
+
+        }
+    }
 }
+

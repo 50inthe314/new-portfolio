@@ -5,7 +5,7 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
 
     protected $layout = 'article';
 
-    protected $postType = '';
+    protected $postType;
 
     public function __construct($group, $name, $post_type, $label) {
         $this->postType = $post_type;
@@ -98,7 +98,7 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
 
         new N2ElementTextarea($group, 'postmetakeymore', n2_('One per line'), 'field_name||compare_method||field_value', array(
             'fieldStyle' => 'width:300px;height: 100px;',
-            'tip'        => 'Example: published||=||yes'
+            'tip'        => n2_('Example: published||=||yes')
         ));
 
         $status = new N2ElementGroup($filter, 'poststatusgroup', n2_('Post status'));
@@ -109,18 +109,29 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
             'options' => $statuses
         ));
 
+        $option = new N2ElementGroup($filter, 'postoptiongroup', n2_('Post option'));
+
+        new N2ElementWordPressOptions($option, 'postoption', n2_('Post option'), '0');
+
+        new N2ElementList($option, 'postoptionin', n2_('Post relationship with selected option'), '0', array(
+            'options' => array(
+                0 => 'IN',
+                1 => 'NOT IN'
+            )
+        ));
+
         $group = new N2ElementGroup($filter, 'datetimegroup', n2_('Date & time'));
         new N2ElementOnOff($group, 'identifydatetime', n2_('Identify datetime'), 0);
         new N2ElementText($group, 'datetimeformat', n2_('Datetime format'), 'm-d-Y H:i:s', array(
-            'tip' => 'Use any PHP datetime format: http://php.net/manual/en/function.date.php'
+            'tip' => sprintf(n2_('Any PHP date format can be used: %s'), "http://php.net/manual/en/function.date.php")
         ));
         new N2ElementTextarea($group, 'translatedate', n2_('Translate dates'), 'from||to&#xA;Monday||Monday&#xA;jan||jan', array(
             'fieldStyle' => 'width:300px;height: 100px;',
-            'tip'        => 'One per line: from||to'
+            'tip'        => n2_('One per line: from||to')
         ));
 
-        new N2ElementText($group, 'timestampvariables', 'Replace these timestamp variables', '', array(
-            'tip' => 'Separate them with comma. The "Datetime format" will be used to format these dates.'
+        new N2ElementText($group, 'timestampvariables', n2_('Replace these timestamp variables'), '', array(
+            'tip' => n2_('Separate them with comma. The "Datetime format" will be used to format these dates.')
         ));
 
         $_order = new N2Tab($form, 'order', n2_('Order by'));
@@ -300,6 +311,23 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
             );
         }
 
+        $post_option = $this->data->get('postoption', 0);
+        if (!empty($post_option)) {
+            $post_option_in = $this->data->get('postoptionin', 0);
+            switch ($post_option_in) {
+                case 0:
+                    $getPosts += array(
+                        'post__in' => get_option($post_option)
+                    );
+                    break;
+                case 1:
+                    $getPosts += array(
+                        'post__not_in' => get_option($post_option)
+                    );
+                    break;
+            }
+        }
+
         $posts = get_posts($getPosts);
 
         $data = array();
@@ -315,7 +343,7 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
             $record['id'] = $post->ID;
 
             $record['url']         = get_permalink();
-            $record['title']       = apply_filters('the_title', get_the_title());
+            $record['title']       = apply_filters('the_title', get_the_title(), $post->ID);
             $record['content']     = get_the_content();
             $record['description'] = preg_replace('#\[[^\]]+\]#', '', $record['content']);
             $record['author_name'] = $record['author'] = get_the_author();
@@ -344,21 +372,39 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
             $record['url_label'] = 'View';
 
             $post_meta = get_post_meta($post->ID);
-            if (count($post_meta)) {
+            if (count($post_meta) && is_array($post_meta) && !empty($post_meta)) {
                 foreach ($post_meta AS $key => $value) {
-                    foreach ($value AS $v) {
-                        if (!empty($v)) {
-                            $key = str_replace(array(
-                                '_',
-                                '-'
-                            ), array(
-                                '',
-                                ''
-                            ), $key);
-                            if (array_key_exists($key, $record)) {
-                                $key = 'meta' . $key;
+                    if (count($value) && is_array($value) && !empty($value)) {
+                        foreach ($value AS $v) {
+                            if (!empty($v) && !is_array($v) && !is_object($v)) {
+                                $key = str_replace(array(
+                                    '_',
+                                    '-'
+                                ), array(
+                                    '',
+                                    ''
+                                ), $key);
+                                if (array_key_exists($key, $record)) {
+                                    $key = 'meta' . $key;
+                                }
+                                if (is_serialized($v)) {
+                                    $unserialize_values = unserialize($v);
+                                    $unserialize_count  = 1;
+                                    foreach ($unserialize_values AS $unserialize_value) {
+                                        if (!empty($unserialize_value) && !is_array($unserialize_value) && !is_object($unserialize_value)) {
+                                            $record['us_' . $key . $unserialize_count] = $unserialize_value;
+                                            $unserialize_count++;
+                                        } else if (is_array($unserialize_value)) {
+                                            foreach ($unserialize_value AS $u_v) {
+                                                $record['us_' . $key . $unserialize_count] = $u_v;
+                                                $unserialize_count++;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $record[$key] = $v;
+                                }
                             }
-                            $record[$key] = $v;
                         }
                     }
                 }

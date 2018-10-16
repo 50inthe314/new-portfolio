@@ -72,7 +72,7 @@ class N2SmartsliderLicenseModel {
         if ($this->hasKey()) {
             $this->checkKey($this->key, 'licensedeauthorize');
             $this->setKey('');
-            N2Message::notice(n2_('Smart Slider deauthorized on this site!'));
+            N2Message::notice(n2_('Smart Slider deactivated on this site!'));
 
             return 'OK';
         }

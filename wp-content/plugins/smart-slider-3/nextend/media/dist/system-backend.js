@@ -2926,7 +2926,7 @@ N2D('NextendImageManager', ['NextendVisualManagerCore'], function ($, undefined)
 
     NextendImageManager.prototype.getVisual = function (image) {
         if (image == '') {
-            N2Classes.Notification.error('The image is empty', {
+            N2Classes.Notification.error(n2_('The image is empty'), {
                 timeout: 3
             });
         } else {
@@ -3006,7 +3006,7 @@ N2D('NextendImageManager', ['NextendVisualManagerCore'], function ($, undefined)
             }, this));
         } else {
             this.hide();
-            N2Classes.Notification.error('Image field can not be empty!');
+            N2Classes.Notification.error(n2_('Image field can not be empty!'));
         }
     };
 

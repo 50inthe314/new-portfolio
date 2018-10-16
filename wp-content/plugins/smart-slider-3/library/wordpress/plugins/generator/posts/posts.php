@@ -8,7 +8,7 @@ if (N2Platform::$isWordpress) {
         protected $name = 'posts';
 
         public function getLabel() {
-            return 'Posts';
+            return n2_('Posts');
         }
 
         protected function loadSources() {

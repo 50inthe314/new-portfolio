@@ -41,8 +41,11 @@ abstract class N2GeneratorAbstract {
     }
 
     public final function getData($slides, $startIndex, $group) {
-        N2SS3Shortcode::addNoopShortCode();
+        N2SS3Shortcode::shortcodeModeToNoop();
     
+
+        $this->resetState();
+
         $data       = array();
         $linearData = $this->_getData($slides * $group, $startIndex - 1);
         $keys       = array();
@@ -69,10 +72,14 @@ abstract class N2GeneratorAbstract {
                 array_pop($data);
             }
         }
-        N2SS3Shortcode::addShortCode();
+        N2SS3Shortcode::shortcodeModeToNormal();
     
 
         return $data;
+    }
+
+    protected function resetState() {
+
     }
 
     protected abstract function _getData($count, $startIndex);

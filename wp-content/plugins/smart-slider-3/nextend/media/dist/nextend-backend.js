@@ -1049,10 +1049,10 @@ N2D('NextendCSS', function ($, undefined) {
     }
 
     NextendCSS.prototype.add = function (css) {
-        var head = document.head || document.getElementsByTagName('head')[0],
+        var body = document.body || document.getElementsByTagName('body')[0],
             style = document.createElement('style');
 
-        head.appendChild(style);
+        body.appendChild(style);
 
         style.type = 'text/css';
         if (style.styleSheet) {
@@ -4370,7 +4370,7 @@ N2D('NotificationStackModal', ['NotificationStack'], function ($, undefined) {
 
     NotificationStackModal.prototype._init = function (bar) {
         var settings = $('<div class="n2-notification-settings"></div>')
-            .append($('<div class="n2-button n2-button-normal n2-button-s n2-button-blue n2-radius-s n2-h5 n2-uc n2-notification-clear">Got it!</div>').on('click', $.proxy(this.clear, this)))
+            .append($('<div class="n2-button n2-button-normal n2-button-s n2-button-blue n2-radius-s n2-h5 n2-uc n2-notification-clear">'+n2_('Got it!')+'</div>').on('click', $.proxy(this.clear, this)))
             .append(this.importantOnlyNode);
 
         this.messageContainer = $('<div class="n2-notification-center n2-border-radius"></div>')
@@ -5864,7 +5864,7 @@ N2D('FormElementList', ['FormElement'], function ($, undefined) {
      * @param relatedFields
      * @constructor
      */
-    function FormElementList(id, multiple, relatedFields) {
+    function FormElementList(id, multiple, relatedFields, relatedValueFields) {
 
         this.separator = '||';
 
@@ -5882,6 +5882,21 @@ N2D('FormElementList', ['FormElement'], function ($, undefined) {
             }
 
             this.relatedFields.toggleClass('n2-hidden', this.isOff(this.element.val()));
+        }
+
+        this.relatedValueFields = false;
+        if (relatedValueFields !== undefined && relatedValueFields.length) {
+            var value = this.element.val();
+            this.relatedValueFields = $('');
+            for (var i = 0; i < relatedValueFields.length; i++) {
+                var $field = $('[data-field="' + relatedValueFields[i].field + '"]')
+                    .data('show-values', relatedValueFields[i].values);
+
+                $field.toggleClass('n2-hidden', $.inArray(value, relatedValueFields[i].values) === -1);
+
+                this.relatedValueFields = this.relatedValueFields.add($field);
+            }
+
         }
 
         N2Classes.FormElement.prototype.constructor.apply(this, arguments);
@@ -5923,7 +5938,16 @@ N2D('FormElementList', ['FormElement'], function ($, undefined) {
     FormElementList.prototype.setHiddenValue = function (value) {
         this.element.val(value);
 
-        if (this.relatedFields) this.relatedFields.toggleClass('n2-hidden', this.isOff(value));
+        if (this.relatedFields) {
+            this.relatedFields.toggleClass('n2-hidden', this.isOff(value));
+        }
+
+        if (this.relatedValueFields) {
+            this.relatedValueFields.each(function () {
+                var $el = $(this);
+                $el.toggleClass('n2-hidden', $.inArray(value, $el.data('show-values')) === -1);
+            });
+        }
     };
 
     FormElementList.prototype.isOff = function (value) {

@@ -21,7 +21,7 @@ class SmartSliderTablePressFix {
         if ($tag == 'table') {
             $this->level++;
             if ($this->level == 1) {
-                N2SS3Shortcode::removeShortcode();
+                N2SS3Shortcode::shortcodeModeToSkip();
             }
         }
 
@@ -33,7 +33,7 @@ class SmartSliderTablePressFix {
         if ($tag == 'table') {
             $this->level--;
             if ($this->level <= 0) {
-                N2SS3Shortcode::addShortCode();
+                N2SS3Shortcode::shortcodeModeRestore();
 
                 global $shortcode_tags;
                 $tmp            = $shortcode_tags;

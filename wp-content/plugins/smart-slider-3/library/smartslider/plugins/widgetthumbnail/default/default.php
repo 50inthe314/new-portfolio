@@ -357,7 +357,7 @@ class N2SSPluginWidgetThumbnailDefault extends N2SSPluginWidgetAbstract {
             ), $previous . $next . N2Html::tag('div', array(
                 'class' => 'nextend-thumbnail-inner n2-ow'
             ), N2Html::tag('div', array(
-                'class' => $barStyle . 'nextend-thumbnail-scroller n2-ow n2-align-content-' . $params->get('widget-thumbnail-align-content') . ($params->get('widget-thumbnail-invert-group-direction', 0) ? ' nextend-thumbnail-invert-group-dir' : ''),
+                'class' => $barStyle . 'nextend-thumbnail-scroller n2-ow n2-align-content-' . $params->get('widget-thumbnail-align-content'),
             ), '')));
     }
 

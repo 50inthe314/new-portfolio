@@ -5726,10 +5726,14 @@ html[dir="rtl"] .n2-list li > .n2-actions {
     background: #212d3a;
     border-bottom-left-radius: 3px;
     border-bottom-right-radius: 3px;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     padding: 0 10px;
     box-sizing: border-box;
+}
+
+.n2-box .n2-box-placeholder[data-align="center"] {
+    justify-content: center;
 }
 
 .n2-box-small .n2-box-placeholder {

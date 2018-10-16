@@ -41,7 +41,7 @@ class N2GeneratorPostsPostsByIDs extends N2GeneratorAbstract {
 
 
             $record['url']         = get_permalink();
-            $record['title']       = apply_filters('the_title', get_the_title());
+            $record['title']       = apply_filters('the_title', get_the_title(), $post->ID);
             $record['description'] = $record['content'] = get_the_content();
             $record['author_name'] = $record['author'] = get_the_author();
             $record['author_url']  = get_the_author_meta('url');

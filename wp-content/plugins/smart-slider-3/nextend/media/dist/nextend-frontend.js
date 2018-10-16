@@ -78,7 +78,7 @@ window.n2const = {
     isBot: /bot|googlebot|crawler|spider|robot|crawling|Google Search Console/i.test(navigator.userAgent),
     lightboxMobileNewTab: 1,
     isVideoAutoplayAllowed: function () {
-        var isAllowed = !!(navigator.platform.match(/(Win|Mac)/) || !(/Mobi/.test(navigator.userAgent)) || ('playsInline' in document.createElement('video') || ('webkit-playsinline' in document.createElement('video'))) || (navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./) && parseInt(navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./)[2]) >= 53));
+        var isAllowed = !!(navigator.platform.match(/(Win|Mac)/) || !(/Mobi/.test(navigator.userAgent)) || ('playsInline' in document.createElement('video') || ('webkit-playsinline' in document.createElement('video'))) || (navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./) && parseInt(navigator.userAgent.match(/Chrom(e|ium)\/([0-9]+)\./)[2]) >= 53) || navigator.userAgent.match(/Android.*(Firefox|Edge|Opera)/));
         window.n2const.isVideoAutoplayAllowed = function () {
             return isAllowed;
         };

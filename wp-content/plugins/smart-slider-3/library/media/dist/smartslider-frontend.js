@@ -617,6 +617,10 @@ N2D('SmartSliderAbstract', function ($, undefined) {
     SmartSliderAbstract.prototype.onSliderHasDimension = function ($sliderElement, parameters) {
         this.killed = false;
 
+        if (n2const.isIE) {
+            $sliderElement.attr('data-ie', n2const.isIE);
+        }
+
         /**
          * @type {SmartSliderResponsive}
          */
@@ -691,9 +695,12 @@ N2D('SmartSliderAbstract', function ($, undefined) {
             lightboxDeviceImages: [],
             titles: [],
             descriptions: [],
-            'background.parallax.tablet': 0,
-            'background.parallax.mobile': 0,
             allowBGImageAttachmentFixed: 1,
+            backgroundParallax: {
+                strength: 0,
+                tablet: 0,
+                mobile: 0
+            },
             particlejs: 0
         }, parameters);
 
@@ -1072,6 +1079,7 @@ N2D('SmartSliderAbstract', function ($, undefined) {
     };
 
     SmartSliderAbstract.prototype.startVisibilityCheck = function () {
+
         if (!this.isAdmin && this.parameters.playWhenVisible) {
             this.ready($.proxy(function () {
                 $(window).on('scroll.n2-ss-visible' + this.id + ' resize.n2-ss-visible' + this.id, $.proxy(this.checkIfVisible, this));
@@ -1085,14 +1093,28 @@ N2D('SmartSliderAbstract', function ($, undefined) {
     };
 
     SmartSliderAbstract.prototype.checkIfVisible = function () {
-        var windowOffsetTop = $(window).scrollTop(),
+        var playWhenVisibleAt = this.parameters.playWhenVisibleAt,
+            windowOffsetTop = $(window).scrollTop(),
             windowHeight = $(window).height(),
-            sliderTop = this.sliderElement.offset().top,
-            middlePointTop = sliderTop + Math.min(this.sliderElement.height(), windowHeight) * (1 - this.parameters.playWhenVisibleAt),
-            middlePointBottom = sliderTop + Math.min(this.sliderElement.height(), windowHeight) * this.parameters.playWhenVisibleAt;
+            bodyHeight = n2(document).height(),
+            sliderBoundingClientRect = this.sliderElement[0].getBoundingClientRect(),
+            requiredVisibility = windowHeight * playWhenVisibleAt / 2,
+            topLine = windowOffsetTop + requiredVisibility,
+            bottomLine = windowOffsetTop + windowHeight - requiredVisibility;
 
-        if (this.isAdmin || (middlePointTop >= windowOffsetTop && middlePointBottom <= windowOffsetTop + windowHeight)) {
-            $(window).off('scroll.n2-ss-visible' + this.id + ' resize.n2-ss-visible' + this.id);
+        if (windowOffsetTop < requiredVisibility) {
+            topLine *= (windowOffsetTop / requiredVisibility);
+        }
+
+        if (windowOffsetTop + windowHeight > bodyHeight - requiredVisibility) {
+            bottomLine += windowOffsetTop + windowHeight - bodyHeight + requiredVisibility;
+        }
+
+        var sliderAbsoluteTop = windowOffsetTop + sliderBoundingClientRect.top,
+            sliderAbsoluteBottom = windowOffsetTop + sliderBoundingClientRect.bottom;
+
+        if (this.isAdmin || (sliderAbsoluteTop <= bottomLine && sliderAbsoluteTop >= topLine) || (sliderAbsoluteBottom >= topLine && sliderAbsoluteBottom <= bottomLine) || (sliderAbsoluteTop <= topLine && sliderAbsoluteBottom >= bottomLine)) {
+            $(window).off('.n2-ss-visible' + this.id);
             this.visibleDeferred.resolve();
         }
     };
@@ -2612,6 +2634,7 @@ N2D('SmartSliderControlFullscreen', function ($, undefined) {
     SmartSliderControlFullscreen.prototype._fullScreen = function () {
 
         if (this.forceFullpage) {
+            this.responsive.isFullScreen = true;
             this.responsive.parameters.type = 'fullpage';
             this.responsive.parameters.upscale = true;
             this.responsive.parameters.forceFull = false;
@@ -2642,6 +2665,7 @@ N2D('SmartSliderControlFullscreen', function ($, undefined) {
             $(window).trigger('resize'); //needed for Safari
         } else {
             if (this.forceFullpage) {
+                this.responsive.isFullScreen = false;
                 this.responsive.parameters.type = this._type;
                 this.responsive.parameters.upscale = this._upscale;
                 this.responsive.parameters.forceFull = this._forceFull;
@@ -3232,9 +3256,6 @@ N2D('SmartSliderSlideBackground', function ($, undefined) {
         this.currentSrc = '';
 
         this.mode = element.data('mode');
-        if (this.mode === 'fixed' && ((n2const.isPhone && !slide.slider.parameters['background.parallax.mobile']) || (n2const.isTablet && !slide.slider.parameters['background.parallax.tablet']))) {
-            this.mode = 'fill';
-        }
 
         this.opacity = element.data('opacity');
 
@@ -3301,6 +3322,10 @@ N2D('SmartSliderSlideBackground', function ($, undefined) {
 
     SmartSliderSlideBackground.prototype.hasVideo = function () {
         return this.elements.video;
+    };
+
+    SmartSliderSlideBackground.prototype.hasBackground = function () {
+        return this.elements.color || this.elements.image || this.elements.video;
     };
 
     SmartSliderSlideBackground.prototype.updateBackgroundToDevice = function (device) {
@@ -3857,10 +3882,6 @@ N2D('SmartSliderSlideBackgroundImage', function ($, undefined) {
             }
         }
 
-        if (background.mode === 'fixed') {
-            this.startFixed();
-        }
-
         if (n2const.isWaybackMachine()) {
             this.mobileSrc = this.tabletSrc = this.desktopSrc = $el.attr('src');
         } else {
@@ -3942,22 +3963,6 @@ N2D('SmartSliderSlideBackgroundImage', function ($, undefined) {
                     this.$background.css('background-image', 'url("' + src + '")');
                 }
                 this.currentSrc = src;
-            }
-        }
-    };
-
-    SmartSliderSlideBackgroundImage.prototype.startFixed = function () {
-        if (!n2const.isEdge) {
-            if (this.slide.slider.parameters.allowBGImageAttachmentFixed && !n2const.isIOS) {
-                this.$background.css({
-                    backgroundRepeat: 'repeat',
-                    position: 'relative',
-                    backgroundAttachment: 'fixed'
-                });
-            } else if (!n2const.isIE) {
-                this.slide.slider.startedDeferred.done($.proxy(function () {
-                    N2Classes.FixedBackground.addElement(this.$background, this.background.element);
-                }, this));
             }
         }
     };
@@ -4618,6 +4623,8 @@ N2D('SmartSliderResponsive', function ($, undefined) {
         this.lastClientHeightTime = 0;
         this.lastOrientation = 0;
 
+        this.isFullScreen = false;
+
         this.invalidateResponsiveState = true;
 
         this.parameters = $.extend({
@@ -4713,7 +4720,6 @@ N2D('SmartSliderResponsive', function ($, undefined) {
             tabletLandscapeScreenWidth: 1024,
             mobileLandscapeScreenWidth: 740,
             orientationMode: 'width_and_height',
-            scrollFix: 0,
             overflowHiddenPage: 0
         }, parameters);
 
@@ -4887,15 +4893,34 @@ N2D('SmartSliderResponsive', function ($, undefined) {
 
             this.sliderElement.on('SliderInternalResize', $.proxy(this.onResize, this));
 
-            if (this.parameters.scrollFix) {
+
+            if (window.ResizeObserver !== undefined) {
+                var width = 0,
+                    observer = new ResizeObserver($.proxy(function (entries) {
+                        entries.forEach($.proxy(function (entry) {
+                            if (width !== entry.contentRect.width) {
+                                width = entry.contentRect.width;
+                                this.sliderElement.triggerHandler('SliderInternalResize');
+                            }
+                        }, this));
+                    }, this));
+                observer.observe(this.containerElement.parent().get(0));
+            } else {
                 try {
-                    var that = this,
-                        iframe = $('<iframe sandbox="allow-same-origin allow-scripts" style="height: 0; background-color: transparent; margin: 0; padding: 0; overflow: hidden; border-width: 0; position: absolute; width: 100%;"/>')
-                            .on('load', function (e) {
-                                $(e.target.contentWindow ? e.target.contentWindow : e.target.contentDocument.defaultView).on('resize', function () {
-                                    that.sliderElement.triggerHandler('SliderInternalResize');
-                                });
-                            }).insertBefore(this.containerElement);
+                    /**
+                     * We can detect every width changes with a dummy iframe.
+                     */
+                    var iframe = $('<iframe sandbox="allow-same-origin allow-scripts" style="margin:0;padding:0;border:0;display:block;width:100%;height:0;"/>')
+                        .on('load', $.proxy(function (e) {
+                            var width = 0,
+                                $frame = $(e.target.contentWindow ? e.target.contentWindow : e.target.contentDocument.defaultView).on('resize', $.proxy(function (e) {
+                                    var newWidth = $frame.width();
+                                    if (width !== newWidth) {
+                                        width = newWidth;
+                                        this.sliderElement.triggerHandler('SliderInternalResize');
+                                    }
+                                }, this));
+                        }, this)).insertBefore(this.containerElement);
                 } catch (e) {
                 }
             }
@@ -4957,6 +4982,8 @@ N2D('SmartSliderResponsive', function ($, undefined) {
             }
             responsiveElement.resize(this.responsiveDimensions, ratios[responsiveElement.ratioName], false, 0);
         }
+
+        this.slider.sliderElement.triggerHandler('SliderResizeHorizontal');
     };
 
     SmartSliderResponsive.prototype.updateVerticalRatios = function (ratios) {
@@ -5006,15 +5033,15 @@ N2D('SmartSliderResponsive', function ($, undefined) {
 
     SmartSliderResponsive.prototype.onResize = function (e) {
         if (!this.slider.mainAnimation || this.slider.mainAnimation.getState() != 'playing') {
-            this.doResize(e);
+            this._onResize(e);
         } else if (!this.delayedResizeAdded) {
             this.delayedResizeAdded = true;
-            this.sliderElement.on('mainAnimationComplete.responsive', $.proxy(this._doDelayedResize, this));
+            this.sliderElement.on('mainAnimationComplete.responsive', $.proxy(this._onResize, this, e));
         }
     };
 
-    SmartSliderResponsive.prototype._doDelayedResize = function () {
-        this.doResize();
+    SmartSliderResponsive.prototype._onResize = function (e) {
+        this.doResize(e);
         this.delayedResizeAdded = false;
     };
 
@@ -5529,6 +5556,9 @@ N2D('SmartSliderResponsive', function ($, undefined) {
     };
 
     SmartSliderResponsive.prototype.getVerticalOffsetHeight = function () {
+        if (this.isFullScreen) {
+            return 0;
+        }
         var h = 0;
         for (var i = 0; i < this.verticalOffsetSelectors.length; i++) {
             h += this.verticalOffsetSelectors.eq(i).outerHeight();
@@ -6194,18 +6224,6 @@ N2D('FrontendItemYouTube', function ($, undefined) {
             playsinline: 0
         }, parameters);
 
-        if (parseInt(this.parameters.autoplay) === 1 && (navigator.userAgent.toLowerCase().indexOf("android") > -1 || n2const.isIOS)) {
-            this.parameters.autoplay = 0;
-            try {
-                if ('playsInline' in document.createElement('video')) {
-                    this.parameters.autoplay = 1;
-                    this.parameters.playsinline = 1;
-                    this.parameters.volume = 0;
-                }
-            } catch (e) {
-            }
-        }
-
         if (parseInt(this.parameters.autoplay) === 1 || !hasImage || n2const.isMobile) {
             this.ready($.proxy(this.initYoutubePlayer, this));
         } else {
@@ -6277,6 +6295,27 @@ N2D('FrontendItemYouTube', function ($, undefined) {
             modestbranding: this.parameters.modestbranding,
             playsinline: this.parameters.playsinline
         };
+
+        if (parseInt(this.parameters.autoplay) === 1) {
+            if (navigator.userAgent.toLowerCase().indexOf("android") > -1) {
+                this.parameters.volume = 0;
+            } else if (n2const.isIOS) {
+                this.parameters.autoplay = 0;
+                try {
+                    if ('playsInline' in document.createElement('video')) {
+                        this.parameters.autoplay = 1;
+                        this.parameters.volume = 0;
+
+                        vars.playsinline = 1;
+                    }
+                } catch (e) {
+                }
+            }
+        }
+
+        if (n2const.isIOS && this.parameters.controls) {
+            vars.use_native_controls = 1;
+        }
 
         if (this.parameters.center == 1) {
             vars.controls = 0;

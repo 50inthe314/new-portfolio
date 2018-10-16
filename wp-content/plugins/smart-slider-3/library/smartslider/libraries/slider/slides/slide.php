@@ -247,7 +247,7 @@ class N2SmartSliderSlide extends N2SmartSliderComponentOwnerAbstract {
         if ($this->sliderObject->exposeSlideData['title']) {
             $title = $this->getTitle();
             if (!empty($title)) {
-                $this->attributes['data-title'] = N2Translation::_($title);
+                $this->attributes['data-title'] = N2SmartSlider::addCMSFunctions(N2Translation::_($title));
             }
         }
 

@@ -830,7 +830,8 @@ N2D('SmartSliderBackgroundAnimationSlices', ['SmartSliderBackgroundAnimationFlux
                     top: totalTop + 'px',
                     left: 0,
                     width: '100%',
-                    height: thisRowHeight + 'px'
+                    height: thisRowHeight + 'px',
+                    zIndex: 1000000
                 }).appendTo(container));
 
                 totalTop += thisRowHeight;
@@ -860,7 +861,8 @@ N2D('SmartSliderBackgroundAnimationSlices', ['SmartSliderBackgroundAnimationFlux
                     top: 0,
                     left: totalLeft + 'px',
                     width: thisColWidth + 'px',
-                    height: '100%'
+                    height: '100%',
+                    zIndex: 1000000
                 }).appendTo(container));
 
                 totalLeft += thisColWidth;
@@ -1426,7 +1428,18 @@ N2D('SmartSliderBackgroundAnimationFluxAbstract', ['SmartSliderBackgroundAnimati
     var inited = false;
     SmartSliderBackgroundAnimationFluxAbstract.prototype.initCSS = function () {
         if (!inited) {
-            $('<style type="text/css">.n2-ss-background-animation{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3}.n2-ss-background-animation .n2-ss-slide-background {z-index: auto;}.n2-ss-background-animation img{max-width:none}.n2-ss-background-animation .n2-3d-side{position:absolute;left:0;top:0;overflow:hidden;background:' + this.sliderBackgroundAnimation.backgroundAnimations.color + '}.n2-firefox .n2-ss-background-animation .n2-3d-side{outline:transparent solid 1px}.n2-ss-background-animation .n2-ff-3d,.n2-ss-background-animation .tile{outline:transparent solid 1px}.tile-colored-overlay{z-index:100000;background:' + this.sliderBackgroundAnimation.backgroundAnimations.color + '}</style>')
+            var rules = [
+                '.n2-ss-background-animation{position:absolute;top:0;left:0;width:100%;height:100%;z-index:3}',
+                '.n2-ss-background-animation .n2-ss-slide-background {z-index: auto;}',
+                '.n2-ss-background-animation img{max-width:none}',
+                '.n2-ss-background-animation .n2-3d-side{position:absolute;left:0;top:0;overflow:hidden;background:' + this.sliderBackgroundAnimation.backgroundAnimations.color + '}',
+                '.n2-firefox .n2-ss-background-animation .n2-3d-side{outline:transparent solid 1px}',
+                '.n2-ss-background-animation .n2-ff-3d,.n2-ss-background-animation .tile{outline:transparent solid 1px}',
+                '.tile-colored-overlay{z-index:100000;background:' + this.sliderBackgroundAnimation.backgroundAnimations.color + '}'
+            ];
+
+
+            $('<style type="text/css">' + rules.join('') + '</style>')
                 .appendTo('head');
             inited = true;
         }

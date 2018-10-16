@@ -2840,10 +2840,10 @@ N2D('SlidesManager', function ($, undefined) {
                                     });
 
                                 } else if (html5Video) {
-                                    N2Classes.Notification.error('This video url is not supported!');
+                                    N2Classes.Notification.error(n2_('This video url is not supported!'));
                                 
                                 } else {
-                                    N2Classes.Notification.error('This video url is not supported!');
+                                    N2Classes.Notification.error(n2_('This video url is not supported!'));
                                 }
                             }, this)));
                         }
@@ -3505,6 +3505,7 @@ N2D('EditorSlide', ['EditorAbstract'], function ($, undefined) {
 
         N2Classes.EditorAbstract.prototype.constructor.call(this, sliderElementID, slideContentElementID, $.extend({
             isAddSample: false,
+            sampleSlidesUrl: '',
             slideBackgroundMode: 'fill'
         }, options));
 
@@ -3741,13 +3742,10 @@ N2D('EditorSlide', ['EditorAbstract'], function ($, undefined) {
     };
 
     EditorSlide.prototype.startSampleSlides = function () {
-        var sampleSlidesUrl = 'https://smartslider3.com/slides/' + window.N2SS3VERSION + '/free/';
-    
 
         var that = this,
-            eventMethod = window.addEventListener ? "addEventListener" : "attachEvent";
-
-        var $iframe = $('<iframe src="' + sampleSlidesUrl + '"></iframe>').prependTo('.n2-ss-sample-slides-container'),
+            eventMethod = window.addEventListener ? "addEventListener" : "attachEvent",
+            $iframe = $('<iframe src="' + this.options.sampleSlidesUrl + '"></iframe>').prependTo('.n2-ss-sample-slides-container'),
             iframe = $iframe[0];
 
         $('html, body').scrollTop($iframe.offset().top - $('#wpadminbar').height());
@@ -10662,7 +10660,7 @@ N2D('ItemManager', function ($, undefined) {
     ItemManager.prototype.createLayerItem = function (group, data, interaction, props) {
         group = group || this.fragmentEditor.mainContainer.getActiveGroup();
         var type = data.item;
-        if (type == 'structure') {
+        if (type === 'structure') {
             var layer = new N2Classes.Row(this.fragmentEditor, group, {});
             layer.create(data.sstype);
             layer.hightlightStructure();
@@ -10671,10 +10669,20 @@ N2D('ItemManager', function ($, undefined) {
                 layer: layer
             };
         } else {
-
             var itemData = this.getItemForm(type),
-                $item = $('<div></div>').attr('data-item', type)
-                    .data('itemvalues', $.extend(true, {}, itemData.values, this.getLastValues(type)))
+                extraValues = {};
+            switch (type) {
+                case 'image':
+                    if (group.container.allowedPlacementMode === 'absolute') {
+                        extraValues.size = '100%|*|auto';
+                    } else {
+                        extraValues.size = 'auto|*|auto';
+                    }
+                    break;
+            }
+
+            var $item = $('<div></div>').attr('data-item', type)
+                    .data('itemvalues', $.extend(true, {}, itemData.values, this.getLastValues(type), extraValues))
                     .addClass('n2-ss-item n2-ss-item-' + type),
                 layer = this._createLayer($item, group, $.extend($('.n2-ss-core-item-' + type).data('layerproperties'), props));
 

@@ -2,9 +2,9 @@
 
 class N2SS3 {
 
-    public static $version = '3.3.7';
+    public static $version = '3.3.8';
 
-    public static $revision = '2543';
+    public static $revision = '2772';
 
     public static $completeVersion;
 
@@ -62,6 +62,12 @@ class N2SS3 {
         return 'https://smartslider3.com/pro-features/?' . http_build_query($params);
     }
 
+    public static function getSampleSlidesUrl($params = array()) {
+        self::applySource($params);
+        return 'https://smartslider3.com/slides/' . self::$version . '/free/?' . http_build_query($params);
+    
+    }
+
     public static function getUpdateInfo() {
         return array(
             'name'   => 'smartslider3',
@@ -92,16 +98,16 @@ class N2SS3 {
                 N2Message::error('Premium sliders are available in PRO version only!');
                 break;
             case 'ASSET_VERSION':
-                N2Message::error('Please update your Smart Slider to the latest version to be able to import the selected sample slider!');
+                N2Message::error('Please <a href="https://smartslider3.helpscoutdocs.com/article/414-update" target="_blank">update</a> your Smart Slider to the latest version to be able to import the selected sample slider!');
                 break;
             case 'LICENSE_EXPIRED':
-                N2Message::error('Your license key expired!');
+                N2Message::error('Your license key <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#nokey" target="_blank">expired</a>!');
                 break;
             case 'DOMAIN_REGISTER_FAILED':
                 N2Message::error('Your license key authorized on a different domain! You can move it to this domain like <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#move" target="_blank">this</a>, or get new one: <a href="https://smartslider3.com/pricing" target="_blank">smartslider3.com</a>');
                 break;
             case 'LICENSE_INVALID':
-                N2Message::error('Your license key invalid, please enter again!');
+                N2Message::error('Your license key invalid, please <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#add-license" target="_blank">enter again!</a>');
                 N2SmartsliderLicenseModel::getInstance()
                                          ->setKey('');
 
