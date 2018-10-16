@@ -37,7 +37,6 @@ N2D('SmartSliderWidgetArrowImage', function ($, undefined) {
             this.previousResize = this.previous;
         }
 
-
         this.next = $('#' + this.slider.elementID + '-arrow-next').on('click', $.proxy(function (e) {
             e.stopPropagation();
             this.slider[n2const.rtl.next]();
@@ -56,15 +55,19 @@ N2D('SmartSliderWidgetArrowImage', function ($, undefined) {
     };
 
     SmartSliderWidgetArrowImage.prototype.loaded = function () {
+        this.previous.css('display', 'inline-block');
         this.previousResize.css('display', 'inline-block');
         this.previousWidth = this.previousResize.width();
         this.previousHeight = this.previousResize.height();
         this.previousResize.css('display', '');
+        this.previous.css('display', '');
 
+        this.next.css('display', 'inline-block');
         this.nextResize.css('display', 'inline-block');
         this.nextWidth = this.nextResize.width();
         this.nextHeight = this.nextResize.height();
         this.nextResize.css('display', '');
+        this.next.css('display', '');
 
         this.previousResize.find('img').css('width', '100%');
         this.nextResize.find('img').css('width', '100%');

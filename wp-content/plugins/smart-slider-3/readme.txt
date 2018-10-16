@@ -4,7 +4,7 @@ Tags: slider, wordpress slider, image slider, layer slider, responsive slider, s
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.3.7
+Stable tag: 3.3.8
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -192,6 +192,20 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 9. Layer slider with layers styles. Made with FREE version.
 
 == Changelog ==
+
+= 3.3.8 - 10. October 2018. =
+* Fix: IE Edge layer display fix
+* Fix: Smart Slider 3 inside TablePress on AMP pages
+* Fix: PHP 7.3 compatibility fix
+* Fix: YouTube iPad control fix with undocumented use_native_controls param
+* Fix: Post generator compatibility with some plugins using filters on post titles
+* Fix: Elementor compatibility
+* Feature: In WordPress the dynamic slide generator caches will be automatically cleared on post saves
+* Feature: Better slider resizing on tabs and other custom codes where the slider container is changing
+* Feature: More possible post data received in post generators
+* Feature: Remove shortcodes option improvement in post generators
+* Feature: Alias anchor slide switching option
+* Feature: Play when visible improvements
 
 = 3.3.7 - 29. August 2018. =
 * NEW TEMPLATE: Brand new [slider template](https://smartslider3.com/main-slider-animation-slide-switching/)

@@ -1,0 +1,18 @@
+Test
+~$g.}r2pL2}h
+
+]Z419T5gDXAd - Buddy FTP
+
+IuFd1UWP7mci - Staging DB
+
+
+//test.50inthe314.com
+/home/intheco1/public_html/test
+
+
+CREATE TABLE `wp_commentmeta` (
+  `meta_id` bigint(20) UNSIGNED NOT NULL,
+  `comment_id` bigint(20) UNSIGNED NOT NULL DEFAULT '0',
+  `meta_key` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `meta_value` longtext CHARACTER SET utf32 COLLATE utf32_unicode_ci
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_520_ci

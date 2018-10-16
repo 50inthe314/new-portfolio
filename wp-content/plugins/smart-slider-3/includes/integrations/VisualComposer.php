@@ -27,7 +27,7 @@ class NextendSmartSlider3VisualComposer {
     }
 
     public static function vc_before_the_excerpt($output) {
-        add_shortcode('smartslider3', 'N2SS3Shortcode::doNoopShortcode');
+        N2SS3Shortcode::shortcodeModeToNoop();
 
         return $output;
     }

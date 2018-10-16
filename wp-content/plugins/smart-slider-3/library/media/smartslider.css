@@ -130,6 +130,10 @@
     transition: none 0s;
 }
 
+.n2-ss-slider p {
+    background-color: transparent;
+}
+
 .n2-ss-slider {
     z-index: 3;
     position: relative;
@@ -697,6 +701,13 @@
 
 .n2-ss-slider [data-frontend-fullwidth="0"][data-sstype="row"] > .n2-ss-layer-row[row-wrapped="0"] > .n2-ss-layer-row-inner > .n2-ss-layer {
     width: auto !important;
+    flex: 0 1 auto;
+}
+
+[data-ie] .n2-ss-slider [data-frontend-fullwidth="0"][data-sstype="row"] > .n2-ss-layer-row[row-wrapped="0"] > .n2-ss-layer-row-inner > .n2-ss-layer {
+    display: inline-block;
+    flex: none;
+    max-width: 100%;
 }
 
 .n2-ss-slider [data-frontend-fullwidth="0"][data-sstype="row"] > .n2-ss-layer-row[row-wrapped="0"] > .n2-ss-layer-row-inner {

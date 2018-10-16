@@ -37,7 +37,6 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
         this.hidden = false;
         this.forceHidden = false;
         this.forceHiddenCB = null;
-        this.group = 2;
         this.itemPerPane = 1;
         this.currentI = 0;
         this.offset = 0;
@@ -68,6 +67,11 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
         this.bar = this.outerBar.find('.nextend-thumbnail-inner');
         this.scroller = this.bar.find('.nextend-thumbnail-scroller');
 
+        this.$groups = $();
+        for (var i = 0; i < this.group; i++) {
+            this.$groups = this.$groups.add($('<div class="nextend-thumbnail-scroller-group"></div>').appendTo(this.scroller));
+        }
+
         var event = 'universalclick';
         if (parameters.action === 'mouseenter') {
             event = 'mouseenter';
@@ -78,7 +82,7 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
         this.renderThumbnails();
 
 
-        this.dots = this.scroller.find('> div')
+        this.dots = this.scroller.find('.nextend-thumbnail-scroller-group > div')
             .on(event, $.proxy(this.onDotClick, this));
 
 
@@ -196,10 +200,23 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
     };
 
     SmartSliderWidgetThumbnailDefault.prototype.renderThumbnails = function () {
+        var itemPerGroup;
+        if (this.parameters.invertGroupDirection) {
+            itemPerGroup = Math.ceil(this.slider.realSlides.length / this.group);
+        }
+
         for (var i = 0; i < this.slider.realSlides.length; i++) {
             var slide = this.slider.realSlides[i],
-                $thumbnail = $('<div class="' + this.parameters.slideStyle + ' n2-ow" style="' + this.parameters.containerStyle + '"></div>')
-                    .appendTo(this.scroller);
+                $thumbnail = $('<div class="' + this.parameters.slideStyle + ' n2-ow" style="' + this.parameters.containerStyle + '"></div>');
+
+            if (this.parameters.invertGroupDirection) {
+                $thumbnail.appendTo(this.$groups.eq(Math.floor(i / itemPerGroup)));
+            } else {
+                $thumbnail.appendTo(this.$groups.eq(i % this.group));
+            }
+
+            $thumbnail.data('slide', slide);
+            slide.$thumbnail = $thumbnail;
             if (this.parameters.thumbnail !== undefined) {
                 var thumbnailType = slide.getThumbnailType(),
                     thumbnailSVG = thumbnailTypes[thumbnailType] !== undefined ? thumbnailTypes[thumbnailType] : '';
@@ -211,9 +228,9 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
 
             if (this.parameters.caption !== undefined) {
                 var $caption = $('<div class="' + this.parameters.caption.styleClass + 'n2-ss-caption n2-ow n2-caption-' + this.parameters.caption.placement + '" style="' + this.parameters.caption.style + '"></div>');
-                switch (this.parameters.captionPlacement) {
+                switch (this.parameters.caption.placement) {
                     case 'before':
-                        $caption.prependto($thumbnail);
+                        $caption.prependTo($thumbnail);
                         break;
                     default:
                         $caption.appendTo($thumbnail);
@@ -291,7 +308,7 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
     var isFired = false;
     SmartSliderWidgetThumbnailDefault.prototype.onDotClick = function (e) {
         if (!isFired) {
-            this.slider.directionalChangeToReal(this.dots.index(e.currentTarget));
+            this.slider.directionalChangeToReal($(e.currentTarget).data('slide').index);
             isFired = true;
         }
         setTimeout($.proxy(function () {
@@ -308,11 +325,11 @@ N2D('SmartSliderWidgetThumbnailDefault', function ($, undefined) {
     };
 
     SmartSliderWidgetThumbnailDefault.prototype.activateDots = function (currentSlideIndex) {
-        this.dots.filter('.n2-active').removeClass('n2-active');
+        this.dots.removeClass('n2-active');
 
         var slides = this.slider.slides[currentSlideIndex].slides;
         for (var i = 0; slides.length > i; i++) {
-            this.dots.eq(slides[i].index).addClass('n2-active');
+            slides[i].$thumbnail.addClass('n2-active');
         }
     };
 

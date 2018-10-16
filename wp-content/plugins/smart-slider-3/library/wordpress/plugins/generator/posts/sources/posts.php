@@ -24,13 +24,18 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         $posts = new N2ElementGroup($filter, 'poststickygroup', n2_('Posts'));
 
         new N2ElementFilter($posts, 'poststicky', n2_('Sticky'), 0);
-        new N2ElementOnoff($posts, 'postshortcode', n2_('Remove shortcodes from description'), 1);
+        new N2ElementOnoff($posts, 'postshortcode', n2_('Remove shortcodes'), 1, array(
+            'relatedFields' => array(
+                'generatorpostshortcodevariables'
+            )
+        ));
+        new N2ElementText($posts, 'postshortcodevariables', n2_('Remove shortcodes from these variables'), 'description, content, excerpt');
 
         $date = new N2ElementGroup($filter, 'customvariablegroup', n2_('Customized variables'));
 
         new N2ElementTextarea($date, 'customdates', n2_('Create custom date variables') . ' (' . n2_('one per line') . ')', 'variable||PHP date format&#xA;modified||Ymd&#xA;date||F j, Y, g:i a&#xA;started||F&#xA;ended||D', array(
             'fieldStyle' => 'width:300px;height: 100px;',
-            'tip'        => n2_('You can write down an existing variable\'s name,  then two | signs and lastly any date format (http://php.net/manual/en/function.date.php) in separate lines and new variables will be created for them. The name of the new variables will be the same as the original variable and "_datetime" will be added to the end of them.')
+            'tip'        => sprintf(n2_('You can write down an existing variable\'s name, then two | signs and lastly any date format (%s) in separate lines and new variables will be created for them. The name of the new variables will be the same as the original variable and "_datetime" will be added to the end of them.'), "http://php.net/manual/en/function.date.php")
         ));
 
         new N2ElementTextarea($date, 'translatecustomdates', n2_('Translate your custom date variables') . ' (' . n2_('one per line') . ')', 'from||to&#xA;Monday||Monday&#xA;jan||jan', array(
@@ -151,6 +156,10 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         return $datas;
     }
 
+    function removeShortcodes($variable) {
+        return preg_replace('#\[[^\]]+\]#', '', $variable);
+    }
+
     protected function _getData($count, $startIndex) {
         global $post, $wp_the_query;
         $tmpPost         = $post;
@@ -267,6 +276,12 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         $translate     = $this->linesToArray($this->data->get('translatecustomdates', ''));
         $date_function = $this->data->get('datefunction', 'date_i18n');
 
+        if ($this->data->get('postshortcode', 1)) {
+            $remove_shortcode = array_map('trim', explode(',', $this->data->get('postshortcodevariables', 'description, content, excerpt')));
+        } else {
+            $remove_shortcode = null;
+        }
+
         $data = array();
         for ($i = 0; $i < count($posts); $i++) {
             $this->ElementorCount = 0;
@@ -277,17 +292,9 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
 
             $record['id']  = $post->ID;
             $record['url'] = get_permalink();
-            if (function_exists('buddyform_strip_html_title_for_entries_in_post_screen')) {
-                $record['title'] = apply_filters('the_title', get_the_title(), $post->ID);
-            } else {
-                $record['title'] = apply_filters('the_title', get_the_title());
-            }
-            $record['content'] = get_the_content();
-            if ($this->data->get('postshortcode', 1)) {
-                $record['description'] = preg_replace('#\[[^\]]+\]#', '', $record['content']);
-            } else {
-                $record['description'] = $record['content'];
-            }
+            $record['title'] = apply_filters('the_title', get_the_title(), $post->ID);
+            $record['content']     = get_the_content();
+            $record['description'] = $record['content'];
             if (class_exists('ET_Builder_Plugin')) {
                 if (strpos($record['description'], 'et_pb_slide background_image') !== false) {
                     $et_slides = $this->get_string_between($record['description'], 'et_pb_slide background_image="', '"');
@@ -421,7 +428,23 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                                 if (array_key_exists($key, $record)) {
                                     $key = 'meta' . $key;
                                 }
-                                $record[$key] = $v;
+                                if (is_serialized($v)) {
+                                    $unserialize_values = unserialize($v);
+                                    $unserialize_count  = 1;
+                                    foreach ($unserialize_values AS $unserialize_value) {
+                                        if (!empty($unserialize_value) && !is_array($unserialize_value) && !is_object($unserialize_value)) {
+                                            $record['us_' . $key . $unserialize_count] = $unserialize_value;
+                                            $unserialize_count++;
+                                        } else if (is_array($unserialize_value)) {
+                                            foreach ($unserialize_value AS $u_v) {
+                                                $record['us_' . $key . $unserialize_count] = $u_v;
+                                                $unserialize_count++;
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    $record[$key] = $v;
+                                }
                             }
                         }
                     }
@@ -435,7 +458,6 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                     }
                 }
             }
-
             $record['excerpt'] = get_the_excerpt();
 
             if (!empty($custom_dates)) {
@@ -452,6 +474,14 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                         } else {
                             $record[$custom_date_key . '_datetime'] = $this->translate(date($custom_date_format, $date), $translate);
                         }
+                    }
+                }
+            }
+
+            if (!empty($remove_shortcode)) {
+                foreach ($remove_shortcode AS $variable) {
+                    if (isset($record[$variable])) {
+                        $record[$variable] = $this->removeShortcodes($record[$variable]);
                     }
                 }
             }

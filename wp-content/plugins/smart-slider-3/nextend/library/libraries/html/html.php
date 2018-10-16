@@ -375,6 +375,7 @@ class N2Html {
             'lbAttributes'       => array(),
             'rbAttributes'       => array(),
             'overlay'            => false,
+            'placeholderAlign'   => '',
             'placeholderContent' => ''
         );
 

@@ -13,6 +13,10 @@ class N2SS3Shortcode {
 
     public static function doShortcode($parameters) {
 
+        if (self::$shortcodeMode == 'noop') {
+            return '';
+        }
+
         if (is_admin() && isset($_GET['nextendajax'])) {
             return '';
         }
@@ -144,19 +148,35 @@ class N2SS3Shortcode {
         return '';
     }
 
+    private static $shortcodeMode = 'shortcode';
+
+    public static function changeShortcodeMode($mode) {
+        if (self::$shortcodeMode != $mode) {
+            self::$shortcodeMode = $mode;
+        }
+    }
+
+    public static function shortcodeModeToNormal() {
+        self::changeShortcodeMode('shortcode');
+    }
+
+    public static function shortcodeModeToNoop() {
+        self::changeShortcodeMode('noop');
+    }
+
+    public static function shortcodeModeToSkip() {
+        self::removeShortcode();
+    }
+
+    public static function shortcodeModeRestore() {
+        self::addShortCode();
+    }
+
     public static function addShortCode() {
         add_shortcode('smartslider3', 'N2SS3Shortcode::doShortcode');
     }
 
-    public static function addNoopShortCode() {
-        add_shortcode('smartslider3', 'N2SS3Shortcode::doNoopShortcode');
-    }
-
-    public static function doNoopShortcode() {
-        return '';
-    }
-
-    public static function removeShortcode() {
+    private static function removeShortcode() {
         remove_shortcode('smartslider3');
     }
 }
@@ -165,29 +185,29 @@ N2SS3Shortcode::addShortCode();
 
 if (defined('DOING_AJAX') && DOING_AJAX) {
     if (isset($_POST['action']) && ($_POST['action'] == 'stpb_preview_builder_item' || $_POST['action'] == 'stpb_load_builder_templates' || $_POST['action'] == 'stpb_load_template')) {
-        N2SS3Shortcode::removeShortcode();
+        N2SS3Shortcode::shortcodeModeToSkip();
     }
 }
 
-add_action('woocommerce_shop_loop', 'N2SS3Shortcode::addNoopShortCode', 9);
-add_action('woocommerce_shop_loop', 'N2SS3Shortcode::addShortCode', 11);
+add_action('woocommerce_shop_loop', 'N2SS3Shortcode::shortcodeModeToNoop', 9);
+add_action('woocommerce_shop_loop', 'N2SS3Shortcode::shortcodeModeToNormal', 11);
 
-add_action('woocommerce_single_product_summary', 'N2SS3Shortcode::addNoopShortCode', 59);
-add_action('woocommerce_single_product_summary', 'N2SS3Shortcode::addShortCode', 61);
+add_action('woocommerce_single_product_summary', 'N2SS3Shortcode::shortcodeModeToNoop', 59);
+add_action('woocommerce_single_product_summary', 'N2SS3Shortcode::shortcodeModeToNormal', 61);
 
 /**
  * Remove Smart Slider from feeds
  */
-add_action('do_feed_rdf', 'N2SS3Shortcode::addNoopShortCode', 0);
-add_action('do_feed_rss', 'N2SS3Shortcode::addNoopShortCode', 0);
-add_action('do_feed_rss2', 'N2SS3Shortcode::addNoopShortCode', 0);
-add_action('do_feed_atom', 'N2SS3Shortcode::addNoopShortCode', 0);
+add_action('do_feed_rdf', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
+add_action('do_feed_rss', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
+add_action('do_feed_rss2', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
+add_action('do_feed_atom', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
 
 /**
  * Remove sliders from the AMP version of the site
  * @url https://wordpress.org/plugins/amp/
  */
-add_action('pre_amp_render_post', 'N2SS3Shortcode::addNoopShortCode', 0);
+add_action('pre_amp_render_post', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
 
 
 add_action('after_setup_theme', function () {
@@ -196,7 +216,7 @@ add_action('after_setup_theme', function () {
          * Theme: Narratium
          * @url https://themeforest.net/item/narratium-simplicity-for-authors/20844434
          */
-        add_action('wp', 'N2SS3Shortcode::addNoopShortCode', 0);
-        add_action('wp', 'N2SS3Shortcode::addShortCode', 11);
+        add_action('wp', 'N2SS3Shortcode::shortcodeModeToNoop', 0);
+        add_action('wp', 'N2SS3Shortcode::shortcodeModeToNormal', 11);
     }
 });

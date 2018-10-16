@@ -946,6 +946,14 @@ div#n2-ss-0:HOVER .n2-ss-static-slide.n2-ss-currently-edited-slide {
     color: #b0b9bf;
 }
 
+body[data-slides="0"] .n2-slider-name .n2-h1 {
+    cursor: default;
+}
+
+body[data-slides="0"] .n2-slider-name .n2-h1:HOVER:after {
+    display: none;
+}
+
 .n2-ss-edit-slide-top-details .n2-h4 a {
     color: #7b8898;
 }
@@ -1701,7 +1709,7 @@ html[dir=rtl] .n2-ss-small-more {
 .n2-ss-available-layers-container {
     width: 300px;
     margin: 0 auto;
-    padding: 10px 0;
+    padding: 10px 0 90px;
 }
 
 .n2-ss-slide-item-group {
@@ -1759,7 +1767,7 @@ html[dir=rtl] .n2-ss-small-more {
     content: "\e990";
 }
 
-.n2-ss-core-item[data-item="rotatingHeading"]:before {
+.n2-ss-core-item[data-item="animatedHeading"]:before {
     content: "\e991";
 }
 
