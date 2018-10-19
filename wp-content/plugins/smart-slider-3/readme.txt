@@ -4,7 +4,7 @@ Tags: slider, wordpress slider, image slider, layer slider, responsive slider, s
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.3.8
+Stable tag: 3.3.9
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -192,6 +192,11 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 9. Layer slider with layers styles. Made with FREE version.
 
 == Changelog ==
+
+= 3.3.9 - 17. October 2018. =
+* Fix: Thumbnail alignment and group
+* Fix: Text layer bold and italic text font colors are now harder to override by theme's codes
+* Fix: NextGen Gallery and Divi live editor bug
 
 = 3.3.8 - 10. October 2018. =
 * Fix: IE Edge layer display fix

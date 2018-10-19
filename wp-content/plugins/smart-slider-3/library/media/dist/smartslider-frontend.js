@@ -1096,7 +1096,7 @@ N2D('SmartSliderAbstract', function ($, undefined) {
         var playWhenVisibleAt = this.parameters.playWhenVisibleAt,
             windowOffsetTop = $(window).scrollTop(),
             windowHeight = $(window).height(),
-            bodyHeight = n2(document).height(),
+            bodyHeight = $(document).height(),
             sliderBoundingClientRect = this.sliderElement[0].getBoundingClientRect(),
             requiredVisibility = windowHeight * playWhenVisibleAt / 2,
             topLine = windowOffsetTop + requiredVisibility,

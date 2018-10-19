@@ -68,6 +68,11 @@
     box-shadow: none;
 }
 
+.n2-ss-slider .n2-ow-all b,
+.n2-ss-slider .n2-ow-all i {
+    color: inherit;
+}
+
 .n2-ss-slider h1.n2-ow,
 .n2-ss-slider h2.n2-ow,
 .n2-ss-slider h3.n2-ow,
@@ -951,4 +956,9 @@
 
 .n2-clear {
     clear: both;
+}
+
+[data-force-hidden],
+[data-force-hidden] * {
+    visibility: hidden !important;
 }

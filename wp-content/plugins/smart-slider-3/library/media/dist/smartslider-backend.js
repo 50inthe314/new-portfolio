@@ -324,7 +324,7 @@ N2D('CreateSlider', function ($, undefined) {
 
         }, this));
 
-        if (window.location.hash.substring(1) == 'createslider') {
+        if (window.location.hash.substring(1) === 'createslider') {
             this.showModal();
         }
     }
@@ -350,7 +350,7 @@ N2D('CreateSlider', function ($, undefined) {
                 name: n2_('Thumbnail - horizontal'),
                 image: '$ss$/admin/images/sliderpresets/thumbnailhorizontal.png'
             });
-            var size = [550, 390 + 130];
+            var size = [550, 540];
         
 
             this.createSliderModal = new N2Classes.NextendModal({
@@ -387,10 +387,14 @@ N2D('CreateSlider', function ($, undefined) {
                             sliderHeight.parent().addClass('n2-form-element-autocomplete');
 
                             this.createHeading(n2_('Preset')).appendTo(this.content);
-                            var imageRadioHeight = 100
+                            var imageRadioHeight = 120
                         
                             var imageRadio = this.createImageRadio(presets)
-                                    .css('height', imageRadioHeight)
+                                    .css({
+                                        height: imageRadioHeight,
+                                        display: 'flex',
+                                        flexWrap: 'wrap'
+                                    })
                                     .appendTo(this.content),
                                 sliderPreset = imageRadio.find('input');
                             imageRadio.css('overflow', 'hidden');
@@ -2578,7 +2582,6 @@ N2D('SlidesManager', function ($, undefined) {
                     case 'post':
                         this.addQuickPost(e);
                         break;
-                    case 'library':
                     case 'empty':
                     case 'static':
                     case 'dynamic':
@@ -2587,6 +2590,8 @@ N2D('SlidesManager', function ($, undefined) {
                         } else {
                             window.location = $(e.currentTarget).data('href');
                         }
+                        break;
+                    case 'library':
                         break;
                 }
             }

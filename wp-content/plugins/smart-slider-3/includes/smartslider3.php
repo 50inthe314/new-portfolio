@@ -80,6 +80,16 @@ class SmartSlider3 {
             require_once dirname(__FILE__) . '/integrations/tablepress.php';
         }
 
+        /**
+         * Fix for NextGenGallery and Divi live editor bug
+         */
+        add_filter('run_ngg_resource_manager', function ($ret) {
+            if (isset($_GET['n2prerender']) && isset($_GET['n2app'])) {
+                $ret = false;
+            }
+            return $ret;
+        }, 1000000);
+
 
         /**
          * For ajax based page loaders

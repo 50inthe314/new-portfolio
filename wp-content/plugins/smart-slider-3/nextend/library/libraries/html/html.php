@@ -410,6 +410,23 @@ class N2Html {
         include(dirname(__FILE__) . '/fragments/heading.phtml');
     }
 
+    public static function banner($options = array()) {
+        static $params = array(
+            'id'          => '',
+            'image'       => '',
+            'imageLink'   => '',
+            'title'       => '',
+            'description' => '',
+            'buttons'     => array()
+        );
+
+        $options = array_merge($params, $options);
+
+        extract($options);
+
+        include(dirname(__FILE__) . '/fragments/banner.phtml');
+    }
+
     /**
      * @param array $array1
      * @param array $array2 [optional]
