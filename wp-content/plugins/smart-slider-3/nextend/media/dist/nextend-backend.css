@@ -1707,7 +1707,8 @@ html[dir="rtl"] .n2-header-breadcrumbs > span {
 }
 
 .n2-top-bar-menu {
-    line-height: 60px;
+    display: flex;
+    align-items: center;
     height: 60px;
     overflow: hidden;
 }

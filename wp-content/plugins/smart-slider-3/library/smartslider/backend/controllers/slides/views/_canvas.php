@@ -46,7 +46,7 @@
         'isAddSample'         => $isAddSample,
         'sampleSlidesUrl'     => N2SS3::getSampleSlidesUrl(array(
             'utm_source'   => 'slide-library-frame',
-            'utm_medium'   => 'smartslider-' . N2Platform::getPlatform() . '-free',
+            'utm_medium'   => 'smartslider-' . N2Platform::getPlatform() . '-' . N2SS3::$plan,
             'utm_campaign' => N2SS3::$campaign
         )),
         'slideAsFile'         => intval(N2SmartSliderSettings::get('slide-as-file', 0)),

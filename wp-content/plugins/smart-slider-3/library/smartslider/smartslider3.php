@@ -2,9 +2,9 @@
 
 class N2SS3 {
 
-    public static $version = '3.3.8';
+    public static $version = '3.3.9';
 
-    public static $revision = '2772';
+    public static $revision = '2798';
 
     public static $completeVersion;
 
@@ -68,11 +68,33 @@ class N2SS3 {
     
     }
 
+    public static function getActivationUrl($params = array()) {
+        self::applySource($params);
+
+        return 'https://secure.nextendweb.com/activate/?' . http_build_query($params);
+    }
+
     public static function getUpdateInfo() {
         return array(
             'name'   => 'smartslider3',
             'plugin' => 'nextend-smart-slider3-pro/nextend-smart-slider3-pro.php'
         );
+    }
+
+    public static function getDomain() {
+        $domain = parse_url(N2Uri::getFullUri(), PHP_URL_HOST);
+        if (empty($domain)) {
+            if (isset($_SERVER['HTTP_HOST'])) {
+
+                $domain = $_SERVER['HTTP_HOST'];
+            }
+            if (empty($domain) && isset($_SERVER['SERVER_NAME'])) {
+
+                $domain = $_SERVER['SERVER_NAME'];
+            }
+        }
+
+        return $domain;
     }
 
     public static function api($_posts, $returnUrl = false) {
