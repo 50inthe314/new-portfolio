@@ -11,7 +11,6 @@
 wp-config.php
 sitemap.xml
 sitemap.xml.gz
-wp-content/uploads/
 wp-content/blogs.dir/
 wp-content/upgrade/
 wp-content/backup-db/
