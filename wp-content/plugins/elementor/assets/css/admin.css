@@ -1,4 +1,4 @@
-/*! elementor - v2.2.5 - 07-10-2018 */
+/*! elementor - v2.2.6 - 22-10-2018 */
 .elementor-screen-only,
 .screen-reader-text,
 .screen-reader-text span,
@@ -511,7 +511,7 @@ body .gutenberg #elementor-switch-mode {
     position: relative; }
   #elementor-editor .elementor-loader-box {
     position: absolute;
-    background-color: #e6e9ec;
+    background-color: #d5dadf;
     -webkit-animation: load 1.8s linear infinite;
             animation: load 1.8s linear infinite; }
     #elementor-editor .elementor-loader-box:nth-of-type(1) {

@@ -982,6 +982,14 @@ ul.elementor-icon-list-items.elementor-inline-items {
   .elementor-field-subgroup:not(.elementor-subgroup-inline) .elementor-field-option {
     flex-basis: 100%; }
 
+.elementor-field-type-checkbox .elementor-field-subgroup .elementor-field-option input,
+.elementor-field-type-checkbox .elementor-field-subgroup .elementor-field-option label,
+.elementor-field-type-radio .elementor-field-subgroup .elementor-field-option input,
+.elementor-field-type-radio .elementor-field-subgroup .elementor-field-option label,
+.elementor-field-type-acceptance .elementor-field-subgroup .elementor-field-option input,
+.elementor-field-type-acceptance .elementor-field-subgroup .elementor-field-option label {
+  display: inline; }
+
 .elementor-field-label {
   cursor: pointer; }
   .elementor-mark-required .elementor-field-label:after {
