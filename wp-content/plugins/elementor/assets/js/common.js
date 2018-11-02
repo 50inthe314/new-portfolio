@@ -1,3 +1,4 @@
+/*! elementor - v2.2.7 - 24-10-2018 */
 /*! elementor - v2.2.6 - 22-10-2018 */
 /*! elementor - v2.2.6 - 22-10-2018 */
 /******/ (function(modules) { // webpackBootstrap

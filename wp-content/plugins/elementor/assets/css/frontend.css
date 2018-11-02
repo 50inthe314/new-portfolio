@@ -1,4 +1,4 @@
-/*! elementor - v2.2.6 - 22-10-2018 */
+/*! elementor - v2.2.7 - 24-10-2018 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -2044,7 +2044,7 @@ ul.elementor-icon-list-items.elementor-inline-items {
   text-align: center; }
   .elementor-widget-image .elementor-image > a,
   .elementor-widget-image .elementor-image figure > a {
-    display: block; }
+    display: inline-block; }
   .elementor-widget-image .elementor-image img {
     vertical-align: middle;
     display: inline-block; }

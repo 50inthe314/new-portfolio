@@ -1544,7 +1544,7 @@ ul.elementor-icon-list-items.elementor-inline-items {
   text-align: center; }
   .elementor-widget-image .elementor-image > a,
   .elementor-widget-image .elementor-image figure > a {
-    display: block; }
+    display: inline-block; }
   .elementor-widget-image .elementor-image img {
     vertical-align: middle;
     display: inline-block; }
