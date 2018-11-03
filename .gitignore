@@ -11,7 +11,6 @@
 wp-config.php
 sitemap.xml
 sitemap.xml.gz
-wp-content/uploads/
 wp-content/blogs.dir/
 wp-content/upgrade/
 wp-content/backup-db/
@@ -191,3 +190,4 @@ wp-content/plugins/gitium/languages/gitium-sr_RS.mo
 wp-content/plugins/gitium/languages/gitium-sr_RS.po
 wp-content/plugins/gitium/languages/gitium.pot
 wp-content/plugins/gitium/readme.txt
+wp-content/vpdb/

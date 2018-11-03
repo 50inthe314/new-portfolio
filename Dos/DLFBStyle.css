@@ -1,0 +1,122 @@
+@charset "UTF-8";
+.middle {
+	width: 520px;
+	padding: 0px;
+	background-image: url(images/blu_bg.png)
+}
+.topnav{
+	height: 27px;
+	width: 520px;
+	padding: 0px;
+	border-bottom: none;
+	background-color:#000;
+}
+.bottomnav{
+	height: 100px;
+	width: 520px;
+	padding: 0px;
+	background-color:#000;
+	font-size:9px;
+	font:Verdana, Geneva, sans-serif;
+	color:#FFF;
+}
+.middlehome {
+	width: 520px;
+	height: 540px;
+	padding: 0px;
+}
+#mainNav {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+#mainNav li {
+	float:left;
+}
+.middlehome {
+	background-image: url(images/DOS_FB_Home_07.gif);
+	width: 520px;
+	height: 563px;
+}
+.repohome {
+	background-image: url(images/DOS_FB_reposado_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.anejohome {
+	background-image:url(images/DOS_FB_anejo_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.grandhome {
+	background-image: url(images/DOS_FB_GrandReserve_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.recipeshome {
+	background-image: url(images/DOS_FB_placeholder_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.experiencehome {
+	background-image: url(images/DOS_FB_placeholder_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.silcucumberhome {
+	background-image: url(images/DOS_FB_CucumTini_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.dosjitohome {
+	background-image: url(images/DOS_FB_Dosjisto_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.mxvamphome {
+	background-image: url(images/DOS_FB_MXVampire_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.teptoasthome {
+	background-image: url(images/DOS_FB_Tepa_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.twoheadedhome {
+	background-image: url(images/DOS_FB_TwoHeadedMonster_07.gif);
+	height: 520px;
+	height: 563px;
+}
+.doslunasdelivered {
+	background-image:url(images/DosLunasDelivered.jpg);
+	width: 520px;
+	height: 900px;
+}
+.navtable {
+	padding: 0px;
+	border: 0px;
+}
+.recipenav {
+	border: 0px;
+	padding: 0px;
+	font-size:9px;
+}
+.grandresmiddle {
+	width: 520px;
+	height: 590px;
+	padding: 0px;
+	background-image: url(images/grand%20res%20bg.png);
+}
+.drinks {
+	height: 590px;
+	width: 520px;
+	background-image:url(images/DL-FP-recipesBG.jpg);
+	background-position: 0, 0;
+}
+#recnav {
+	position:absolute;
+	left: 218px;
+	top: 215px;
+	list-style: none;
+}
