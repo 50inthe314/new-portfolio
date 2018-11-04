@@ -1927,7 +1927,6 @@ form input[type="checkbox"]:focus {
 form input[type="checkbox"],
 form input[type="radio"] {
   display: inline-block;
-  margin: .5em 0;
 }
 
 form input[type="text"][disabled],
@@ -7089,6 +7088,12 @@ ul.meta li i {
   max-width: 700px;
 }
 
+.single-post.content-max-width .entry-content ul,
+.single-post.content-max-width .entry-content ol {
+  padding-left: 40px;
+  padding-right: 40px;
+}
+
 .single-post.content-max-width .thumbnail {
   margin-top: 0;
 }
@@ -8493,6 +8498,11 @@ body .elementor-element.elementor-wc-products ul.products li.product.circle-sale
 /* Fix parallax footer issue in the Elementor editor */
 .elementor-editor-active .parallax-footer {
   z-index: -1;
+}
+
+/* Fix checkbox issue in Elementor */
+.elementor-field-type-acceptance .elementor-field-subgroup .elementor-field-option input[type="checkbox"] {
+  display: inline-block;
 }
 
 /*------------------------------------*

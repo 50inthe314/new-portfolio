@@ -1,6 +1,6 @@
 <?php
 /**
- * The Header for our theme. Edit
+ * The Header for our theme.
  *
  * @package OceanWP WordPress theme
  */ ?>
