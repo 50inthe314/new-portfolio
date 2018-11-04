@@ -192,3 +192,14 @@ wp-content/plugins/gitium/languages/gitium.pot
 wp-content/plugins/gitium/readme.txt
 wp-content/vpdb/
 wp-config-prod.php
+
+Dos/
+cgi-bin/
+fitmkt/
+hire/
+old-site/
+opps/
+projects/
+stage-new/
+staging/
+test/
