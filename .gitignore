@@ -203,3 +203,5 @@ projects/
 stage-new/
 staging/
 test/
+wp-content/vpdb/
+wp-includes/
