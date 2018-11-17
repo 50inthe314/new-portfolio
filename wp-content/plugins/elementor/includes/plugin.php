@@ -1,7 +1,10 @@
 <?php
 namespace Elementor;
 
-use Elementor\Core\Ajax_Manager;
+use Elementor\Core\Admin\Admin;
+use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
+use Elementor\Core\Common\App as CommonApp;
+use Elementor\Core\Common\Modules\Connect\Manager;
 use Elementor\Core\Debug\Inspector;
 use Elementor\Core\Documents_Manager;
 use Elementor\Core\Files\Manager as Files_Manager;
@@ -57,9 +60,10 @@ class Plugin {
 	 * Holds the plugin ajax manager.
 	 *
 	 * @since 1.9.0
+	 * @deprecated 2.3.0 Use `Plugin::$instance->common->get_component( 'ajax' )` instead
 	 * @access public
 	 *
-	 * @var Ajax_Manager
+	 * @var Ajax
 	 */
 	public $ajax;
 
@@ -388,6 +392,16 @@ class Plugin {
 	public $inspector;
 
 	/**
+	 * @var Manager
+	 */
+	public $connect;
+
+	/**
+	 * @var CommonApp
+	 */
+	public $common;
+
+	/**
 	 * Clone.
 	 *
 	 * Disable class cloning and throw an error on object clone.
@@ -469,6 +483,13 @@ class Plugin {
 		do_action( 'elementor/init' );
 	}
 
+	public function on_rest_api_init() {
+		// On admin/frontend sometimes the rest API is initialized after the common is initialized.
+		if ( ! $this->common ) {
+			$this->init_common();
+		}
+	}
+
 	/**
 	 * Init components.
 	 *
@@ -482,9 +503,6 @@ class Plugin {
 	private function init_components() {
 		$this->inspector = new Inspector();
 		$this->debugger = $this->inspector;
-
-		// Allow all components to use AJAX.
-		$this->ajax = new Ajax_Manager();
 
 		Settings_Manager::run();
 
@@ -501,6 +519,7 @@ class Plugin {
 		 */
 		$this->posts_css_manager = $this->files_manager;
 		$this->settings = new Settings();
+		$this->tools = new Tools();
 		$this->editor = new Editor();
 		$this->preview = new Preview();
 		$this->frontend = new Frontend();
@@ -511,6 +530,7 @@ class Plugin {
 		$this->modules_manager = new Modules_Manager();
 		$this->role_manager = new Core\RoleManager\Role_Manager();
 		$this->system_info = new System_Info\Main();
+		$this->revisions_manager = new Revisions_Manager();
 
 		User::init();
 		Upgrades::add_actions();
@@ -518,17 +538,23 @@ class Plugin {
 		Tracker::init();
 
 		if ( is_admin() ) {
-			$this->revisions_manager = new Revisions_Manager();
 			$this->heartbeat = new Heartbeat();
 			$this->wordpress_widgets_manager = new WordPress_Widgets_Manager();
-			$this->admin = new Core\Admin\Admin();
-			$this->tools = new Tools();
+			$this->admin = new Admin();
 			$this->beta_testers = new Beta_Testers();
 
 			if ( Utils::is_ajax() ) {
 				new Images_Manager();
 			}
 		}
+	}
+
+	public function init_common() {
+		$this->common = new CommonApp();
+
+		$this->common->init_components();
+
+		$this->ajax = $this->common->get_component( 'ajax' );
 	}
 
 	/**
@@ -581,6 +607,7 @@ class Plugin {
 		Compatibility::register_actions();
 
 		add_action( 'init', [ $this, 'init' ], 0 );
+		add_action( 'rest_api_init', [ $this, 'on_rest_api_init' ] );
 	}
 }
 

@@ -132,6 +132,11 @@ abstract class Document extends Controls_Stack {
 		return $this->get_name() . '-' . $this->post->ID;
 	}
 
+	public function get_post_type_title() {
+		$post_type_object = get_post_type_object( $this->post->post_type );
+
+		return $post_type_object->labels->singular_name;
+	}
 
 	public function get_remote_library_type() {
 		return $this->get_name();
@@ -308,7 +313,7 @@ abstract class Document extends Controls_Stack {
 			Plugin::$instance->db->copy_elementor_meta( $this->post->ID, $autosave_id );
 
 			$document = Plugin::$instance->documents->get( $autosave_id );
-			$document->save_type();
+			$document->save_template_type();
 		} else {
 			$document = false;
 		}
@@ -375,13 +380,18 @@ abstract class Document extends Controls_Stack {
 
 		if ( $is_published || $can_publish || ! Plugin::$instance->editor->is_edit_mode() ) {
 
+			$statuses = get_post_statuses();
+			if ( 'future' === $this->get_main_post()->post_status ) {
+				$statuses['future'] = __( 'Future', 'elementor' );
+			}
+
 			$this->add_control(
 				'post_status',
 				[
 					'label' => __( 'Status', 'elementor' ),
 					'type' => Controls_Manager::SELECT,
 					'default' => $this->get_main_post()->post_status,
-					'options' => get_post_statuses(),
+					'options' => $statuses,
 				]
 			);
 		}
@@ -599,7 +609,7 @@ abstract class Document extends Controls_Stack {
 		if ( Plugin::$instance->editor->is_edit_mode() ) {
 			if ( empty( $elements ) && empty( $autosave_elements ) ) {
 				// Convert to Elementor.
-				$elements = Plugin::$instance->db->get_new_editor_from_wp_editor( $this->post->ID );
+				$elements = $this->convert_to_elementor();
 				if ( $this->is_autosave() ) {
 					Plugin::$instance->db->copy_elementor_meta( $this->post->post_parent, $this->post->ID );
 				}
@@ -611,6 +621,57 @@ abstract class Document extends Controls_Stack {
 		}
 
 		return $elements;
+	}
+
+	public function convert_to_elementor() {
+		$this->save_template_type();
+
+		if ( empty( $this->post->post_content ) ) {
+			return [];
+		}
+
+		// Check if it's only a shortcode.
+		preg_match_all( '/' . get_shortcode_regex() . '/', $this->post->post_content, $matches, PREG_SET_ORDER );
+		if ( ! empty( $matches ) ) {
+			foreach ( $matches as $shortcode ) {
+				if ( trim( $this->post->post_content ) === $shortcode[0] ) {
+					$widget_type = Plugin::$instance->widgets_manager->get_widget_types( 'shortcode' );
+					$settings = [
+						'shortcode' => $this->post->post_content,
+					];
+					break;
+				}
+			}
+		}
+
+		if ( empty( $widget_type ) ) {
+			$widget_type = Plugin::$instance->widgets_manager->get_widget_types( 'text-editor' );
+			$settings = [
+				'editor' => $this->post->post_content,
+			];
+		}
+
+		// TODO: Better coding to start template for editor
+		return [
+			[
+				'id' => Utils::generate_random_string(),
+				'elType' => 'section',
+				'elements' => [
+					[
+						'id' => Utils::generate_random_string(),
+						'elType' => 'column',
+						'elements' => [
+							[
+								'id' => Utils::generate_random_string(),
+								'elType' => $widget_type::get_type(),
+								'widgetType' => $widget_type->get_name(),
+								'settings' => $settings,
+							],
+						],
+					],
+				],
+			],
+		];
 	}
 
 	public function print_elements_with_wrapper( $elements_data = null ) {
@@ -753,9 +814,20 @@ abstract class Document extends Controls_Stack {
 	/**
 	 * @since 2.0.0
 	 * @access public
+	 * @deprecated Use `save_template_type`.
 	 */
 	public function save_type() {
-		update_post_meta( $this->post->ID, self::TYPE_META_KEY, $this->get_name() );
+		// TODO: _deprecated_function( __METHOD__, '2.2.0', 'save_template_type' );
+
+		$this->save_template_type();
+	}
+
+	public function save_template_type() {
+		return $this->update_main_meta( self::TYPE_META_KEY, $this->get_name() );
+	}
+
+	public function get_template_type() {
+		return $this->get_main_meta( self::TYPE_META_KEY );
 	}
 
 	/**

@@ -1,4 +1,4 @@
-/*! elementor - v2.2.7 - 24-10-2018 */
+/*! elementor - v2.3.1 - 12-11-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -82,10 +82,226 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 167);
+/******/ 	return __webpack_require__(__webpack_require__.s = 181);
 /******/ })
 /************************************************************************/
 /******/ ({
+
+/***/ 0:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var Module = function Module() {
+	var $ = jQuery,
+	    instanceParams = arguments,
+	    self = this,
+	    events = {};
+
+	var settings = void 0;
+
+	var ensureClosureMethods = function ensureClosureMethods() {
+		$.each(self, function (methodName) {
+			var oldMethod = self[methodName];
+
+			if ('function' !== typeof oldMethod) {
+				return;
+			}
+
+			self[methodName] = function () {
+				return oldMethod.apply(self, arguments);
+			};
+		});
+	};
+
+	var initSettings = function initSettings() {
+		settings = self.getDefaultSettings();
+
+		var instanceSettings = instanceParams[0];
+
+		if (instanceSettings) {
+			$.extend(settings, instanceSettings);
+		}
+	};
+
+	var init = function init() {
+		self.__construct.apply(self, instanceParams);
+
+		ensureClosureMethods();
+
+		initSettings();
+
+		self.trigger('init');
+	};
+
+	this.getItems = function (items, itemKey) {
+		if (itemKey) {
+			var keyStack = itemKey.split('.'),
+			    currentKey = keyStack.splice(0, 1);
+
+			if (!keyStack.length) {
+				return items[currentKey];
+			}
+
+			if (!items[currentKey]) {
+				return;
+			}
+
+			return this.getItems(items[currentKey], keyStack.join('.'));
+		}
+
+		return items;
+	};
+
+	this.getSettings = function (setting) {
+		return this.getItems(settings, setting);
+	};
+
+	this.setSettings = function (settingKey, value, settingsContainer) {
+		if (!settingsContainer) {
+			settingsContainer = settings;
+		}
+
+		if ('object' === (typeof settingKey === 'undefined' ? 'undefined' : _typeof(settingKey))) {
+			$.extend(settingsContainer, settingKey);
+
+			return self;
+		}
+
+		var keyStack = settingKey.split('.'),
+		    currentKey = keyStack.splice(0, 1);
+
+		if (!keyStack.length) {
+			settingsContainer[currentKey] = value;
+
+			return self;
+		}
+
+		if (!settingsContainer[currentKey]) {
+			settingsContainer[currentKey] = {};
+		}
+
+		return self.setSettings(keyStack.join('.'), value, settingsContainer[currentKey]);
+	};
+
+	this.forceMethodImplementation = function (methodArguments) {
+		var functionName = methodArguments.callee.name;
+
+		throw new ReferenceError('The method ' + functionName + ' must to be implemented in the inheritor child.');
+	};
+
+	this.on = function (eventName, callback) {
+		if ('object' === (typeof eventName === 'undefined' ? 'undefined' : _typeof(eventName))) {
+			$.each(eventName, function (singleEventName) {
+				self.on(singleEventName, this);
+			});
+
+			return self;
+		}
+
+		var eventNames = eventName.split(' ');
+
+		eventNames.forEach(function (singleEventName) {
+			if (!events[singleEventName]) {
+				events[singleEventName] = [];
+			}
+
+			events[singleEventName].push(callback);
+		});
+
+		return self;
+	};
+
+	this.off = function (eventName, callback) {
+		if (!events[eventName]) {
+			return self;
+		}
+
+		if (!callback) {
+			delete events[eventName];
+
+			return self;
+		}
+
+		var callbackIndex = events[eventName].indexOf(callback);
+
+		if (-1 !== callbackIndex) {
+			delete events[eventName][callbackIndex];
+		}
+
+		return self;
+	};
+
+	this.trigger = function (eventName) {
+		var methodName = 'on' + eventName[0].toUpperCase() + eventName.slice(1),
+		    params = Array.prototype.slice.call(arguments, 1);
+
+		if (self[methodName]) {
+			self[methodName].apply(self, params);
+		}
+
+		var callbacks = events[eventName];
+
+		if (!callbacks) {
+			return self;
+		}
+
+		$.each(callbacks, function (index, callback) {
+			callback.apply(self, params);
+		});
+
+		return self;
+	};
+
+	init();
+};
+
+Module.prototype.__construct = function () {};
+
+Module.prototype.getDefaultSettings = function () {
+	return {};
+};
+
+Module.extendsCount = 0;
+
+Module.extend = function (properties) {
+	var $ = jQuery,
+	    parent = this;
+
+	var child = function child() {
+		return parent.apply(this, arguments);
+	};
+
+	$.extend(child, parent);
+
+	child.prototype = Object.create($.extend({}, parent.prototype, properties));
+
+	child.prototype.constructor = child;
+
+	/*
+  * Constructor ID is used to set an unique ID
+     * to every extend of the Module.
+     *
+  * It's useful in some cases such as unique
+  * listener for frontend handlers.
+  */
+	var constructorID = ++Module.extendsCount;
+
+	child.prototype.getConstructorID = function () {
+		return constructorID;
+	};
+
+	child.__super__ = parent.prototype;
+
+	return child;
+};
+
+module.exports = Module;
+
+/***/ }),
 
 /***/ 1:
 /***/ (function(module, exports, __webpack_require__) {
@@ -93,7 +309,7 @@
 "use strict";
 
 
-var Module = __webpack_require__(2),
+var Module = __webpack_require__(0),
     ViewModule;
 
 ViewModule = Module.extend({
@@ -120,7 +336,7 @@ module.exports = ViewModule;
 
 /***/ }),
 
-/***/ 16:
+/***/ 17:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -180,21 +396,31 @@ module.exports = ViewModule.extend({
 
 /***/ }),
 
-/***/ 167:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
+var _hotKeys = __webpack_require__(22);
+
+var _hotKeys2 = _interopRequireDefault(_hotKeys);
+
+var _environment = __webpack_require__(3);
+
+var _environment2 = _interopRequireDefault(_environment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 /* global elementorFrontendConfig */
 (function ($) {
 	var elements = {},
 	    EventManager = __webpack_require__(20),
-	    Module = __webpack_require__(5),
-	    ElementsHandler = __webpack_require__(168),
-	    YouTubeModule = __webpack_require__(180),
-	    AnchorsModule = __webpack_require__(181),
-	    LightboxModule = __webpack_require__(182);
+	    Module = __webpack_require__(7),
+	    ElementsHandler = __webpack_require__(182),
+	    YouTubeModule = __webpack_require__(194),
+	    AnchorsModule = __webpack_require__(195),
+	    LightboxModule = __webpack_require__(196);
 
 	var ElementorFrontend = function ElementorFrontend() {
 		var self = this,
@@ -210,11 +436,22 @@ module.exports = ViewModule.extend({
 
 		var initElements = function initElements() {
 			elements.window = window;
+
 			elements.$window = $(window);
+
 			elements.$document = $(document);
-			elements.$body = $('body');
+
+			elements.$body = $(document.body);
+
 			elements.$elementor = elements.$document.find('.elementor');
+
 			elements.$wpAdminBar = elements.$document.find('#wpadminbar');
+		};
+
+		var initHotKeys = function initHotKeys() {
+			self.hotKeys = new _hotKeys2.default();
+
+			self.hotKeys.bindListener(elements.$window);
 		};
 
 		var bindEvents = function bindEvents() {
@@ -229,17 +466,15 @@ module.exports = ViewModule.extend({
 			};
 
 			self.modules = {
-				StretchElement: __webpack_require__(183),
-				Masonry: __webpack_require__(16)
+				utils: {
+					Module: __webpack_require__(0),
+					ViewModule: __webpack_require__(1)
+				},
+				StretchElement: __webpack_require__(197),
+				Masonry: __webpack_require__(17)
 			};
 
 			self.elementsHandler = new ElementsHandler($);
-		};
-
-		var initHotKeys = function initHotKeys() {
-			self.hotKeys = __webpack_require__(17);
-
-			self.hotKeys.bindListener(elements.$window);
 		};
 
 		var getSiteSettings = function getSiteSettings(settingType, settingName) {
@@ -253,16 +488,16 @@ module.exports = ViewModule.extend({
 		};
 
 		var addIeCompatibility = function addIeCompatibility() {
-			var isIE = 'Microsoft Internet Explorer' === navigator.appName || !!navigator.userAgent.match(/Trident/g) || !!navigator.userAgent.match(/MSIE/g) || !!navigator.userAgent.match(/rv:11/),
-			    el = document.createElement('div'),
+			var el = document.createElement('div'),
 			    supportsGrid = 'string' === typeof el.style.grid;
 
-			if (!isIE && supportsGrid) {
+			if (!_environment2.default.ie && supportsGrid) {
 				return;
 			}
+
 			elements.$body.addClass('elementor-msie');
 
-			var msieCss = '<link rel="stylesheet" id="elementor-frontend-css-msie" href="' + elementorFrontend.config.urls.assets + 'css/frontend-msie.min.css?' + elementorFrontend.config.version + '" type="text/css" />';
+			var msieCss = '<link rel="stylesheet" id="elementor-frontend-css-msie" href="' + self.config.urls.assets + 'css/frontend-msie.min.css?' + self.config.version + '" type="text/css" />';
 
 			elements.$body.append(msieCss);
 		};
@@ -295,20 +530,20 @@ module.exports = ViewModule.extend({
 			return elements;
 		};
 
-		this.getDialogsManager = function () {
-			if (!dialogsManager) {
-				dialogsManager = new DialogsManager.Instance();
-			}
-
-			return dialogsManager;
-		};
-
 		this.getPageSettings = function (settingName) {
 			return getSiteSettings('page', settingName);
 		};
 
 		this.getGeneralSettings = function (settingName) {
 			return getSiteSettings('general', settingName);
+		};
+
+		this.getDialogsManager = function () {
+			if (!dialogsManager) {
+				dialogsManager = new DialogsManager.Instance();
+			}
+
+			return dialogsManager;
 		};
 
 		this.isEditMode = function () {
@@ -362,7 +597,7 @@ module.exports = ViewModule.extend({
 
 		this.addListenerOnce = function (listenerID, event, callback, to) {
 			if (!to) {
-				to = self.getElements('$window');
+				to = elements.$window;
 			}
 
 			if (!self.isEditMode()) {
@@ -384,7 +619,7 @@ module.exports = ViewModule.extend({
 
 		this.removeListeners = function (listenerID, event, callback, from) {
 			if (!from) {
-				from = self.getElements('$window');
+				from = elements.$window;
 			}
 
 			if (from instanceof jQuery) {
@@ -433,7 +668,7 @@ if (!elementorFrontend.isEditMode()) {
 
 /***/ }),
 
-/***/ 168:
+/***/ 182:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -447,22 +682,22 @@ ElementsHandler = function ElementsHandler($) {
 	// element-type.skin-type
 	var handlers = {
 		// Elements
-		section: __webpack_require__(169),
+		section: __webpack_require__(183),
 
 		// Widgets
-		'accordion.default': __webpack_require__(170),
-		'alert.default': __webpack_require__(171),
-		'counter.default': __webpack_require__(172),
-		'progress.default': __webpack_require__(173),
-		'tabs.default': __webpack_require__(174),
-		'toggle.default': __webpack_require__(175),
-		'video.default': __webpack_require__(176),
-		'image-carousel.default': __webpack_require__(177),
-		'text-editor.default': __webpack_require__(178)
+		'accordion.default': __webpack_require__(184),
+		'alert.default': __webpack_require__(185),
+		'counter.default': __webpack_require__(186),
+		'progress.default': __webpack_require__(187),
+		'tabs.default': __webpack_require__(188),
+		'toggle.default': __webpack_require__(189),
+		'video.default': __webpack_require__(190),
+		'image-carousel.default': __webpack_require__(191),
+		'text-editor.default': __webpack_require__(192)
 	};
 
 	var addGlobalHandlers = function addGlobalHandlers() {
-		elementorFrontend.hooks.addAction('frontend/element_ready/global', __webpack_require__(179));
+		elementorFrontend.hooks.addAction('frontend/element_ready/global', __webpack_require__(193));
 	};
 
 	var addElementsHandlers = function addElementsHandlers() {
@@ -536,13 +771,13 @@ module.exports = ElementsHandler;
 
 /***/ }),
 
-/***/ 169:
+/***/ 183:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5);
+var HandlerModule = __webpack_require__(7);
 
 var BackgroundVideo = HandlerModule.extend({
 	player: null,
@@ -657,7 +892,6 @@ var BackgroundVideo = HandlerModule.extend({
 			},
 			playerVars: {
 				controls: 0,
-				showinfo: 0,
 				rel: 0
 			}
 		});
@@ -917,68 +1151,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 17:
+/***/ 184:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HotKeys = function HotKeys() {
-	var hotKeysHandlers = {};
-
-	var applyHotKey = function applyHotKey(event) {
-		var handlers = hotKeysHandlers[event.which];
-
-		if (!handlers) {
-			return;
-		}
-
-		jQuery.each(handlers, function () {
-			var handler = this;
-
-			if (handler.isWorthHandling && !handler.isWorthHandling(event)) {
-				return;
-			}
-
-			// Fix for some keyboard sources that consider alt key as ctrl key
-			if (!handler.allowAltKey && event.altKey) {
-				return;
-			}
-
-			event.preventDefault();
-
-			handler.handle(event);
-		});
-	};
-
-	this.isControlEvent = function (event) {
-		return event[elementor.envData.mac ? 'metaKey' : 'ctrlKey'];
-	};
-
-	this.addHotKeyHandler = function (keyCode, handlerName, handler) {
-		if (!hotKeysHandlers[keyCode]) {
-			hotKeysHandlers[keyCode] = {};
-		}
-
-		hotKeysHandlers[keyCode][handlerName] = handler;
-	};
-
-	this.bindListener = function ($listener) {
-		$listener.on('keydown', applyHotKey);
-	};
-};
-
-module.exports = new HotKeys();
-
-/***/ }),
-
-/***/ 170:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var TabsModule = __webpack_require__(22);
+var TabsModule = __webpack_require__(23);
 
 module.exports = function ($scope) {
 	new TabsModule({
@@ -990,7 +1169,7 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 171:
+/***/ 185:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1004,7 +1183,7 @@ module.exports = function ($scope, $) {
 
 /***/ }),
 
-/***/ 172:
+/***/ 186:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1027,7 +1206,7 @@ module.exports = function ($scope, $) {
 
 /***/ }),
 
-/***/ 173:
+/***/ 187:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1043,13 +1222,13 @@ module.exports = function ($scope, $) {
 
 /***/ }),
 
-/***/ 174:
+/***/ 188:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var TabsModule = __webpack_require__(22);
+var TabsModule = __webpack_require__(23);
 
 module.exports = function ($scope) {
 	new TabsModule({
@@ -1060,13 +1239,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 175:
+/***/ 189:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var TabsModule = __webpack_require__(22);
+var TabsModule = __webpack_require__(23);
 
 module.exports = function ($scope) {
 	new TabsModule({
@@ -1080,13 +1259,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 176:
+/***/ 190:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5),
+var HandlerModule = __webpack_require__(7),
     VideoModule;
 
 VideoModule = HandlerModule.extend({
@@ -1180,13 +1359,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 177:
+/***/ 191:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5),
+var HandlerModule = __webpack_require__(7),
     ImageCarouselHandler;
 
 ImageCarouselHandler = HandlerModule.extend({
@@ -1255,13 +1434,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 178:
+/***/ 192:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5),
+var HandlerModule = __webpack_require__(7),
     TextEditor;
 
 TextEditor = HandlerModule.extend({
@@ -1365,13 +1544,13 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 179:
+/***/ 193:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5),
+var HandlerModule = __webpack_require__(7),
     GlobalHandler;
 
 GlobalHandler = HandlerModule.extend({
@@ -1421,7 +1600,7 @@ module.exports = function ($scope) {
 
 /***/ }),
 
-/***/ 180:
+/***/ 194:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1478,7 +1657,7 @@ module.exports = ViewModule.extend({
 
 /***/ }),
 
-/***/ 181:
+/***/ 195:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1562,7 +1741,7 @@ module.exports = ViewModule.extend({
 
 /***/ }),
 
-/***/ 182:
+/***/ 196:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1668,7 +1847,7 @@ LightboxModule = ViewModule.extend({
 		modal.onHide = function () {
 			DialogsManager.getWidgetType('lightbox').prototype.onHide.apply(modal, arguments);
 
-			modal.getElements('widgetContent').removeClass('animated');
+			modal.getElements('message').removeClass('animated');
 		};
 
 		switch (options.type) {
@@ -1889,7 +2068,7 @@ LightboxModule = ViewModule.extend({
 	},
 
 	isLightboxLink: function isLightboxLink(element) {
-		if ('A' === element.tagName && !/\.(png|jpe?g|gif|svg)$/i.test(element.href)) {
+		if ('A' === element.tagName && (element.hasAttribute('download') || !/\.(png|jpe?g|gif|svg)(\?.*)?$/i.test(element.href))) {
 			return false;
 		}
 
@@ -2032,7 +2211,7 @@ module.exports = LightboxModule;
 
 /***/ }),
 
-/***/ 183:
+/***/ 197:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2115,221 +2294,6 @@ module.exports = ViewModule.extend({
 		this.elements.$element.css(css);
 	}
 });
-
-/***/ }),
-
-/***/ 2:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
-
-var Module = function Module() {
-	var $ = jQuery,
-	    instanceParams = arguments,
-	    self = this,
-	    settings,
-	    events = {};
-
-	var ensureClosureMethods = function ensureClosureMethods() {
-		$.each(self, function (methodName) {
-			var oldMethod = self[methodName];
-
-			if ('function' !== typeof oldMethod) {
-				return;
-			}
-
-			self[methodName] = function () {
-				return oldMethod.apply(self, arguments);
-			};
-		});
-	};
-
-	var initSettings = function initSettings() {
-		settings = self.getDefaultSettings();
-
-		var instanceSettings = instanceParams[0];
-
-		if (instanceSettings) {
-			$.extend(settings, instanceSettings);
-		}
-	};
-
-	var init = function init() {
-		self.__construct.apply(self, instanceParams);
-
-		ensureClosureMethods();
-
-		initSettings();
-
-		self.trigger('init');
-	};
-
-	this.getItems = function (items, itemKey) {
-		if (itemKey) {
-			var keyStack = itemKey.split('.'),
-			    currentKey = keyStack.splice(0, 1);
-
-			if (!keyStack.length) {
-				return items[currentKey];
-			}
-
-			if (!items[currentKey]) {
-				return;
-			}
-
-			return this.getItems(items[currentKey], keyStack.join('.'));
-		}
-
-		return items;
-	};
-
-	this.getSettings = function (setting) {
-		return this.getItems(settings, setting);
-	};
-
-	this.setSettings = function (settingKey, value, settingsContainer) {
-		if (!settingsContainer) {
-			settingsContainer = settings;
-		}
-
-		if ('object' === (typeof settingKey === 'undefined' ? 'undefined' : _typeof(settingKey))) {
-			$.extend(settingsContainer, settingKey);
-
-			return self;
-		}
-
-		var keyStack = settingKey.split('.'),
-		    currentKey = keyStack.splice(0, 1);
-
-		if (!keyStack.length) {
-			settingsContainer[currentKey] = value;
-
-			return self;
-		}
-
-		if (!settingsContainer[currentKey]) {
-			settingsContainer[currentKey] = {};
-		}
-
-		return self.setSettings(keyStack.join('.'), value, settingsContainer[currentKey]);
-	};
-
-	this.forceMethodImplementation = function (methodArguments) {
-		var functionName = methodArguments.callee.name;
-
-		throw new ReferenceError('The method ' + functionName + ' must to be implemented in the inheritor child.');
-	};
-
-	this.on = function (eventName, callback) {
-		if ('object' === (typeof eventName === 'undefined' ? 'undefined' : _typeof(eventName))) {
-			$.each(eventName, function (singleEventName) {
-				self.on(singleEventName, this);
-			});
-
-			return self;
-		}
-
-		var eventNames = eventName.split(' ');
-
-		eventNames.forEach(function (singleEventName) {
-			if (!events[singleEventName]) {
-				events[singleEventName] = [];
-			}
-
-			events[singleEventName].push(callback);
-		});
-
-		return self;
-	};
-
-	this.off = function (eventName, callback) {
-		if (!events[eventName]) {
-			return self;
-		}
-
-		if (!callback) {
-			delete events[eventName];
-
-			return self;
-		}
-
-		var callbackIndex = events[eventName].indexOf(callback);
-
-		if (-1 !== callbackIndex) {
-			delete events[eventName][callbackIndex];
-		}
-
-		return self;
-	};
-
-	this.trigger = function (eventName) {
-		var methodName = 'on' + eventName[0].toUpperCase() + eventName.slice(1),
-		    params = Array.prototype.slice.call(arguments, 1);
-
-		if (self[methodName]) {
-			self[methodName].apply(self, params);
-		}
-
-		var callbacks = events[eventName];
-
-		if (!callbacks) {
-			return self;
-		}
-
-		$.each(callbacks, function (index, callback) {
-			callback.apply(self, params);
-		});
-
-		return self;
-	};
-
-	init();
-};
-
-Module.prototype.__construct = function () {};
-
-Module.prototype.getDefaultSettings = function () {
-	return {};
-};
-
-Module.extendsCount = 0;
-
-Module.extend = function (properties) {
-	var $ = jQuery,
-	    parent = this;
-
-	var child = function child() {
-		return parent.apply(this, arguments);
-	};
-
-	$.extend(child, parent);
-
-	child.prototype = Object.create($.extend({}, parent.prototype, properties));
-
-	child.prototype.constructor = child;
-
-	/*
-  * Constructor ID is used to set an unique ID
-     * to every extend of the Module.
-     *
-  * It's useful in some cases such as unique
-  * listener for frontend handlers.
-  */
-	var constructorID = ++Module.extendsCount;
-
-	child.prototype.getConstructorID = function () {
-		return constructorID;
-	};
-
-	child.__super__ = parent.prototype;
-
-	return child;
-};
-
-module.exports = Module;
 
 /***/ }),
 
@@ -2606,7 +2570,86 @@ module.exports = EventManager;
 "use strict";
 
 
-var HandlerModule = __webpack_require__(5);
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _environment = __webpack_require__(3);
+
+var _environment2 = _interopRequireDefault(_environment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var HotKeys = function () {
+	function HotKeys() {
+		_classCallCheck(this, HotKeys);
+
+		this.hotKeysHandlers = {};
+	}
+
+	_createClass(HotKeys, [{
+		key: 'applyHotKey',
+		value: function applyHotKey(event) {
+			var handlers = this.hotKeysHandlers[event.which];
+
+			if (!handlers) {
+				return;
+			}
+
+			jQuery.each(handlers, function (key, handler) {
+				if (handler.isWorthHandling && !handler.isWorthHandling(event)) {
+					return;
+				}
+
+				// Fix for some keyboard sources that consider alt key as ctrl key
+				if (!handler.allowAltKey && event.altKey) {
+					return;
+				}
+
+				event.preventDefault();
+
+				handler.handle(event);
+			});
+		}
+	}, {
+		key: 'isControlEvent',
+		value: function isControlEvent(event) {
+			return event[_environment2.default.mac ? 'metaKey' : 'ctrlKey'];
+		}
+	}, {
+		key: 'addHotKeyHandler',
+		value: function addHotKeyHandler(keyCode, handlerName, handler) {
+			if (!this.hotKeysHandlers[keyCode]) {
+				this.hotKeysHandlers[keyCode] = {};
+			}
+
+			this.hotKeysHandlers[keyCode][handlerName] = handler;
+		}
+	}, {
+		key: 'bindListener',
+		value: function bindListener($listener) {
+			$listener.on('keydown', this.applyHotKey.bind(this));
+		}
+	}]);
+
+	return HotKeys;
+}();
+
+exports.default = HotKeys;
+
+/***/ }),
+
+/***/ 23:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var HandlerModule = __webpack_require__(7);
 
 module.exports = HandlerModule.extend({
 	$activeContent: null,
@@ -2690,19 +2733,22 @@ module.exports = HandlerModule.extend({
 	},
 
 	bindEvents: function bindEvents() {
-		var self = this;
+		var _this = this;
 
-		self.elements.$tabTitles.on('focus', function (event) {
-			self.changeActiveTab(event.currentTarget.dataset.tab);
-		});
+		this.elements.$tabTitles.on({
+			keydown: function keydown(event) {
+				if ('Enter' === event.key) {
+					event.preventDefault();
 
-		if (self.getSettings('toggleSelf')) {
-			self.elements.$tabTitles.on('mousedown', function (event) {
-				if (jQuery(event.currentTarget).is(':focus')) {
-					self.changeActiveTab(event.currentTarget.dataset.tab);
+					_this.changeActiveTab(event.currentTarget.dataset.tab);
 				}
-			});
-		}
+			},
+			click: function click(event) {
+				event.preventDefault();
+
+				_this.changeActiveTab(event.currentTarget.dataset.tab);
+			}
+		});
 	},
 
 	onInit: function onInit() {
@@ -2737,7 +2783,28 @@ module.exports = HandlerModule.extend({
 
 /***/ }),
 
-/***/ 5:
+/***/ 3:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+var userAgent = navigator.userAgent;
+
+exports.default = {
+	webkit: -1 !== userAgent.indexOf('AppleWebKit'),
+	firefox: -1 !== userAgent.indexOf('Firefox'),
+	ie: /Trident|MSIE/.test(userAgent),
+	edge: -1 !== userAgent.indexOf('Edge'),
+	mac: -1 !== userAgent.indexOf('Macintosh')
+};
+
+/***/ }),
+
+/***/ 7:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2844,7 +2911,7 @@ HandlerModule = ViewModule.extend({
 		}
 
 		['page', 'general'].forEach(function (settingsType) {
-			var listenerMethodName = 'on' + elementor.helpers.firstLetterUppercase(settingsType) + 'SettingsChange';
+			var listenerMethodName = 'on' + settingsType[0].toUpperCase() + settingsType.slice(1) + 'SettingsChange';
 
 			if (self[listenerMethodName]) {
 				self.editorListeners.push({

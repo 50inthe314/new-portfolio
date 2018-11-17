@@ -1,4 +1,4 @@
-/*! elementor - v2.2.7 - 24-10-2018 */
+/*! elementor - v2.3.1 - 12-11-2018 */
 @charset "UTF-8";
 .elementor-panel-box {
   margin-top: 10px;
@@ -129,21 +129,14 @@
             flex-direction: column; }
   .elementor-control.elementor-control-type-divider {
     padding: 0;
-    margin-bottom: -1px;
-    z-index: 1;
     background-color: transparent; }
     .elementor-control.elementor-control-type-divider hr {
-      border-bottom-width: 0;
-      border-top-width: 1px;
+      border-width: 0;
       border-color: #e6e9ec;
-      border-style: solid; }
-      .elementor-control.elementor-control-type-divider hr.elementor-divider-style--thick {
-        border-top-width: 1px; }
-      .elementor-control.elementor-control-type-divider hr.elementor-divider-style--default {
-        margin-right: 20px;
-        margin-left: 20px; }
-    .elementor-control.elementor-control-type-divider + .elementor-control:not(.elementor-control-type-section) {
-      padding-top: 15px; }
+      border-style: solid;
+      border-top-width: 1px;
+      background-color: #ffffff;
+      height: 15px; }
   .elementor-control.elementor-control-separator-default:not(.elementor-control-type-divider).elementor-control-wp {
     margin-top: 15px; }
     .elementor-control.elementor-control-separator-default:not(.elementor-control-type-divider).elementor-control-wp:before {
