@@ -1,4 +1,4 @@
-/*! elementor - v2.3.1 - 12-11-2018 */
+/*! elementor - v2.3.5 - 11-12-2018 */
 .dialog-widget-content {
   background-color: #fff;
   position: absolute;
@@ -67,7 +67,8 @@
   position: absolute;
   top: 30px;
   right: 30px;
-  font-size: 15px; }
+  font-size: 15px;
+  line-height: 1; }
   .dialog-close-button:not(:hover) {
     opacity: .4; }
 
@@ -106,6 +107,8 @@
     height: 100%;
     width: 100%;
     border: 0; }
+  .elementor-fit-aspect-ratio video {
+    width: 100%; }
 
 .flatpickr-calendar {
   width: 280px; }
@@ -334,13 +337,14 @@
     .elementor .elementor-background-video-container.elementor-loading {
       opacity: 0; }
   .elementor .elementor-background-video-embed {
-    max-width: none;
+    max-width: none; }
+  .elementor .elementor-background-video-embed, .elementor .elementor-background-video-hosted {
     position: absolute;
     top: 50%;
-    left: 0;
-    -webkit-transform: translateY(-50%);
-        -ms-transform: translateY(-50%);
-            transform: translateY(-50%); }
+    left: 50%;
+    -webkit-transform: translateX(-50%) translateY(-50%);
+        -ms-transform: translateX(-50%) translateY(-50%);
+            transform: translateX(-50%) translateY(-50%); }
   .elementor .elementor-background-video {
     position: absolute;
     max-width: none;
@@ -2753,7 +2757,9 @@ body.elementor-page .elementor-widget-menu-anchor {
     padding: 12px 10px; } }
 
 .elementor-widget-video .elementor-widget-container {
-  overflow: hidden; }
+  overflow: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+          transform: translate3d(0, 0, 0); }
 
 .elementor-widget-video .elementor-open-inline .elementor-custom-embed-image-overlay {
   position: absolute;
@@ -3208,11 +3214,11 @@ button.swiper-pagination-bullet {
 .swiper-container-horizontal > .swiper-pagination-bullets .swiper-pagination-bullet {
   margin: 0 6px; }
 
-/* Progress */
-.swiper-pagination-progress {
+/* Progressbar */
+.swiper-pagination-progressbar {
   background: rgba(0, 0, 0, 0.25);
   position: absolute; }
-  .swiper-pagination-progress .swiper-pagination-progressbar {
+  .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
     background: #000;
     position: absolute;
     left: 0;
@@ -3226,29 +3232,29 @@ button.swiper-pagination-bullet {
         -ms-transform-origin: left top;
             transform-origin: left top; }
 
-.swiper-container-rtl .swiper-pagination-progress .swiper-pagination-progressbar {
+.swiper-container-rtl .swiper-pagination-progressbar .swiper-pagination-progressbar-fill {
   -webkit-transform-origin: right top;
       -ms-transform-origin: right top;
           transform-origin: right top; }
 
-.swiper-container-horizontal > .swiper-pagination-progress {
+.swiper-container-horizontal > .swiper-pagination-progressbar {
   width: 100%;
   height: 4px;
   left: 0;
   top: 0; }
 
-.swiper-container-vertical > .swiper-pagination-progress {
+.swiper-container-vertical > .swiper-pagination-progressbar {
   width: 4px;
   height: 100%;
   left: 0;
   top: 0; }
 
-.swiper-pagination-progress.swiper-pagination-white {
+.swiper-pagination-progressbar.swiper-pagination-white {
   background: rgba(255, 255, 255, 0.5); }
-  .swiper-pagination-progress.swiper-pagination-white .swiper-pagination-progressbar {
+  .swiper-pagination-progressbar.swiper-pagination-white .swiper-pagination-progressbar-fill {
     background: #fff; }
 
-.swiper-pagination-progress.swiper-pagination-black .swiper-pagination-progressbar {
+.swiper-pagination-progressbar.swiper-pagination-black .swiper-pagination-progressbar-fill {
   background: #000; }
 
 /* 3D Container */
@@ -3650,14 +3656,14 @@ button.swiper-pagination-bullet {
   padding: 0; }
 
 @media (max-width: 767px) {
-  .elementor-hidden-phone {
+  .elementor:not(.elementor-edit-area-active) .elementor-hidden-phone {
     display: none; } }
 
 @media (min-width: 768px) and (max-width: 1024px) {
-  .elementor-hidden-tablet {
+  .elementor:not(.elementor-edit-area-active) .elementor-hidden-tablet {
     display: none; } }
 
 @media (min-width: 1025px) {
-  .elementor-hidden-desktop {
+  .elementor:not(.elementor-edit-area-active) .elementor-hidden-desktop {
     display: none; } }
 /*# sourceMappingURL=frontend-rtl.css.map */

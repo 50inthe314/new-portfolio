@@ -361,6 +361,11 @@ class Upgrades {
 		}
 	}
 
+	/**
+	 * @since 2.1.0
+	 * @access private
+	 * @static
+	 */
 	private static function upgrade_v210() {
 		global $wpdb;
 
@@ -432,11 +437,21 @@ class Upgrades {
 		} // End foreach().
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access private
+	 * @static
+	 */
 	private static function upgrade_v230() {
-		self::upgrade_v230_template_type();
 		self::upgrade_v230_widget_image();
+		self::upgrade_v230_template_type();
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access private
+	 * @static
+	 */
 	private static function upgrade_v230_widget_image() {
 		global $wpdb;
 
@@ -463,6 +478,9 @@ class Upgrades {
 		];
 
 		foreach ( $post_ids as $post_id ) {
+			// Clear WP cache for next step.
+			wp_cache_flush();
+
 			$do_update = false;
 
 			$document = Plugin::$instance->documents->get( $post_id );
@@ -502,12 +520,14 @@ class Upgrades {
 			$json_value = wp_slash( wp_json_encode( $data ) );
 
 			update_metadata( 'post', $post_id, '_elementor_data', $json_value );
-
-			// Clear WP cache for next step.
-			wp_cache_flush();
 		} // End foreach().
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access private
+	 * @static
+	 */
 	private static function upgrade_v230_template_type() {
 		global $wpdb;
 
@@ -524,6 +544,9 @@ class Upgrades {
 		}
 
 		foreach ( $post_ids as $post_id ) {
+			// Clear WP cache for next step.
+			wp_cache_flush();
+
 			$document = Plugin::$instance->documents->get( $post_id );
 
 			if ( ! $document ) {

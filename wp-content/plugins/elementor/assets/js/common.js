@@ -1,4 +1,4 @@
-/*! elementor - v2.3.1 - 12-11-2018 */
+/*! elementor - v2.3.5 - 11-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -408,6 +408,10 @@ var _finder = __webpack_require__(170);
 
 var _finder2 = _interopRequireDefault(_finder);
 
+var _connect = __webpack_require__(177);
+
+var _connect2 = _interopRequireDefault(_connect);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -472,7 +476,8 @@ var ElementorCommonApp = function (_ViewModule) {
 
 			var modules = {
 				ajax: _ajax2.default,
-				finder: _finder2.default
+				finder: _finder2.default,
+				connect: _connect2.default
 			};
 
 			activeModules.forEach(function (name) {
@@ -1266,8 +1271,19 @@ var _class = function (_Marionette$Composite) {
 		}
 	}, {
 		key: 'goToActiveItem',
-		value: function goToActiveItem() {
-			this.$activeItem.children('a')[0].click();
+		value: function goToActiveItem(event) {
+			var $a = this.$activeItem.children('a'),
+			    isControlClicked = elementorCommon.hotKeys.isControlEvent(event);
+
+			if (isControlClicked) {
+				$a.attr('target', '_blank');
+			}
+
+			$a[0].click();
+
+			if (isControlClicked) {
+				$a.removeAttr('target');
+			}
 		}
 	}, {
 		key: 'addHotKeys',
@@ -1300,8 +1316,8 @@ var _class = function (_Marionette$Composite) {
 				isWorthHandling: function isWorthHandling() {
 					return elementorCommon.finder.getLayout().getModal().isVisible() && _this2.$activeItem;
 				},
-				handle: function handle() {
-					return _this2.goToActiveItem();
+				handle: function handle(event) {
+					return _this2.goToActiveItem(event);
 				}
 			});
 		}
@@ -1518,6 +1534,76 @@ var _class = function (_Category) {
 
 	return _class;
 }(_category2.default);
+
+exports.default = _class;
+
+/***/ }),
+
+/***/ 177:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Module = __webpack_require__(0);
+
+var _class = function (_Module) {
+	_inherits(_class, _Module);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'addPopupPlugin',
+		value: function addPopupPlugin() {
+			(function ($) {
+				$.fn.elementorConnect = function (options) {
+					var settings = $.extend({
+						// These are the defaults.
+						callback: function callback() {
+							location.reload();
+						}
+					}, options);
+
+					this.attr('target', '_blank');
+					this.attr('href', this.attr('href') + '&mode=popup');
+
+					jQuery(window).on('elementorConnected', settings.callback);
+
+					return this;
+				};
+			})(jQuery);
+		}
+	}, {
+		key: 'applyPopup',
+		value: function applyPopup() {
+			jQuery('.elementor-connect-popup').elementorConnect();
+		}
+	}, {
+		key: 'onInit',
+		value: function onInit() {
+			this.addPopupPlugin();
+			this.applyPopup();
+		}
+	}]);
+
+	return _class;
+}(Module);
 
 exports.default = _class;
 

@@ -1,4 +1,4 @@
-/*! elementor - v2.3.1 - 12-11-2018 */
+/*! elementor - v2.3.5 - 11-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -82,7 +82,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 178);
+/******/ 	return __webpack_require__(__webpack_require__.s = 179);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -382,14 +382,14 @@ exports.default = _class;
 
 /***/ }),
 
-/***/ 178:
+/***/ 179:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 var ViewModule = __webpack_require__(1),
-    NewTemplateLayout = __webpack_require__(179);
+    NewTemplateLayout = __webpack_require__(180);
 
 var NewTemplateModule = ViewModule.extend({
 
@@ -436,7 +436,7 @@ jQuery(function () {
 
 /***/ }),
 
-/***/ 179:
+/***/ 180:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -448,7 +448,7 @@ var _layout2 = _interopRequireDefault(_layout);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var NewTemplateView = __webpack_require__(180);
+var NewTemplateView = __webpack_require__(181);
 
 module.exports = _layout2.default.extend({
 
@@ -479,7 +479,7 @@ module.exports = _layout2.default.extend({
 
 /***/ }),
 
-/***/ 180:
+/***/ 181:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -155,7 +155,7 @@ class Widget_Star_Rating extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->add_responsive_control(
 			'align',
 			[
 				'label' => __( 'Alignment', 'elementor' ),
@@ -198,22 +198,27 @@ class Widget_Star_Rating extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'title_color',
+			[
+				'label' => __( 'Text Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'scheme' => [
+					'type' => Scheme_Color::get_type(),
+					'value' => Scheme_Color::COLOR_3,
+				],
+				'selectors' => [
+					'{{WRAPPER}} .elementor-star-rating__title' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'title_typography',
 				'selector' => '{{WRAPPER}} .elementor-star-rating__title',
-			]
-		);
-
-		$this->add_control(
-			'title_color',
-			[
-				'label' => __( 'Color', 'elementor' ),
-				'type' => Controls_Manager::COLOR,
-				'selectors' => [
-					'{{WRAPPER}} .elementor-star-rating__title' => 'color: {{VALUE}}',
-				],
+				'scheme' => Scheme_Typography::TYPOGRAPHY_3,
 			]
 		);
 
@@ -306,6 +311,10 @@ class Widget_Star_Rating extends Widget_Base {
 		$this->end_controls_section();
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access protected
+	 */
 	protected function get_rating() {
 		$settings = $this->get_settings_for_display();
 		$rating_scale = (int) $settings['rating_scale'];
@@ -314,6 +323,10 @@ class Widget_Star_Rating extends Widget_Base {
 		return [ $rating, $rating_scale ];
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access protected
+	 */
 	protected function render_stars( $icon ) {
 		$rating_data = $this->get_rating();
 		$rating = $rating_data[0];
@@ -333,6 +346,10 @@ class Widget_Star_Rating extends Widget_Base {
 		return $stars_html;
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access protected
+	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		$rating_data = $this->get_rating();
@@ -372,6 +389,10 @@ class Widget_Star_Rating extends Widget_Base {
 		<?php
 	}
 
+	/**
+	 * @since 2.3.0
+	 * @access protected
+	 */
 	protected function _content_template() {
 		?>
 		<#

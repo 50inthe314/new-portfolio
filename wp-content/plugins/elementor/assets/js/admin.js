@@ -1,4 +1,4 @@
-/*! elementor - v2.3.1 - 12-11-2018 */
+/*! elementor - v2.3.5 - 11-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -737,34 +737,57 @@ MaintenanceModeModule = ViewModule.extend({
 		return elements;
 	},
 
-	bindEvents: function bindEvents() {
+	handleModeSelectChange: function handleModeSelectChange() {
 		var settings = this.getSettings(),
 		    elements = this.elements;
 
-		elements.$modeSelect.on('change', function () {
-			elements.$maintenanceModeTable.toggleClass(settings.classes.isEnabled, !!elements.$modeSelect.val());
-			elements.$maintenanceModeDescriptions.hide();
-			elements.$maintenanceModeDescriptions.filter('[data-value="' + elements.$modeSelect.val() + '"]').show();
-		}).trigger('change');
+		elements.$maintenanceModeTable.toggleClass(settings.classes.isEnabled, !!elements.$modeSelect.val());
+		elements.$maintenanceModeDescriptions.hide();
+		elements.$maintenanceModeDescriptions.filter('[data-value="' + elements.$modeSelect.val() + '"]').show();
+	},
 
-		elements.$excludeModeSelect.on('change', function () {
-			elements.$excludeRolesArea.toggle('custom' === elements.$excludeModeSelect.val());
-		}).trigger('change');
+	handleExcludeModeSelectChange: function handleExcludeModeSelectChange() {
+		var elements = this.elements;
 
-		elements.$templateSelect.on('change', function () {
-			var templateID = elements.$templateSelect.val();
+		elements.$excludeRolesArea.toggle('custom' === elements.$excludeModeSelect.val());
+	},
 
-			if (!templateID) {
-				elements.$editTemplateButton.hide();
-				elements.$maintenanceModeError.show();
-				return;
-			}
+	handleTemplateSelectChange: function handleTemplateSelectChange() {
+		var elements = this.elements;
 
-			var editUrl = elementorAdmin.config.home_url + '?p=' + templateID + '&elementor';
+		var templateID = elements.$templateSelect.val();
 
-			elements.$editTemplateButton.prop('href', editUrl).show();
-			elements.$maintenanceModeError.hide();
-		}).trigger('change');
+		if (!templateID) {
+			elements.$editTemplateButton.hide();
+			elements.$maintenanceModeError.show();
+			return;
+		}
+
+		var editUrl = elementorAdmin.config.home_url + '?p=' + templateID + '&elementor';
+
+		elements.$editTemplateButton.prop('href', editUrl).show();
+		elements.$maintenanceModeError.hide();
+	},
+
+	bindEvents: function bindEvents() {
+		var elements = this.elements;
+
+		elements.$modeSelect.on('change', this.handleModeSelectChange.bind(this));
+
+		elements.$excludeModeSelect.on('change', this.handleExcludeModeSelectChange.bind(this));
+
+		elements.$templateSelect.on('change', this.handleTemplateSelectChange.bind(this));
+	},
+
+	onAdminInit: function onAdminInit() {
+		this.handleModeSelectChange();
+		this.handleExcludeModeSelectChange();
+		this.handleTemplateSelectChange();
+	},
+
+	onInit: function onInit() {
+		ViewModule.prototype.onInit.apply(this, arguments);
+		elementorCommon.elements.$window.on('elementor/admin/init', this.onAdminInit);
 	}
 });
 
