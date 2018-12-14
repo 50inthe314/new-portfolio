@@ -41,19 +41,6 @@ wp-includes/
 /licencia-sk_SK.txt
 # sv_SE
 /licens-sv_SE.txt
-/wp-activate.php
-/wp-blog-header.php
-/wp-comments-post.php
-/wp-config-sample.php
-/wp-cron.php
-/wp-links-opml.php
-/wp-load.php
-/wp-login.php
-/wp-mail.php
-/wp-settings.php
-/wp-signup.php
-/wp-trackback.php
-/xmlrpc.php
 wp-content/plugins/revisr/uninstall.php
 wp-content/plugins/revisr/templates/partials/revert-form.php
 wp-content/plugins/revisr/templates/partials/push-form.php
