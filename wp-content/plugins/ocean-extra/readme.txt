@@ -2,14 +2,14 @@
 Contributors: oceanwp
 Tags: widgets, meta box, metaboxes, metabox, oceanwp
 Requires at least: 4.6
-Tested up to: 4.9.8
-Stable tag: 1.4.29
+Tested up to: 5.0
+Stable tag: 1.4.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
 == Description ==
 
-Ocean Extra add extra features to [OceanWP](https://oceanwp.org/) like widgets, metaboxes, activate/desactivate the customizer sections, enable/disable the theme's scripts and styles, import/export and a panel to activate the premium extensions.
+Ocean Extra add extra features to [OceanWP](https://oceanwp.org/) like widgets, metaboxes, activate/deactivate the customizer sections, enable/disable the theme's scripts and styles, import/export and a panel to activate the premium extensions.
 This plugin requires the [OceanWP](https://oceanwp.org/) theme to be installed.
 
 == Installation ==
@@ -31,6 +31,9 @@ This plugin will only work with the [OceanWP](https://oceanwp.org/) theme.
 3. Custom CSS.
 
 == Changelog ==
+
+= 1.4.30 =
+- Fixed: Issue when importing the JSON file in Theme Panel > Import/Export.
 
 = 1.4.29 =
 - Tweak: Some tweaks for an upcoming big update.

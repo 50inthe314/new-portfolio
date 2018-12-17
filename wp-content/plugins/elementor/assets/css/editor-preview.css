@@ -1,4 +1,4 @@
-/*! elementor - v2.3.5 - 11-12-2018 */
+/*! elementor - v2.3.6 - 17-12-2018 */
 @charset "UTF-8";
 .elementor-panel-box {
   margin-top: 10px;
@@ -305,14 +305,24 @@
 .elementor-label-block.elementor-control-hidden-label:not(.elementor-control-dynamic) > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper {
   margin-top: 0; }
 
-.elementor-label-inline > .elementor-control-content > .elementor-control-field > .elementor-control-title {
+.elementor-label-inline:not([class*='elementor-control-responsive']) > .elementor-control-content > .elementor-control-field > .elementor-control-title {
   width: 45%;
   -webkit-flex-shrink: 0;
       -ms-flex-negative: 0;
           flex-shrink: 0; }
 
-.elementor-label-inline > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper {
+.elementor-label-inline:not([class*='elementor-control-responsive']) > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper {
   width: 55%; }
+
+.elementor-label-inline[class*='elementor-control-responsive'] > .elementor-control-content > .elementor-control-field > .elementor-control-title {
+  width: auto; }
+
+.elementor-label-inline[class*='elementor-control-responsive'] > .elementor-control-content > .elementor-control-field > .elementor-control-input-wrapper {
+  width: 55%;
+  -webkit-flex-shrink: 1;
+      -ms-flex-negative: 1;
+          flex-shrink: 1;
+  margin-left: auto; }
 
 .elementor-control-field-description {
   margin-top: 10px; }
@@ -442,9 +452,9 @@
             -ms-transform: translateX(-50%);
                 transform: translateX(-50%); }
 
-.elementor-device-desktop #elementor-panel .elementor-panel-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher {
+.elementor-device-desktop #elementor-panel .elementor-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher {
   background: #c2cbd2; }
-  .elementor-device-desktop #elementor-panel .elementor-panel-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher:not(.elementor-responsive-switcher-desktop) {
+  .elementor-device-desktop #elementor-panel .elementor-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher:not(.elementor-responsive-switcher-desktop) {
     display: none; }
 
 .elementor-device-mobile .elementor-responsive-switcher-mobile {
