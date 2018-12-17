@@ -1,4 +1,4 @@
-/*! elementor - v2.2.7 - 24-10-2018 */
+/*! elementor - v2.3.6 - 17-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -82,219 +82,12 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 164);
+/******/ 	return __webpack_require__(__webpack_require__.s = 179);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 1:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Module = __webpack_require__(2),
-    ViewModule;
-
-ViewModule = Module.extend({
-	elements: null,
-
-	getDefaultElements: function getDefaultElements() {
-		return {};
-	},
-
-	bindEvents: function bindEvents() {},
-
-	onInit: function onInit() {
-		this.initElements();
-
-		this.bindEvents();
-	},
-
-	initElements: function initElements() {
-		this.elements = this.getDefaultElements();
-	}
-});
-
-module.exports = ViewModule;
-
-/***/ }),
-
-/***/ 14:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var TemplateLibraryHeaderView;
-
-TemplateLibraryHeaderView = Marionette.LayoutView.extend({
-
-	className: 'elementor-templates-modal__header',
-
-	template: '#tmpl-elementor-templates-modal__header',
-
-	regions: {
-		logoArea: '.elementor-templates-modal__header__logo-area',
-		tools: '#elementor-template-library-header-tools',
-		menuArea: '.elementor-templates-modal__header__menu-area'
-	},
-
-	ui: {
-		closeModal: '.elementor-templates-modal__header__close'
-	},
-
-	events: {
-		'click @ui.closeModal': 'onCloseModalClick'
-	},
-
-	templateHelpers: function templateHelpers() {
-		return {
-			closeType: this.getOption('closeType')
-		};
-	},
-
-	onCloseModalClick: function onCloseModalClick() {
-		this._parent._parent._parent.hideModal();
-	}
-});
-
-module.exports = TemplateLibraryHeaderView;
-
-/***/ }),
-
-/***/ 15:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var TemplateLibraryLoadingView;
-
-TemplateLibraryLoadingView = Marionette.ItemView.extend({
-	id: 'elementor-template-library-loading',
-
-	template: '#tmpl-elementor-template-library-loading'
-});
-
-module.exports = TemplateLibraryLoadingView;
-
-/***/ }),
-
-/***/ 164:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var ViewModule = __webpack_require__(1),
-    NewTemplateLayout = __webpack_require__(165);
-
-var NewTemplateModule = ViewModule.extend({
-
-	getDefaultSettings: function getDefaultSettings() {
-		return {
-			selectors: {
-				addButton: '.page-title-action:first, #elementor-template-library-add-new'
-			}
-		};
-	},
-
-	getDefaultElements: function getDefaultElements() {
-		var selectors = this.getSettings('selectors');
-
-		return {
-			$addButton: jQuery(selectors.addButton)
-		};
-	},
-
-	bindEvents: function bindEvents() {
-		this.elements.$addButton.on('click', this.onAddButtonClick);
-	},
-
-	onInit: function onInit() {
-		ViewModule.prototype.onInit.apply(this, arguments);
-
-		this.layout = new NewTemplateLayout();
-	},
-
-	onAddButtonClick: function onAddButtonClick(event) {
-		event.preventDefault();
-
-		this.layout.showModal();
-	}
-});
-
-jQuery(function () {
-	window.elementorNewTemplate = new NewTemplateModule();
-});
-
-/***/ }),
-
-/***/ 165:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var BaseModalLayout = __webpack_require__(8),
-    NewTemplateView = __webpack_require__(166);
-
-module.exports = BaseModalLayout.extend({
-
-	getModalOptions: function getModalOptions() {
-		return {
-			id: 'elementor-new-template-modal'
-		};
-	},
-
-	getLogoOptions: function getLogoOptions() {
-		return {
-			title: elementorAdmin.config.i18n.new_template
-		};
-	},
-
-	initialize: function initialize() {
-		BaseModalLayout.prototype.initialize.apply(this, arguments);
-
-		this.showLogo();
-
-		this.showContentView();
-	},
-
-	getDialogsManager: function getDialogsManager() {
-		return elementorAdmin.getDialogsManager();
-	},
-
-	showContentView: function showContentView() {
-		this.modalContent.show(new NewTemplateView());
-	}
-});
-
-/***/ }),
-
-/***/ 166:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = Marionette.ItemView.extend({
-
-	id: 'elementor-new-template-dialog-content',
-
-	template: '#tmpl-elementor-new-template',
-
-	ui: {},
-
-	events: {},
-
-	onRender: function onRender() {}
-});
-
-/***/ }),
-
-/***/ 2:
+/***/ 0:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -306,8 +99,9 @@ var Module = function Module() {
 	var $ = jQuery,
 	    instanceParams = arguments,
 	    self = this,
-	    settings,
 	    events = {};
+
+	var settings = void 0;
 
 	var ensureClosureMethods = function ensureClosureMethods() {
 		$.each(self, function (methodName) {
@@ -509,103 +303,436 @@ module.exports = Module;
 
 /***/ }),
 
+/***/ 1:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Module = __webpack_require__(0),
+    ViewModule;
+
+ViewModule = Module.extend({
+	elements: null,
+
+	getDefaultElements: function getDefaultElements() {
+		return {};
+	},
+
+	bindEvents: function bindEvents() {},
+
+	onInit: function onInit() {
+		this.initElements();
+
+		this.bindEvents();
+	},
+
+	initElements: function initElements() {
+		this.elements = this.getDefaultElements();
+	}
+});
+
+module.exports = ViewModule;
+
+/***/ }),
+
+/***/ 10:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Marionette$ItemView) {
+	_inherits(_class, _Marionette$ItemView);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'id',
+		value: function id() {
+			return 'elementor-template-library-loading';
+		}
+	}, {
+		key: 'getTemplate',
+		value: function getTemplate() {
+			return '#tmpl-elementor-template-library-loading';
+		}
+	}]);
+
+	return _class;
+}(Marionette.ItemView);
+
+exports.default = _class;
+
+/***/ }),
+
+/***/ 179:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var ViewModule = __webpack_require__(1),
+    NewTemplateLayout = __webpack_require__(180);
+
+var NewTemplateModule = ViewModule.extend({
+
+	getDefaultSettings: function getDefaultSettings() {
+		return {
+			selectors: {
+				addButton: '.page-title-action:first, #elementor-template-library-add-new'
+			}
+		};
+	},
+
+	getDefaultElements: function getDefaultElements() {
+		var selectors = this.getSettings('selectors');
+
+		return {
+			$addButton: jQuery(selectors.addButton)
+		};
+	},
+
+	bindEvents: function bindEvents() {
+		this.elements.$addButton.on('click', this.onAddButtonClick);
+	},
+
+	onInit: function onInit() {
+		ViewModule.prototype.onInit.apply(this, arguments);
+
+		this.layout = new NewTemplateLayout();
+
+		if ('#add_new' === location.hash) {
+			this.layout.showModal();
+		}
+	},
+
+	onAddButtonClick: function onAddButtonClick(event) {
+		event.preventDefault();
+
+		this.layout.showModal();
+	}
+});
+
+jQuery(function () {
+	window.elementorNewTemplate = new NewTemplateModule();
+});
+
+/***/ }),
+
+/***/ 180:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _layout = __webpack_require__(5);
+
+var _layout2 = _interopRequireDefault(_layout);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NewTemplateView = __webpack_require__(181);
+
+module.exports = _layout2.default.extend({
+
+	getModalOptions: function getModalOptions() {
+		return {
+			id: 'elementor-new-template-modal'
+		};
+	},
+
+	getLogoOptions: function getLogoOptions() {
+		return {
+			title: elementorAdmin.translate('new_template')
+		};
+	},
+
+	initialize: function initialize() {
+		_layout2.default.prototype.initialize.apply(this, arguments);
+
+		this.showLogo();
+
+		this.showContentView();
+	},
+
+	showContentView: function showContentView() {
+		this.modalContent.show(new NewTemplateView());
+	}
+});
+
+/***/ }),
+
+/***/ 181:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+module.exports = Marionette.ItemView.extend({
+
+	id: 'elementor-new-template-dialog-content',
+
+	template: '#tmpl-elementor-new-template',
+
+	ui: {},
+
+	events: {},
+
+	onRender: function onRender() {}
+});
+
+/***/ }),
+
+/***/ 5:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+	value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _header = __webpack_require__(9);
+
+var _header2 = _interopRequireDefault(_header);
+
+var _logo = __webpack_require__(8);
+
+var _logo2 = _interopRequireDefault(_logo);
+
+var _loading = __webpack_require__(10);
+
+var _loading2 = _interopRequireDefault(_loading);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Marionette$LayoutVie) {
+	_inherits(_class, _Marionette$LayoutVie);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'el',
+		value: function el() {
+			return this.getModal().getElements('widget');
+		}
+	}, {
+		key: 'regions',
+		value: function regions() {
+			return {
+				modalHeader: '.dialog-header',
+				modalContent: '.dialog-lightbox-content',
+				modalLoading: '.dialog-lightbox-loading'
+			};
+		}
+	}, {
+		key: 'initialize',
+		value: function initialize() {
+			this.modalHeader.show(new _header2.default(this.getHeaderOptions()));
+		}
+	}, {
+		key: 'getModal',
+		value: function getModal() {
+			if (!this.modal) {
+				this.initModal();
+			}
+
+			return this.modal;
+		}
+	}, {
+		key: 'initModal',
+		value: function initModal() {
+			var modalOptions = {
+				className: 'elementor-templates-modal',
+				closeButton: false,
+				draggable: false,
+				hide: {
+					onOutsideClick: false
+				}
+			};
+
+			jQuery.extend(true, modalOptions, this.getModalOptions());
+
+			this.modal = elementorCommon.dialogsManager.createWidget('lightbox', modalOptions);
+
+			this.modal.getElements('message').append(this.modal.addElement('content'), this.modal.addElement('loading'));
+
+			if (modalOptions.draggable) {
+				this.draggableModal();
+			}
+		}
+	}, {
+		key: 'showModal',
+		value: function showModal() {
+			this.getModal().show();
+		}
+	}, {
+		key: 'hideModal',
+		value: function hideModal() {
+			this.getModal().hide();
+		}
+	}, {
+		key: 'draggableModal',
+		value: function draggableModal() {
+			var $modalWidgetContent = this.getModal().getElements('widgetContent');
+
+			$modalWidgetContent.draggable({
+				containment: 'parent',
+				stop: function stop() {
+					$modalWidgetContent.height('');
+				}
+			});
+
+			$modalWidgetContent.css('position', 'absolute');
+		}
+	}, {
+		key: 'getModalOptions',
+		value: function getModalOptions() {
+			return {};
+		}
+	}, {
+		key: 'getLogoOptions',
+		value: function getLogoOptions() {
+			return {};
+		}
+	}, {
+		key: 'getHeaderOptions',
+		value: function getHeaderOptions() {
+			return {
+				closeType: 'normal'
+			};
+		}
+	}, {
+		key: 'getHeaderView',
+		value: function getHeaderView() {
+			return this.modalHeader.currentView;
+		}
+	}, {
+		key: 'showLoadingView',
+		value: function showLoadingView() {
+			this.modalLoading.show(new _loading2.default());
+
+			this.modalLoading.$el.show();
+
+			this.modalContent.$el.hide();
+		}
+	}, {
+		key: 'hideLoadingView',
+		value: function hideLoadingView() {
+			this.modalContent.$el.show();
+
+			this.modalLoading.$el.hide();
+		}
+	}, {
+		key: 'showLogo',
+		value: function showLogo() {
+			this.getHeaderView().logoArea.show(new _logo2.default(this.getLogoOptions()));
+		}
+	}]);
+
+	return _class;
+}(Marionette.LayoutView);
+
+exports.default = _class;
+
+/***/ }),
+
 /***/ 8:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var TemplateLibraryHeaderView = __webpack_require__(14),
-    TemplateLibraryHeaderLogoView = __webpack_require__(9),
-    TemplateLibraryLoadingView = __webpack_require__(15);
-
-module.exports = Marionette.LayoutView.extend({
-	el: function el() {
-		return this.modal.getElements('widget');
-	},
-
-	modal: null,
-
-	regions: function regions() {
-		return {
-			modalHeader: '.dialog-header',
-			modalContent: '.dialog-lightbox-content',
-			modalLoading: '.dialog-lightbox-loading'
-		};
-	},
-
-	constructor: function constructor() {
-		this.initModal();
-
-		Marionette.LayoutView.prototype.constructor.apply(this, arguments);
-	},
-
-	initialize: function initialize() {
-		this.modalHeader.show(new TemplateLibraryHeaderView(this.getHeaderOptions()));
-	},
-
-	initModal: function initModal() {
-		var modalOptions = {
-			className: 'elementor-templates-modal',
-			closeButton: false,
-			hide: {
-				onOutsideClick: false
-			}
-		};
-
-		jQuery.extend(true, modalOptions, this.getModalOptions());
-
-		this.modal = this.getDialogsManager().createWidget('lightbox', modalOptions);
-
-		this.modal.getElements('message').append(this.modal.addElement('content'), this.modal.addElement('loading'));
-	},
-
-	getDialogsManager: function getDialogsManager() {
-		return elementor.dialogsManager;
-	},
-
-	showModal: function showModal() {
-		this.modal.show();
-	},
-
-	hideModal: function hideModal() {
-		this.modal.hide();
-	},
-
-	getModalOptions: function getModalOptions() {
-		return {};
-	},
-
-	getLogoOptions: function getLogoOptions() {
-		return {};
-	},
-
-	getHeaderOptions: function getHeaderOptions() {
-		return {};
-	},
-
-	getHeaderView: function getHeaderView() {
-		return this.modalHeader.currentView;
-	},
-
-	showLoadingView: function showLoadingView() {
-		this.modalLoading.show(new TemplateLibraryLoadingView());
-
-		this.modalLoading.$el.show();
-
-		this.modalContent.$el.hide();
-	},
-
-	hideLoadingView: function hideLoadingView() {
-		this.modalContent.$el.show();
-
-		this.modalLoading.$el.hide();
-	},
-
-	showLogo: function showLogo() {
-		this.getHeaderView().logoArea.show(new TemplateLibraryHeaderLogoView(this.getLogoOptions()));
-	}
+Object.defineProperty(exports, "__esModule", {
+	value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Marionette$ItemView) {
+	_inherits(_class, _Marionette$ItemView);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'getTemplate',
+		value: function getTemplate() {
+			return '#tmpl-elementor-templates-modal__header__logo';
+		}
+	}, {
+		key: 'className',
+		value: function className() {
+			return 'elementor-templates-modal__header__logo';
+		}
+	}, {
+		key: 'events',
+		value: function events() {
+			return {
+				click: 'onClick'
+			};
+		}
+	}, {
+		key: 'templateHelpers',
+		value: function templateHelpers() {
+			return {
+				title: this.getOption('title')
+			};
+		}
+	}, {
+		key: 'onClick',
+		value: function onClick() {
+			var clickCallback = this.getOption('click');
+
+			if (clickCallback) {
+				clickCallback();
+			}
+		}
+	}]);
+
+	return _class;
+}(Marionette.ItemView);
+
+exports.default = _class;
 
 /***/ }),
 
@@ -615,29 +742,78 @@ module.exports = Marionette.LayoutView.extend({
 "use strict";
 
 
-module.exports = Marionette.ItemView.extend({
-	template: '#tmpl-elementor-templates-modal__header__logo',
-
-	className: 'elementor-templates-modal__header__logo',
-
-	events: {
-		click: 'onClick'
-	},
-
-	templateHelpers: function templateHelpers() {
-		return {
-			title: this.getOption('title')
-		};
-	},
-
-	onClick: function onClick() {
-		var clickCallback = this.getOption('click');
-
-		if (clickCallback) {
-			clickCallback();
-		}
-	}
+Object.defineProperty(exports, "__esModule", {
+	value: true
 });
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _class = function (_Marionette$LayoutVie) {
+	_inherits(_class, _Marionette$LayoutVie);
+
+	function _class() {
+		_classCallCheck(this, _class);
+
+		return _possibleConstructorReturn(this, (_class.__proto__ || Object.getPrototypeOf(_class)).apply(this, arguments));
+	}
+
+	_createClass(_class, [{
+		key: 'className',
+		value: function className() {
+			return 'elementor-templates-modal__header';
+		}
+	}, {
+		key: 'getTemplate',
+		value: function getTemplate() {
+			return '#tmpl-elementor-templates-modal__header';
+		}
+	}, {
+		key: 'regions',
+		value: function regions() {
+			return {
+				logoArea: '.elementor-templates-modal__header__logo-area',
+				tools: '#elementor-template-library-header-tools',
+				menuArea: '.elementor-templates-modal__header__menu-area'
+			};
+		}
+	}, {
+		key: 'ui',
+		value: function ui() {
+			return {
+				closeModal: '.elementor-templates-modal__header__close'
+			};
+		}
+	}, {
+		key: 'events',
+		value: function events() {
+			return {
+				'click @ui.closeModal': 'onCloseModalClick'
+			};
+		}
+	}, {
+		key: 'templateHelpers',
+		value: function templateHelpers() {
+			return {
+				closeType: this.getOption('closeType')
+			};
+		}
+	}, {
+		key: 'onCloseModalClick',
+		value: function onCloseModalClick() {
+			this._parent._parent._parent.hideModal();
+		}
+	}]);
+
+	return _class;
+}(Marionette.LayoutView);
+
+exports.default = _class;
 
 /***/ })
 

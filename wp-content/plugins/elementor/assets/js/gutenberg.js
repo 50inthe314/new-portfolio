@@ -1,4 +1,4 @@
-/*! elementor - v2.2.7 - 24-10-2018 */
+/*! elementor - v2.3.6 - 17-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -82,12 +82,12 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 163);
+/******/ 	return __webpack_require__(__webpack_require__.s = 178);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 163:
+/***/ 178:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
