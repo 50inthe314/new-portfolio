@@ -48,7 +48,7 @@ class N2SmartSliderTypeSimple extends N2SmartSliderType {
         $this->widgets->echoAbove();
         ?>
 
-        <div class="n2-ss-slider-1 n2-ss-swipe-element n2-ow" style="<?php echo $sliderCSS; ?>">
+        <div class="n2-ss-slider-1 n2-ss-swipe-element n2-ow" style="<?php echo n2_esc_attr($sliderCSS); ?>">
             <?php
             echo $this->getBackgroundVideo($params);
             ?>

@@ -125,11 +125,11 @@ if (empty($thumbnail)) {
 <?php echo $slidesOuterHTML; ?>
 
     <div class="n2-ss-edit-slide-top">
-    <div class="n2-ss-edit-slide-top-thumbnail" onclick="N2Classes.$('.n2-ss-tab-background').trigger('click');"><img src="<?php echo $thumbnail; ?>"/></div>
+    <div class="n2-ss-edit-slide-top-thumbnail" onclick="N2Classes.$('.n2-ss-tab-background').trigger('click');"><img src="<?php echo n2_esc_attr($thumbnail); ?>"/></div>
     <div class="n2-ss-edit-slide-top-details">
         <div class="n2-h1" onclick="N2Classes.$('.n2-ss-tab-settings').trigger('click');N2Classes.$('#slidetitle').trigger('focus');N2Classes.$(window).scrollTop(N2Classes.$('#slidetitle').offset().top - 200);">
             <?php
-            echo $renderedSlide->getTitle(true);
+            echo n2_esc_html($renderedSlide->getTitle(true));
             ?>
         </div>
         <div class="n2-h4"><a class="n2-ss-back-to" href="<?php echo $this->appType->router->createUrl(array(

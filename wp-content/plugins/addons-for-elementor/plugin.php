@@ -45,7 +45,7 @@ if ( !class_exists( 'Livemesh_Elementor_Addons' ) ) {
         public function __clone()
         {
             // Cloning instances of the class is forbidden
-            _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'livemesh-el-addons' ), '2.3.3' );
+            _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'livemesh-el-addons' ), '2.5.2' );
         }
         
         /**
@@ -55,7 +55,7 @@ if ( !class_exists( 'Livemesh_Elementor_Addons' ) ) {
         public function __wakeup()
         {
             // Unserializing instances of the class is forbidden
-            _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'livemesh-el-addons' ), '2.3.3' );
+            _doing_it_wrong( __FUNCTION__, __( 'Cheatin&#8217; huh?', 'livemesh-el-addons' ), '2.5.2' );
         }
         
         private function setup_debug_constants()
@@ -223,13 +223,6 @@ if ( !class_exists( 'Livemesh_Elementor_Addons' ) ) {
             wp_register_script(
                 'jquery-stats',
                 LAE_PLUGIN_URL . 'assets/js/jquery.stats' . $suffix . '.js',
-                array( 'jquery' ),
-                LAE_VERSION,
-                true
-            );
-            wp_register_script(
-                'slick',
-                LAE_PLUGIN_URL . 'assets/js/slick' . $suffix . '.js',
                 array( 'jquery' ),
                 LAE_VERSION,
                 true

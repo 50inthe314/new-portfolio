@@ -8,3 +8,7 @@ foreach (N2Filesystem::folders($dir) AS $folder) {
         require_once($file);
     }
 }
+
+N2Loader::import('libraries.plugins.N2SliderGeneratorPluginAbstract', 'smartslider');
+
+do_action('smartslider3_generator');

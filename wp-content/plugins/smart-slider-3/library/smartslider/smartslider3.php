@@ -2,9 +2,9 @@
 
 class N2SS3 {
 
-    public static $version = '3.3.9';
+    public static $version = '3.3.11';
 
-    public static $revision = '2798';
+    public static $revision = '2911';
 
     public static $completeVersion;
 
@@ -123,13 +123,13 @@ class N2SS3 {
                 N2Message::error('Please <a href="https://smartslider3.helpscoutdocs.com/article/414-update" target="_blank">update</a> your Smart Slider to the latest version to be able to import the selected sample slider!');
                 break;
             case 'LICENSE_EXPIRED':
-                N2Message::error('Your license key <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#nokey" target="_blank">expired</a>!');
+                N2Message::error('Your license has <a href="https://smartslider3.helpscoutdocs.com/article/1101-activation#nokey" target="_blank">expired</a>! Get new one: <a href="https://smartslider3.com/pricing" target="_blank">smartslider3.com</a>.');
                 break;
             case 'DOMAIN_REGISTER_FAILED':
-                N2Message::error('Your license key authorized on a different domain! You can move it to this domain like <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#move" target="_blank">this</a>, or get new one: <a href="https://smartslider3.com/pricing" target="_blank">smartslider3.com</a>');
+                N2Message::error('Smart Slider 3 PRO license is not registered on the current domain. Please activate this domain by following <a href="https://smartslider3.helpscoutdocs.com/article/1101-activation" target="_blank">the license activation documentation</a>.');
                 break;
             case 'LICENSE_INVALID':
-                N2Message::error('Your license key invalid, please <a href="https://smartslider3.helpscoutdocs.com/article/1101-license#add-license" target="_blank">enter again!</a>');
+                N2Message::error('Smart Slider 3 PRO license is not registered on the current domain. Please activate this domain by following <a href="https://smartslider3.helpscoutdocs.com/article/1101-activation" target="_blank">the license activation documentation</a>.');
                 N2SmartsliderLicenseModel::getInstance()
                                          ->setKey('');
 
@@ -141,7 +141,7 @@ class N2SS3 {
                 N2Message::error('Update error, please update manually!');
                 break;
             case 'PLATFORM_NOT_ALLOWED':
-                N2Message::error(sprintf('Your license key is not valid for Smart Slider3 - %s!', N2Platform::getPlatformName()));
+                N2Message::error(sprintf('Your license is not valid for Smart Slider3 - %s!', N2Platform::getPlatformName()));
                 break;
             case 'ERROR_HANDLED':
                 break;

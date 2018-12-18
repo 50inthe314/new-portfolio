@@ -22,11 +22,13 @@ function lae_get_all_taxonomy_options() {
 
     $results = array();
 
+    $limit = apply_filters('lae_taxonomy_terms_dropdown_limit', 500);
+
     foreach ($wpdb->get_results("
 		SELECT terms.slug AS 'slug', terms.name AS 'label', termtaxonomy.taxonomy AS 'type'
 		FROM $wpdb->terms AS terms
 		JOIN $wpdb->term_taxonomy AS termtaxonomy ON terms.term_id = termtaxonomy.term_id
-		LIMIT 500
+		LIMIT $limit
 	") as $result) {
         $results[$result->type . ':' . $result->slug] = $result->type . ':' . $result->label;
     }

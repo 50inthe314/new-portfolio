@@ -38,6 +38,10 @@ class N2Platform {
         return $wp_version;
     }
 
+    public static function getCharset() {
+        return get_option('blog_charset');
+    }
+
     public static function getDate() {
         return current_time('mysql');
     }

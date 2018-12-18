@@ -83,7 +83,7 @@ class N2SmartSliderExport {
 
                     self::addImage($slide['params']->get('backgroundImage'));
                     self::addImage($slide['params']->get('ligthboxImage'));
-                    self::addLightbox($slide['params']->get('link'));
+                    self::addLightbox($slide['params']->get('href'));
 
                     $layers = json_decode($slide['slide'], true);
 
@@ -271,7 +271,7 @@ class N2SmartSliderExport {
             'replaceHTMLImageHrefLightbox'
         ), $sliderHTML);
 
-        $headHTML = preg_replace_callback('/"([^"]*?\.(jpg|png|gif|jpeg))"/i', array(
+        $headHTML = preg_replace_callback('/"([^"]*?\.(jpg|png|gif|jpeg|webp|svg))"/i', array(
             $this,
             'replaceJSON'
         ), $headHTML);

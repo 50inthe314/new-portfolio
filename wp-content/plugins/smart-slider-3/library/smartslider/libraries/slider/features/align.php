@@ -1,7 +1,6 @@
 <?php
 
-class N2SmartSliderFeatureAlign
-{
+class N2SmartSliderFeatureAlign {
 
     private $slider;
 
@@ -51,7 +50,7 @@ class N2SmartSliderFeatureAlign
     }
 
     public function makeJavaScriptProperties(&$properties) {
-        $properties['align'] = $this->align;
+        $properties['align']     = $this->align;
         $properties['isDelayed'] = intval($this->slider->params->get('is-delayed', 0));
     }
 }

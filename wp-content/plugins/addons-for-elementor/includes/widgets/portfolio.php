@@ -870,7 +870,7 @@ class LAE_Portfolio_Widget extends Widget_Base {
 
                     $image_info .= '</div><!-- .lae-image-info -->';
 
-                    $entry_image .= apply_filters('lae_posts_grid_image_info', $image_info, $settings);
+                    $entry_image .= apply_filters('lae_posts_grid_image_info', $image_info, $post_id, $settings);
 
                     $entry_image .= '</div>';
 
@@ -886,7 +886,7 @@ class LAE_Portfolio_Widget extends Widget_Base {
 
                         $entry_title = '<' . $settings['entry_title_tag'] . ' class="entry-title"><a href="' . get_permalink() . '" title="' . get_the_title() . '" rel="bookmark">' . get_the_title() . '</a></' . $settings['entry_title_tag'] . '>';
 
-                        $entry_text .= apply_filters('lae_posts_grid_entry_title', $entry_title, $settings);
+                        $entry_text .= apply_filters('lae_posts_grid_entry_title', $entry_title, $post_id, $settings);
 
                     endif;
 

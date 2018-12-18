@@ -13,9 +13,9 @@ Aladin
 Aldrich
 Alef
 Alegreya
-Alegreya SC
 Alegreya Sans
 Alegreya Sans SC
+Alegreya SC
 Alex Brush
 Alfa Slab One
 Alice
@@ -249,10 +249,10 @@ Droid Sans Mono
 Droid Serif
 Duru Sans
 Dynalight
-EB Garamond
 Eagle Lake
 East Sea Dokdo
 Eater
+EB Garamond
 Economica
 Eczar
 Ek Mukta
@@ -312,8 +312,6 @@ Fresca
 Frijole
 Fruktur
 Fugaz One
-GFS Didot
-GFS Neohellenic
 Gabriela
 Gaegu
 Gafata
@@ -327,6 +325,8 @@ Geo
 Geostar
 Geostar Fill
 Germania One
+GFS Didot
+GFS Neohellenic
 Gidugu
 Gilda Display
 Give You Glory
@@ -373,18 +373,18 @@ IBM Plex Mono
 IBM Plex Sans
 IBM Plex Sans Condensed
 IBM Plex Serif
-IM Fell DW Pica
-IM Fell DW Pica SC
+Iceberg
+Iceland
 IM Fell Double Pica
 IM Fell Double Pica SC
+IM Fell DW Pica
+IM Fell DW Pica SC
 IM Fell English
 IM Fell English SC
 IM Fell French Canon
 IM Fell French Canon SC
 IM Fell Great Primer
 IM Fell Great Primer SC
-Iceberg
-Iceland
 Imprima
 Inconsolata
 Inder
@@ -436,8 +436,8 @@ Khula
 Kirang Haerang
 Kite One
 Knewave
-KoHo
 Kodchasan
+KoHo
 Kosugi
 Kosugi Maru
 Kotta One
@@ -569,7 +569,6 @@ Mukta Malar
 Mukta Vaani
 Muli
 Mystery Quest
-NTR
 Nanum Brush Script
 Nanum Gothic
 Nanum Gothic Coding
@@ -592,6 +591,8 @@ Noticia Text
 Noto Sans
 Noto Sans JP
 Noto Sans KR
+Noto Sans SC
+Noto Sans TC
 Noto Serif
 Noto Serif JP
 Noto Serif KR
@@ -603,6 +604,7 @@ Nova Round
 Nova Script
 Nova Slim
 Nova Square
+NTR
 Numans
 Nunito
 Nunito Sans
@@ -628,12 +630,6 @@ Overpass Mono
 Ovo
 Oxygen
 Oxygen Mono
-PT Mono
-PT Sans
-PT Sans Caption
-PT Sans Narrow
-PT Serif
-PT Serif Caption
 Pacifico
 Padauk
 Palanquin
@@ -684,6 +680,12 @@ Prociono
 Prompt
 Prosto One
 Proza Libre
+PT Mono
+PT Sans
+PT Sans Caption
+PT Sans Narrow
+PT Serif
+PT Serif Caption
 Puritan
 Purple Purse
 Quando
@@ -872,7 +874,6 @@ UnifrakturMaguntia
 Unkempt
 Unlock
 Unna
-VT323
 Vampiro One
 Varela
 Varela Round
@@ -886,6 +887,7 @@ Volkhov
 Vollkorn
 Vollkorn SC
 Voltaire
+VT323
 Waiting for the Sunrise
 Wallpoet
 Walter Turncoat

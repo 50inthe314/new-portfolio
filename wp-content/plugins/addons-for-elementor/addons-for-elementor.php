@@ -8,7 +8,7 @@
  * Author URI: https://www.livemeshthemes.com/elementor-addons
  * License: GPL3
  * License URI: https://www.gnu.org/licenses/gpl-3.0.txt
- * Version: 2.3.3
+ * Version: 2.5.2
  * Text Domain: livemesh-el-addons
  * Domain Path: languages
  *
@@ -36,13 +36,13 @@ if ( !defined( 'ABSPATH' ) ) {
 
 if ( !function_exists( 'lae_fs' ) ) {
     // Plugin version
-    define( 'LAE_VERSION', '2.3.3' );
+    define( 'LAE_VERSION', '2.5.2' );
     // Plugin Root File
     define( 'LAE_PLUGIN_FILE', __FILE__ );
     // Plugin Folder Path
     define( 'LAE_PLUGIN_DIR', plugin_dir_path( __FILE__ ) );
     // Plugin Folder URL
-    define( 'LAE_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+    define( 'LAE_PLUGIN_URL', plugins_url( '/', __FILE__ ) );
     // Plugin Addons Folder Path
     define( 'LAE_ADDONS_DIR', plugin_dir_path( __FILE__ ) . 'includes/widgets/' );
     // Plugin Premium Addons Folder Path

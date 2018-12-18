@@ -20,9 +20,7 @@ class N2SSItemYouTube extends N2SSItemAbstract {
             'center'   => 0,
             'loop'     => 0,
             'reset'    => 0,
-            'theme'    => 'dark',
-            'related'  => 0,
-            'vq'       => 'default'
+            'related'  => 1,
         ));
 
         $rawYTUrl = $owner->fill($this->data->get('youtubeurl', ''));

@@ -33,12 +33,12 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
 
         $date = new N2ElementGroup($filter, 'customvariablegroup', n2_('Customized variables'));
 
-        new N2ElementTextarea($date, 'customdates', n2_('Create custom date variables') . ' (' . n2_('one per line') . ')', 'variable||PHP date format&#xA;modified||Ymd&#xA;date||F j, Y, g:i a&#xA;started||F&#xA;ended||D', array(
+        new N2ElementTextarea($date, 'customdates', n2_('Create custom date variables') . ' (' . n2_('one per line') . ')', "variable||PHP date format\nmodified||Ymd\ndate||F j, Y, g:i a\nstarted||F\nended||D", array(
             'fieldStyle' => 'width:300px;height: 100px;',
             'tip'        => sprintf(n2_('You can write down an existing variable\'s name, then two | signs and lastly any date format (%s) in separate lines and new variables will be created for them. The name of the new variables will be the same as the original variable and "_datetime" will be added to the end of them.'), "http://php.net/manual/en/function.date.php")
         ));
 
-        new N2ElementTextarea($date, 'translatecustomdates', n2_('Translate your custom date variables') . ' (' . n2_('one per line') . ')', 'from||to&#xA;Monday||Monday&#xA;jan||jan', array(
+        new N2ElementTextarea($date, 'translatecustomdates', n2_('Translate your custom date variables') . ' (' . n2_('one per line') . ')', "from||to\nMonday||Monday\njan||jan", array(
             'fieldStyle' => 'width:300px;height: 100px;',
             'tip'        => n2_('You can translate the newly created variables. Write the original text, like \'Monday\', then two | signs and the text you want it to be translated to, for example \'Montag\'. Together: Monday||Montag')
         ));
@@ -290,9 +290,9 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
             $post = $posts[$i];
             setup_postdata($post);
 
-            $record['id']  = $post->ID;
-            $record['url'] = get_permalink();
-            $record['title'] = apply_filters('the_title', get_the_title(), $post->ID);
+            $record['id']          = $post->ID;
+            $record['url']         = get_permalink();
+            $record['title']       = apply_filters('the_title', get_the_title(), $post->ID);
             $record['content']     = get_the_content();
             $record['description'] = $record['content'];
             if (class_exists('ET_Builder_Plugin')) {
@@ -431,14 +431,18 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                                 if (is_serialized($v)) {
                                     $unserialize_values = unserialize($v);
                                     $unserialize_count  = 1;
-                                    foreach ($unserialize_values AS $unserialize_value) {
-                                        if (!empty($unserialize_value) && !is_array($unserialize_value) && !is_object($unserialize_value)) {
-                                            $record['us_' . $key . $unserialize_count] = $unserialize_value;
-                                            $unserialize_count++;
-                                        } else if (is_array($unserialize_value)) {
-                                            foreach ($unserialize_value AS $u_v) {
-                                                $record['us_' . $key . $unserialize_count] = $u_v;
+                                    if (!empty($unserialize_values) && is_array($unserialize_values)) {
+                                        foreach ($unserialize_values AS $unserialize_value) {
+                                            if (!empty($unserialize_value) && is_string($unserialize_value)) {
+                                                $record['us_' . $key . $unserialize_count] = $unserialize_value;
                                                 $unserialize_count++;
+                                            } else if (is_array($unserialize_value)) {
+                                                foreach ($unserialize_value AS $u_v) {
+                                                    if (is_string($u_v)) {
+                                                        $record['us_' . $key . $unserialize_count] = $u_v;
+                                                        $unserialize_count++;
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -457,6 +461,11 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                         }
                     }
                 }
+            }
+            if (isset($record['primarytermcategory'])) {
+                $primary                         = get_category($record['primarytermcategory']);
+                $record['primary_category_name'] = $primary->name;
+                $record['primary_category_link'] = get_category_link($primary->cat_ID);
             }
             $record['excerpt'] = get_the_excerpt();
 
@@ -486,6 +495,8 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
                 }
             }
 
+            $record = apply_filters('smartslider3_posts_posts_data', $record);
+
             $data[$i] = &$record;
             unset($record);
         }
@@ -503,7 +514,6 @@ class N2GeneratorPostsPosts extends N2GeneratorAbstract {
         if ($timezone_string !== '') {
             date_default_timezone_set($prev_timezone);
         }
-
         return $data;
     }
 

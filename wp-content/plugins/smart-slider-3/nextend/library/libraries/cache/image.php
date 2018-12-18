@@ -60,7 +60,9 @@ class N2StoreImage extends N2Cache {
             'jpeg',
             'png',
             'mp4',
-            'mp3'
+            'mp3',
+            'webp',
+            'svg'
         );
 
         $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));

@@ -167,7 +167,7 @@ class N2SmartSliderImport {
                 $slide['thumbnail'] = $this->fixImage($slide['thumbnail']);
                 $slide['params']->set('backgroundImage', $this->fixImage($slide['params']->get('backgroundImage')));
                 $slide['params']->set('ligthboxImage', $this->fixImage($slide['params']->get('ligthboxImage')));
-                $slide['params']->set('link', $this->fixLightbox($slide['params']->get('link')));
+                $slide['params']->set('href', $this->fixLightbox($slide['params']->get('href')));
 
                 $layers = json_decode($slide['slide'], true);
 

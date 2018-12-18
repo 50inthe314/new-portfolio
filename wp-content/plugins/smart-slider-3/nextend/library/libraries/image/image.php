@@ -40,7 +40,7 @@ class N2Image extends N2CacheImage {
             $pathInfo  = pathinfo(parse_url($imageUrl, PHP_URL_PATH));
             $extension = self::validateExtension($pathInfo['extension']);
             if (!$extension) {
-                return $originalImageUrl;
+                return N2Filesystem::pathToAbsoluteURL($originalImageUrl);
             }
 
             return N2Filesystem::pathToAbsoluteURL($cache->makeCache($extension, array(
@@ -377,7 +377,9 @@ class N2Image extends N2CacheImage {
             'png'  => 'png',
             'jpg'  => 'jpg',
             'jpeg' => 'jpg',
-            'gif'  => 'gif'
+            'gif'  => 'gif',
+            'webp' => 'webp',
+            'svg'  => 'svg'
         );
         $extension = strtolower($extension);
         if (isset($validExtensions[$extension])) {

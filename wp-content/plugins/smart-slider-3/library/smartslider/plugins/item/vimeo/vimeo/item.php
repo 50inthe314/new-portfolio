@@ -9,9 +9,14 @@ class N2SSItemVimeo extends N2SSItemAbstract {
     public function render() {
         $owner = $this->layer->getOwner();
 
-        $this->data->set("vimeocode", preg_replace('/\D/', '', $owner->fill($this->data->get("vimeourl"))));
+        $url = $owner->fill($this->data->get("vimeourl"));
+        if (preg_match('/https?:\/\/(?:www\.|player\.)?vimeo.com\/(?:channels\/(?:\w+\/)?|groups\/([^\/]*)\/videos\/|album\/(\d+)\/video\/|video\/|)(\d+)(?:$|\/|\?)/', $url, $matches)) {
+            $videoID = $matches[3];
+        } else {
+            $videoID = preg_replace('/\D/', '', $url);
+        }
 
-        $style = '';
+        $this->data->set("vimeocode", $videoID);
 
         $hasImage = 0;
         $image    = $this->data->get('image');

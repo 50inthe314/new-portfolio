@@ -1506,7 +1506,7 @@ N2D('NextendModal', function ($, undefined) {
         $select = $group.find('select');
 
         for (var k in values) {
-            $select.append('<option value="' + k + '">' + values[k] + '</option>');
+            $('<option value="' + k + '"></option>').text(values[k]).appendTo($select);
         }
         $select.prop('selectedIndex', 0);
 

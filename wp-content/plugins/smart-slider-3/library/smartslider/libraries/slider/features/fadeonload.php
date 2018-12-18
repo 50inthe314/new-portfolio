@@ -73,7 +73,7 @@ class N2SmartSliderFeatureFadeOnLoad {
                 return N2Html::tag("div", array(
                     "id"     => $this->slider->elementId . "-placeholder",
                     "encode" => false,
-                    "style"  => 'position: relative;z-index:2;background-color:RGBA(0,0,0,0);max-height:' . $maxHeight . 'px;' . $style . ' background-color:' . $this->placeholderColor . ';'
+                    "style"  => 'position: relative;z-index:2;background-color:RGBA(0,0,0,0);max-height:' . $maxHeight . 'px;' . n2_esc_attr($style) . ' background-color:' . $this->placeholderColor . ';'
                 ), $this->makeImage($sizes));
             } else {
                 $this->slider->addCSS("#{$this->slider->elementId} .n2-ss-load-fade{position: relative !important;}");

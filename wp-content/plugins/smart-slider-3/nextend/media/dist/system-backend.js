@@ -325,7 +325,7 @@ N2D('NextendFragmentEditorController', ['NextendFragmentEditorControllerWithEdit
             this.previewModeField = new N2Classes.FormElementRadio('n2-' + this.type + '-editor-preview-mode', ['0']);
             this.previewModeField.element.on('nextendChange.n2-editor', $.proxy(this.previewModeChanged, this));
 
-            this.previewModeField.options.eq(0).html(this.previewModesList[0].label);
+            this.previewModeField.options.eq(0).text(this.previewModesList[0].label);
         }
     }
 
@@ -410,7 +410,7 @@ N2D('NextendFragmentEditorController', ['NextendFragmentEditorControllerWithEdit
         for (var i = this.tabField.values.length - 1; i > 0; i--) {
             this.tabField.removeTabOption(this.tabField.values[i]);
         }
-        this.tabField.options.eq(0).html(labels[0]);
+        this.tabField.options.eq(0).text(labels[0]);
         for (var i = 1; i < labels.length; i++) {
             this.tabField.addTabOption(i + '', labels[i]);
         }
@@ -488,13 +488,13 @@ N2D('NextendFragmentEditorController', ['NextendFragmentEditorControllerWithEdit
         if (this.currentTabs === false) {
             if (mode == 0) {
                 for (var i = 0; i < this.currentVisual.length; i++) {
-                    this.tabField.options.eq(i).html('#' + i);
+                    this.tabField.options.eq(i).text('#' + i);
                 }
             } else {
                 var tabs = this.previewModesList[mode].tabs;
                 if (tabs) {
                     for (var i = 0; i < this.currentVisual.length; i++) {
-                        this.tabField.options.eq(i).html(tabs[i]);
+                        this.tabField.options.eq(i).text(tabs[i]);
                     }
                 }
             }
@@ -816,8 +816,7 @@ N2D('NextendVisualWithSetRow', ['NextendVisualWithSet'], function ($, undefined)
 
     NextendVisualWithSetRow.prototype.createRow = function () {
         this.row = $('<li></li>')
-            .append($('<a href="#">' + this.name + '</a>')
-                .on('click', $.proxy(this.activate, this)));
+            .append($('<a href="#"></a>').text(this.name).on('click', $.proxy(this.activate, this)));
         if (!this.isSystem()) {
             this.row.append($('<span class="n2-actions"></span>')
                 .append($('<div class="n2-button n2-button-icon n2-button-s" href="#"><i class="n2-i n2-i-delete n2-i-grey-opacity"></i></div>')
@@ -1070,9 +1069,10 @@ N2D('NextendVisualSetsManagerEditable', ['NextendVisualSetsManager'], function (
                             this.createHeading(n2_('Sets')).appendTo(this.content);
                             var data = [];
                             for (var k in visualManager.sets) {
-                                var id = visualManager.sets[k].set.id;
+                                var id = visualManager.sets[k].set.id,
+                                    label = $('<span></span>').text(visualManager.sets[k].set.value)
                                 if (setsManager.isSetAllowedToEdit(id)) {
-                                    data.push([visualManager.sets[k].set.value, $('<div class="n2-button n2-button-normal n2-button-xs n2-radius-s n2-button-grey n2-uc n2-h5">' + n2_('Rename') + '</div>')
+                                    data.push([label, $('<div class="n2-button n2-button-normal n2-button-xs n2-radius-s n2-button-grey n2-uc n2-h5">' + n2_('Rename') + '</div>')
                                         .on('click', {id: id}, $.proxy(function (e) {
                                             this.loadPane('rename', false, false, [e.data.id]);
                                         }, this)), $('<div class="n2-button n2-button-normal n2-button-xs n2-radius-s n2-button-red n2-uc n2-h5">' + n2_('Delete') + '</div>')
@@ -1080,7 +1080,7 @@ N2D('NextendVisualSetsManagerEditable', ['NextendVisualSetsManager'], function (
                                             this.loadPane('delete', false, false, [e.data.id]);
                                         }, this))]);
                                 } else {
-                                    data.push([visualManager.sets[k].set.value, '', '']);
+                                    data.push([label, '', '']);
                                 }
                             }
                             this.createTable(data, ['width:100%;', '', '']).appendTo(this.createTableWrap().appendTo(this.content));
@@ -1184,7 +1184,7 @@ N2D('NextendVisualSetsManagerEditable', ['NextendVisualSetsManager'], function (
                                 }, this));
 
                             this.controls.find('.n2-button-red')
-                                .html('Yes, delete "' + visualManager.sets[id].set.value + '"')
+                                .text('Yes, delete "' + visualManager.sets[id].set.value + '"')
                                 .on('click', $.proxy(function (e) {
                                     e.preventDefault();
                                     setsManager.deleteVisualSet(id)
@@ -1221,7 +1221,7 @@ N2D('NextendVisualSet', function ($, undefined) {
             this.visualManager.setsByReference[set.referencekey] = set;
         }
 
-        this.option = $('<option value="' + set.id + '">' + set.value + '</option>')
+        this.option = $('<option value="' + set.id + '"></option>').text(set.value)
             .appendTo(this.visualManager.setsSelector);
     }
 
@@ -1274,7 +1274,7 @@ N2D('NextendVisualSet', function ($, undefined) {
 
     NextendVisualSet.prototype.rename = function (name) {
         this.set.value = name;
-        this.option.html(name);
+        this.option.text(name);
     };
 
     NextendVisualSet.prototype.delete = function () {
@@ -2050,7 +2050,7 @@ N2D('NextendFontEditor', ['NextendFragmentEditor'], function ($, undefined) {
         );
 
         this.fields.lineHeight.element.data('field').insideChange(values.lineheight);
-        this.fields.weight.element.data('field').insideChange(values.bold);
+        this.fields.weight.element.data('field').insideChange(values.weight);
         this.fields.decoration.element.data('field').insideChange([
             values.italic == 1 ? 'italic' : '',
             values.underline == 1 ? 'underline' : ''
@@ -2197,7 +2197,7 @@ N2D('NextendFontEditorController', ['NextendFragmentEditorController'], function
             tshadow: "0|*|0|*|0|*|000000ff",
             afont: this.defaultFamily,
             lineheight: "1.5",
-            bold: 0,
+            weight: 400,
             italic: 0,
             underline: 0,
             align: "left",

@@ -4,7 +4,7 @@ Tags: slider, wordpress slider, image slider, layer slider, responsive slider, s
 Donate link: https://sites.fastspring.com/nextend/product/smartslider3donate
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 3.3.9
+Stable tag: 3.3.11
 Requires PHP: 5.4
 License: GPLv3 or later
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -116,13 +116,16 @@ Smart Slider 3 is a community-driven project that would not be the same without 
 #### Translations
 
 * English
-* French (fr_FR) 87%
-* Hungarian (hu_HU) 85%
-* Traditional Chinese (zh_tw) 83%
-* Italian (it_IT) 70%
-* Russian (ru_RU) 68%
-* German (de_DE) 65%
-* Spanish (es_ES) 67%
+* Brazil Portugese (pt_BR) 100%
+* Russian (ru_RU) 95%
+* Polish (pl_PL) 90%
+* Italian (it_IT) 74%
+* Finnish (fi_FI) 72%
+* Hungarian (hu_HU) 66%
+* French (fr_FR) 65%
+* Traditional Chinese (zh_tw) 61%
+* German (de_DE) 53%
+* Spanish (es_ES) 52%
 
 == Installation ==
 [Check our official documentation for more information](https://smartslider3.helpscoutdocs.com/)
@@ -193,8 +196,27 @@ Of course! Smart Slider use protocol relative urls which works fine on http:// a
 
 == Changelog ==
 
+= 3.3.11 - 22. November 2018. =
+* Feature: SVG and WEBP image format support
+* Fix: Links will be able to contain || characters
+* Fix: Android Samsung internet browser fix for full page
+* Fix: Include additional CSS files in prerender iframes (fix for page builder frontend view)
+* Fix: If Load this slider after option is used, but the parent slider doesn't exists (like it is turned off for certain devices), your slider will still load.
+
+= 3.3.10 - 12. November 2018. =
+* Feature: Filters for WordPress post generators
+* Feature: WP admin area will use the user's language, not the website's language
+* Feature: New target options for links
+* Fix: YouTube layer updated to match the latest YouTube embedded API. The Related parameter is renamed to Show related videos from the same channel
+* Fix: Private Vimeo videos
+* Fix: Visual Composer
+* Fix: WPBakery Page Builder 
+* Fix: WordPress post generator possible warning
+* Fix: Font manager weight
+* Deprecated: YouTube has deprecated the showinfo parameter. The Show video title option has removed.
+
 = 3.3.9 - 17. October 2018. =
-* Fix: Thumbnail alignment and group
+* Fix: Thumbnail alignment and groupping
 * Fix: Text layer bold and italic text font colors are now harder to override by theme's codes
 * Fix: NextGen Gallery and Divi live editor bug
 

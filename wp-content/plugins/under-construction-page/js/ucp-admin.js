@@ -30,6 +30,7 @@ jQuery(document).ready(function($) {
   // init select2
   $('#whitelisted_users').select2({ 'placeholder': ucp.whitelisted_users_placeholder});
 
+
   // autosize textareas
   $.each($('textarea[data-autoresize]'), function() {
     var offset = this.offsetHeight - this.clientHeight;
@@ -39,6 +40,7 @@ jQuery(document).ready(function($) {
     };
     $(this).on('keyup input click', function() { resizeTextarea(this); }).removeAttr('data-autoresize');
   });
+
 
   // maybe init survey dialog
   $('#features-survey-dialog').dialog({'dialogClass': 'wp-dialog ucp-dialog ucp-survey-dialog',
@@ -262,6 +264,7 @@ jQuery(document).ready(function($) {
 
   // helper for linking anchors in different tabs
   $('.settings_page_ucp').on('click', '.change_tab', function(e) {
+    e.preventDefault();
     $('#ucp_tabs').tabs('option', 'active', $(this).data('tab'));
 
     // get the link anchor and scroll to it
@@ -269,6 +272,8 @@ jQuery(document).ready(function($) {
     if (target) {
       $.scrollTo('#' + target, 500, {offset: {top:-50, left:0}});
     }
+
+    return false;
   });
 
 
@@ -276,7 +281,7 @@ jQuery(document).ready(function($) {
   $('#upsell-dialog').dialog({'dialogClass': 'wp-dialog ucp-dialog ucp-upsell-dialog',
                               'modal': 1,
                               'resizable': false,
-                              'title': 'asdasd <b>asdasd</b>',
+                              'title': 'UCP Upsell',
                               'zIndex': 9999,
                               'width': 900,
                               'height': 'auto',
@@ -293,6 +298,38 @@ jQuery(document).ready(function($) {
   $(window).resize(function(e){
     $('#upsell-dialog').dialog("option", "position", {my: "center", at: "center", of: window});
   });
+
+  // upsell dialog init
+  $('#mailoptin-upsell-dialog').dialog({'dialogClass': 'wp-dialog ucp-dialog mailoptin-upsell-dialog',
+                              'modal': 1,
+                              'resizable': false,
+                              'title': 'Start Collecting Leads and Subscribers',
+                              'zIndex': 9999,
+                              'width': 550,
+                              'height': 'auto',
+                              'show': 'fade',
+                              'hide': 'fade',
+                              'open': function(event, ui) {
+                                ucp_fix_dialog_close(event, ui);
+                                $(this).siblings().find('span.ui-dialog-title').html(ucp.mailoptin_dialog_upsell_title);
+                              },
+                              'close': function(event, ui) { },
+                              'autoOpen': false,
+                              'closeOnEscape': true
+  });
+  $(window).resize(function(e) {
+    $('#mailoptin-upsell-dialog').dialog("option", "position", {my: "center", at: "center", of: window});
+  });
+
+
+  jQuery('#install-mailoptin').on('click',function(e){
+    $('#mailoptin-upsell-dialog').dialog('close');
+    jQuery('body').append('<div style="width:550px;height:450px; position:fixed;top:10%;left:50%;margin-left:-275px; color:#444; background-color: #fbfbfb;border:1px solid #DDD; border-radius:4px;box-shadow: 0px 0px 0px 4000px rgba(0, 0, 0, 0.85);z-index: 9999999;"><iframe src="' + ucp.mailoptin_install_url + '" style="width:100%;height:100%;border:none;" /></div>');
+    jQuery('#wpwrap').css('pointer-events', 'none');
+    e.preventDefault();
+    return false;
+  });
+
 
   // zebra on pricing table, per column
   $('#ucp-pricing-table').find('tr').each(function() {
@@ -345,6 +382,18 @@ jQuery(document).ready(function($) {
 
     return false;
   });
+
+
+  $('.settings_page_ucp').on('click', '.open-mailoptin-upsell', function(e) {
+    e.preventDefault();
+
+    $(this).blur();
+
+    $('#mailoptin-upsell-dialog').dialog('open');
+
+    return false;
+  });
+
 
   $('#tabs_upsell').on('tabsactivate', function(event, ui) {
     $('#upsell-dialog').dialog("option", "position", {my: "center", at: "center", of: window});

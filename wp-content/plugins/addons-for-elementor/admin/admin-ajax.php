@@ -113,9 +113,9 @@ class LAE_Admin_Ajax {
         
         $this->ajax_msg = array(
             'box_icons' => array(
-                'before' => '<i class="tg-info-box-icon dashicons dashicons-admin-generic"></i>',
-                'success' => '<i class="tg-info-box-icon dashicons dashicons-yes"></i>',
-                'error' => '<i class="tg-info-box-icon dashicons dashicons-no-alt"></i>'
+                'before' => '<i class="lae-info-box-icon dashicons dashicons-admin-generic"></i>',
+                'success' => '<i class="lae-info-box-icon dashicons dashicons-yes"></i>',
+                'error' => '<i class="lae-info-box-icon dashicons dashicons-no-alt"></i>'
             ),
             'box_messages' => array(
 
