@@ -381,6 +381,8 @@ function lae_get_image_html( $image_setting, $image_size_key, $settings )
         $image_class .= " attachment-{$size} size-{$size}";
         $image_attr = array(
             'class' => trim( $image_class ),
+            'alt'   => get_the_title( $attachment_id ),
+            'title' => lae_get_image_alt( $attachment_id ),
         );
         $image_html .= wp_get_attachment_image(
             $attachment_id,
@@ -551,22 +553,6 @@ function lae_get_template_part( $template_name, $settings )
 {
     // Allow the user to place the templates in a different folder
     $templates_folder = apply_filters( 'lae_templates_folder', 'elementor-addons' );
-    $template = locate_template( $templates_folder . '/' . $template_name . '.php' );
-    /* If template is found */
-    
-    if ( '' !== $template ) {
-        ob_start();
-        include $template;
-        return ob_get_clean();
-    }
-    
-    return null;
-}
-
-function lae_get_module_template_part( $template_name, $module )
-{
-    // Allow the user to place the templates in a different folder
-    $templates_folder = apply_filters( 'lae_templates_folder', 'elementor-addons/modules' );
     $template = locate_template( $templates_folder . '/' . $template_name . '.php' );
     /* If template is found */
     

@@ -39,7 +39,7 @@ $deactivate_element_testimonials_slider = lae_get_option( 'lae_deactivate_elemen
 
                 <ul class="lae-tabs-wrap">
                     <li class="lae-tab selected" data-target="general"><i
-                            class="lae-icon dashicons dashicons-admin-generic"></i><?php 
+                                class="lae-icon dashicons dashicons-admin-generic"></i><?php 
 echo  __( 'General', 'livemesh-el-addons' ) ;
 ?>
                     </li>
@@ -48,18 +48,20 @@ echo  __( 'General', 'livemesh-el-addons' ) ;
 echo  __( 'Elements', 'livemesh-el-addons' ) ;
 ?>
                     </li>
+                    <?php 
+?>
                     <li class="lae-tab" data-target="custom-css"><i
-                            class="lae-icon dashicons dashicons-editor-code"></i><?php 
+                                class="lae-icon dashicons dashicons-editor-code"></i><?php 
 echo  __( 'Custom CSS', 'livemesh-el-addons' ) ;
 ?>
                     </li>
                     <li class="lae-tab" data-target="debugging"><i
-                            class="lae-icon dashicons dashicons-warning"></i><?php 
+                                class="lae-icon dashicons dashicons-warning"></i><?php 
 echo  __( 'Debugging', 'livemesh-el-addons' ) ;
 ?>
                     </li>
                     <li class="lae-tab" data-target="premium-version"><i
-                            class="lae-icon dashicons dashicons-yes"></i><?php 
+                                class="lae-icon dashicons dashicons-yes"></i><?php 
 echo  __( 'Premium Version', 'livemesh-el-addons' ) ;
 ?>
                     </li>
@@ -130,6 +132,8 @@ echo  $theme_hover_color ;
 
                 </div>
 
+                <?php 
+?>
 
 
                 <!-------------------  ELEMENTS TAB -------------------->
@@ -693,7 +697,6 @@ if ( lae_fs()->is_not_paying() ) {
                                 <li><strong>Private Tickets</strong> - Private tickets help you work with us
                                     directly regarding the issues you are facing in your site by sharing the details of
                                     your site securely.
-                                </li>
                                 </li>
                                 <li><strong>Faster turnaround</strong> - The threads opened by paid customers will be
                                     attended to within 24 hours of opening a ticket.

@@ -41,7 +41,7 @@ class LAE_Posts_Carousel_Widget extends Widget_Base {
         return [
             'lae-widgets-scripts',
             'lae-frontend-scripts',
-            'slick',
+            'jquery-slick',
         ];
     }
 

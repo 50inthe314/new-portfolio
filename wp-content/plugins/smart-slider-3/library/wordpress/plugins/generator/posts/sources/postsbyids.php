@@ -117,8 +117,14 @@ class N2GeneratorPostsPostsByIDs extends N2GeneratorAbstract {
                     }
                 }
             }
-
+            if(isset($record['primarytermcategory'])){
+                $primary = get_category($record['primarytermcategory']);
+                $record['primary_category_name'] = $primary->name;
+                $record['primary_category_link'] = get_category_link($primary->cat_ID);
+            }
             $record['excerpt'] = get_the_excerpt();
+
+			$record = apply_filters( 'smartslider3_posts_postsbyids_data', $record );
 
             $data[$i] = &$record;
             unset($record);

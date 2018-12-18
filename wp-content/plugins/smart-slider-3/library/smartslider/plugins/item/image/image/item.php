@@ -33,7 +33,7 @@ class N2SSItemImage extends N2SSItemAbstract {
             $imageAttributes['title'] = $title;
         }
 
-        $html = N2Html::tag('img', $imageAttributes + N2Html::getExcludeLazyLoadAttributes(), false);
+        $html = N2Html::tag('img', N2HTML::addExcludeLazyLoadAttributes($imageAttributes), false);
 
 
         $style = $owner->addStyle($this->data->get('style'), 'heading');

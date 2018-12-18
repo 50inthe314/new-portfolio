@@ -5,7 +5,7 @@ Contributors: livemesh, freemius
 Tags: elementor, elementor addons, elementor extensions, elementor modules, page builder, portfolio, carousel, posts grid
 Requires at least: 4.5
 Tested up to: 4.9
-Stable Tag: 2.3.3
+Stable Tag: 2.5.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -104,6 +104,16 @@ Pls install and activate the <a href="https://wordpress.org/plugins/portfolio-po
 5. The Livemesh Addons for Elementor plugin documentation.
 
 == Changelog ==
+
+= 2.5.2 =
+* Fixed - Carousels utilizing slick JS causing conflict with Elementor scripts.
+
+= 2.5 =
+* Minor fixes and enhancements
+
+= 2.4 =
+* Added - A filter to control taxonomy dropdown limit
+* Added - Increased number of columns on carousel
 
 = 2.3.3 =
 * Fixed - Social media icons not showing up for team profiles.

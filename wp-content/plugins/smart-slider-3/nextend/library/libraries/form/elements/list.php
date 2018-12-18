@@ -95,6 +95,7 @@ class N2ElementList extends N2ElementHidden {
      * @param array $options
      */
     public function setOptions($options) {
+
         $this->options = $options;
     }
 

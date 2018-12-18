@@ -26,6 +26,14 @@
   display: none;
 }
 
+.ucp-notice-small {
+  border-left: 4px solid #00a0d2;
+  margin: 5px 0 15px;
+  padding: 1px 12px;
+  background-color: #fafafa;
+  display: inline-block;
+}
+
 .settings_page_ucp .button:hover,
 .settings_page_ucp .button-primary:hover,
 .settings_page_ucp .button-secondary:hover,
@@ -42,6 +50,10 @@
 
 .settings_page_ucp h1 {
   margin-bottom: 30px;
+}
+
+#ucp_content #wp-content-media-buttons {
+  display: none;
 }
 
 .settings_page_ucp h1 a {
@@ -375,9 +387,7 @@ span.select2-container .select2-search--inline .select2-search__field {
 .question-wrapper .dashicons.big {
   color: rgba(0, 0, 0, 1);
   display: inline;
-  height: 61px;
   font-size: 61px;
-  margin-bottom: 10px;
 }
 
 .question-wrapper img {
@@ -856,5 +866,56 @@ h3.ucp-pro-logo span {
 }
 option.ucp-promo {
   color: #e14d43;
+}
+/* upsell dialog */
+
+
+/* mailoptin upsell dialog */
+.mailoptin-upsell-dialog .ui-dialog-titlebar {
+  background: #2980b9;
+  text-align: center;
+  height: 55px;
+}
+.mailoptin-upsell-dialog .ui-dialog-titlebar img {
+  height: 32px;
+  display: inline-block;
+  margin: 11px 0 0 0;
+}
+.mailoptin-upsell-dialog .ui-dialog-titlebar-close {
+  color: #fff;
+  height: 55px;
+}
+.mailoptin-upsell-dialog .ui-dialog-titlebar-close:hover {
+  color: #333;
+}
+.mailoptin-upsell-dialog .ui-dialog-content {
+  padding: 0;
+}
+.mailoptin-upsell-dialog .ui-tabs-nav {
+  text-align: center;
+}
+.mailoptin-upsell-dialog .ui-tabs .upsell-tab {
+  padding: 20px 15px;
+  text-align: center;
+}
+.mailoptin-upsell-dialog a {
+  color: #333;
+}
+.mailoptin-upsell-dialog a:hover {
+  color: #000;
+}
+option.mailoptin-promo {
+  color: #2980b9;
+}
+.mailoptin-pro-feature {
+  display: inline-block;
+  width: 32%;
+  background: rgba(128, 128, 128, 0.03);
+  margin: 0 5px 20px 5px;
+  padding: 10px;
+  box-sizing: border-box;
+  vertical-align: top;
+  position: relative;
+  border-top: 1px solid #2980b9;
 }
 /* upsell dialog */

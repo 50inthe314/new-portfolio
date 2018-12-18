@@ -104,6 +104,10 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
         $status = new N2ElementGroup($filter, 'poststatusgroup', n2_('Post status'));
 
         $statuses = get_post_stati();
+        $statuses += array(
+            'any'   => 'any',
+            'unset' => 'unset',
+        );
 
         new N2ElementList($status, 'poststatus', n2_('Post status'), 'publish', array(
             'options' => $statuses
@@ -125,7 +129,7 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
         new N2ElementText($group, 'datetimeformat', n2_('Datetime format'), 'm-d-Y H:i:s', array(
             'tip' => sprintf(n2_('Any PHP date format can be used: %s'), "http://php.net/manual/en/function.date.php")
         ));
-        new N2ElementTextarea($group, 'translatedate', n2_('Translate dates'), 'from||to&#xA;Monday||Monday&#xA;jan||jan', array(
+        new N2ElementTextarea($group, 'translatedate', n2_('Translate dates'), "from||to\nMonday||Monday\njan||jan", array(
             'fieldStyle' => 'width:300px;height: 100px;',
             'tip'        => n2_('One per line: from||to')
         ));
@@ -133,6 +137,11 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
         new N2ElementText($group, 'timestampvariables', n2_('Replace these timestamp variables'), '', array(
             'tip' => n2_('Separate them with comma. The "Datetime format" will be used to format these dates.')
         ));
+
+        $group = new N2ElementGroup($filter, 'removevalues', n2_('Remove duplicates'), array(
+            'tip' => n2_('You can remove results based on one variable\'s uniqueness. For example if you want the images to be unique, you could write this variable into the "Unique variable" field: image')
+        ));
+        new N2ElementText($group, 'uniquevariable', n2_('Unique variable'), '');
 
         $_order = new N2Tab($form, 'order', n2_('Order by'));
         $order  = new N2ElementMixed($_order, 'postsorder', n2_('Order'), 'post_date|*|desc');
@@ -235,7 +244,6 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
         } else {
             $getPostMeta = array();
         }
-
         $metaMore = $this->data->get('postmetakeymore', '');
         if (!empty($metaMore) && $metaMore != 'field_name||compare_method||field_value') {
             $metaMoreValues = explode(PHP_EOL, $metaMore);
@@ -334,6 +342,7 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
 
         $timestampVariables = array_map('trim', explode(',', $this->data->get('timestampvariables', '')));
         $datetimeformat     = $this->data->get('datetimeformat', 'm-d-Y H:i:s');
+
         for ($i = 0; $i < count($posts); $i++) {
             $record = array();
 
@@ -390,14 +399,18 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
                                 if (is_serialized($v)) {
                                     $unserialize_values = unserialize($v);
                                     $unserialize_count  = 1;
-                                    foreach ($unserialize_values AS $unserialize_value) {
-                                        if (!empty($unserialize_value) && !is_array($unserialize_value) && !is_object($unserialize_value)) {
-                                            $record['us_' . $key . $unserialize_count] = $unserialize_value;
-                                            $unserialize_count++;
-                                        } else if (is_array($unserialize_value)) {
-                                            foreach ($unserialize_value AS $u_v) {
-                                                $record['us_' . $key . $unserialize_count] = $u_v;
+                                    if (!empty($unserialize_values) && is_array($unserialize_values)) {
+                                        foreach ($unserialize_values AS $unserialize_value) {
+                                            if (!empty($unserialize_value) && is_string($unserialize_value)) {
+                                                $record['us_' . $key . $unserialize_count] = $unserialize_value;
                                                 $unserialize_count++;
+                                            } else if (is_array($unserialize_value)) {
+                                                foreach ($unserialize_value AS $u_v) {
+                                                    if (is_string($u_v)) {
+                                                        $record['us_' . $key . $unserialize_count] = $u_v;
+                                                        $unserialize_count++;
+                                                    }
+                                                }
                                             }
                                         }
                                     }
@@ -460,7 +473,11 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
                     }
                 }
             }
-
+            if (isset($record['primarytermcategory'])) {
+                $primary                         = get_category($record['primarytermcategory']);
+                $record['primary_category_name'] = $primary->name;
+                $record['primary_category_link'] = get_category_link($primary->cat_ID);
+            }
             $record['excerpt'] = get_the_excerpt();
 
             if (!empty($timestampVariables)) {
@@ -471,9 +488,26 @@ class N2GeneratorPostsCustomPosts extends N2GeneratorAbstract {
                 }
             }
 
+            $record = apply_filters('smartslider3_posts_customposts_data', $record);
+
             $data[$i] = &$record;
             unset($record);
         }
+
+        $unique_variable = $this->data->get('uniquevariable', '');
+        if (!empty($unique_variable)) {
+            $count         = count($data);
+            $unique_helper = array();
+            for ($i = 0; $i < $count; $i++) {
+                if (!in_array($data[$i][$unique_variable], $unique_helper)) {
+                    $unique_helper[] = $data[$i][$unique_variable];
+                } else {
+                    unset($data[$i]);
+                }
+            }
+            $data = array_values($data);
+        }
+
         if ($siteorigin_panels_filter_content) {
             add_filter('the_content', 'siteorigin_panels_filter_content');
         }

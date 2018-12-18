@@ -34,8 +34,8 @@ class N2SSItemHeading extends N2SSItemAbstract {
             $attributes['title'] = $title;
         }
 
-        list($link) = (array)N2Parse::parse($this->data->get('link', '#|*|'));
-        if (!empty($link) && $link != '#') {
+        $href = $this->data->get('href', '');
+        if (!empty($href) && $href != '#') {
             $linkAttributes['class'] .= ' ' . $font . $style;
 
             $font  = '';

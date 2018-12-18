@@ -15,8 +15,9 @@ class NextendSmartSlider3Gutenberg {
 
         wp_enqueue_script('gutenberg-smartslider3', plugins_url('block.js', __FILE__), array(
             'wp-blocks',
-            'wp-i18n',
             'wp-element',
+            'wp-components',
+            'wp-i18n',
             'underscore'
         ), filemtime(plugin_dir_path(__FILE__) . 'block.js'));
 
@@ -25,7 +26,7 @@ class NextendSmartSlider3Gutenberg {
             )) . ';');
 
         \N2SS3Shortcode::forceIframe('gutenberg');
-        wp_enqueue_style('gutenberg-smartslider3', plugins_url('style.min.css', __FILE__), array('wp-blocks'), filemtime(plugin_dir_path(__FILE__) . 'style.min.css'));
+        wp_enqueue_style('gutenberg-smartslider3', plugins_url('style.min.css', __FILE__), array('wp-block-library'), filemtime(plugin_dir_path(__FILE__) . 'style.min.css'));
     
 
     }

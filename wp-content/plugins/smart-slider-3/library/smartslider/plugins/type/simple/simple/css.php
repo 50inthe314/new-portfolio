@@ -12,7 +12,7 @@ class N2SmartSliderCSSSimple extends N2SmartSliderCSSAbstract {
         $width  = intval($this->context['width']);
         $height = intval($this->context['height']);
 
-        $this->context['backgroundSize']       = $params->get('background-size');
+        $this->context['backgroundSize']       = $params->getIfEmpty('background-size', 'inherit');
         $this->context['backgroundAttachment'] = $params->get('background-fixed') ? 'fixed' : 'scroll';
 
         $borderWidth                   = $params->get('border-width');

@@ -3,6 +3,10 @@
 class N2Localization extends N2LocalizationAbstract {
 
     static function getLocale() {
-        return get_locale();
+        if(function_exists('get_user_locale')){
+            return get_user_locale();
+        } else {
+            return get_locale();
+        }
     }
 }

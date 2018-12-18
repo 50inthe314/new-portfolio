@@ -41,7 +41,7 @@ class LAE_Carousel_Widget extends Widget_Base {
         return [
             'lae-widgets-scripts',
             'lae-frontend-scripts',
-            'slick'
+            'jquery-slick'
         ];
     }
 
@@ -263,7 +263,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns per row', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 10,
+                'max' => 25,
                 'step' => 1,
                 'default' => 3,
             ]
@@ -276,7 +276,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns to scroll', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 10,
+                'max' => 25,
                 'step' => 1,
                 'default' => 3,
             ]
@@ -319,7 +319,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns per row', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 8,
+                'max' => 20,
                 'step' => 1,
                 'default' => 2,
             ]
@@ -331,7 +331,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns to scroll', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 8,
+                'max' => 20,
                 'step' => 1,
                 'default' => 2,
             ]
@@ -382,7 +382,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns per row', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 4,
+                'max' => 10,
                 'step' => 1,
                 'default' => 1,
             ]
@@ -394,7 +394,7 @@ Fusce risus nisl, viverra et, tempor et, pretium in, sapien. Vestibulum turpis s
                 'label' => __('Columns to scroll', 'livemesh-el-addons'),
                 'type' => Controls_Manager::NUMBER,
                 'min' => 1,
-                'max' => 4,
+                'max' => 10,
                 'step' => 1,
                 'default' => 1,
             ]

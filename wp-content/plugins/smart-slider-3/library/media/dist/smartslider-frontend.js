@@ -55,9 +55,9 @@ N2D('SmartSliderBackgrounds', function ($, undefined) {
     SmartSliderBackgrounds.prototype.onVisibleSlidesChanged = function () {
 
         if (this.lazyLoad == 1) {
-            this.load = this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide));
+            this.load = $.when.apply($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         } else if (this.lazyLoad == 2) { // delayed
-            this.load = this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide));
+            this.load = $.when.apply($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         }
     };
 
@@ -67,16 +67,18 @@ N2D('SmartSliderBackgrounds', function ($, undefined) {
 
         this.slider.sliderElement.on('SliderDevice', $.proxy(this.onSlideDeviceChanged, this));
 
-        this.preLoadSlides = this._preLoadSlides;
         if (this.lazyLoad == 1) {
             this.preLoadSlides = this.preloadSlidesLazyNeighbor;
 
-            this.load = this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide));
+            this.load = this.whenWithProgress($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         } else if (this.lazyLoad == 2) { // delayed
+            this.preLoadSlides = this._preLoadSlides;
             $(window).on('load', $.proxy(this.preLoadAll, this));
 
-            this.load = this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide));
+            this.load = this.whenWithProgress($, this.preLoadSlides(this.slider.getVisibleSlides(this.slider.currentSlide)));
         } else {
+            this.preLoadSlides = this._preLoadSlides;
+
             this.load = this.whenWithProgress(this.preLoadAll());
         }
     };
@@ -107,11 +109,11 @@ N2D('SmartSliderBackgrounds', function ($, undefined) {
             deferreds.push(slides[i].preLoad());
         }
 
-        return $.when.apply($, deferreds);
+        return deferreds;
     };
 
     SmartSliderBackgrounds.prototype.preloadSlidesLazyNeighbor = function (slides) {
-        var deferreds = [this._preLoadSlides(slides)];
+        var deferreds = this._preLoadSlides(slides);
 
         if (this.lazyLoadNeighbor) {
             var j = 0,
@@ -151,7 +153,9 @@ N2D('SmartSliderBackgrounds', function ($, undefined) {
             }, 100);
         }
 
-        return renderedDeferred;
+        deferreds.push(renderedDeferred);
+
+        return deferreds;
     };
 
     SmartSliderBackgrounds.prototype.hack = function () {
@@ -209,9 +213,11 @@ N2D('SmartSliderLoad', function ($, undefined) {
 
             var spinnerCounter = this.spinner.find('.n2-ss-spinner-counter');
             if (spinnerCounter.length) {
-                this.smartSlider.backgrounds.load.progress($.proxy(function (current, total) {
-                    spinnerCounter.html(Math.round(current / (total + 1) * 100) + '%');
-                }, this));
+                spinnerCounter.html('0%');
+                this.smartSlider.backgrounds.load
+                    .progress($.proxy(function (current, total) {
+                        spinnerCounter.html(Math.round(current / (total + 1) * 100) + '%');
+                    }, this));
             }
 
             this.showSlider();
@@ -270,6 +276,7 @@ N2D('SmartSliderLoad', function ($, undefined) {
                 .addClass('n2-ss-loaded')
                 .removeClass('n2notransition');
 
+            this.spinner.find('.n2-ss-spinner-counter').html('');
             this.removeSpinner('fadePlaceholder');
             $('#' + this.id + '-placeholder').remove();
             this.loadingArea = this.smartSlider.sliderElement;
@@ -541,6 +548,12 @@ N2D('SmartSliderAbstract', function ($, undefined) {
                 this.sliderElement.closest('.n2-ss-align').remove();
             }, this));
         }
+
+        /**
+         * If the killed slider has a dependency we force them to show
+         */
+        n2ss.makeReady(this.id, this);
+        this.readyDeferred.resolve();
     };
 
     SmartSliderAbstract.prototype.waitForExists = function (id, parameters) {
@@ -784,7 +797,7 @@ N2D('SmartSliderAbstract', function ($, undefined) {
     };
 
     SmartSliderAbstract.prototype.changeActiveBeforeLoad = function (index) {
-        if (index > 0 && index < this.realSlides.length && this.starterSlide !== this.realSlides[index]) {
+        if (index >= 0 && index < this.realSlides.length && this.starterSlide !== this.realSlides[index]) {
 
             this.unsetActiveSlide(this.starterSlide);
 
@@ -1274,7 +1287,7 @@ N2D('SmartSliderAbstract', function ($, undefined) {
             n2c.log('Event: sliderSwitchTo: ', 'targetSlideIndex');
             this.sliderElement.trigger('sliderSwitchTo', [nextSlideIndex, this.getRealIndex(nextSlideIndex)]);
             var time = $.now();
-            $.when(this.backgrounds.preLoadSlides(this.getVisibleSlides(this.slides[nextSlideIndex])), this.focus(isSystem)).done($.proxy(function () {
+            $.when($.when.apply($, this.backgrounds.preLoadSlides(this.getVisibleSlides(this.slides[nextSlideIndex]))), this.focus(isSystem)).done($.proxy(function () {
 
                 if (this.mainAnimationLastChangeTime <= time) {
                     this.mainAnimationLastChangeTime = time;
@@ -4580,7 +4593,7 @@ N2D('FrontendComponentRow', ['FrontendComponent'], function ($, undefined) {
                     sumWidth += flexLine[j].getWidthPercentage();
                 }
                 for (j = 0; j < flexLine.length; j++) {
-                    flexLine[j].$layer.css('width', 'calc(' + (flexLine[j].getWidthPercentage() / sumWidth * 100) + '% - ' + gutterValue + 'px)');
+                    flexLine[j].$layer.css('width', 'calc(' + (flexLine[j].getWidthPercentage() / sumWidth * 100) + '% - ' + (n2const.isIE ? gutterValue + 1 : gutterValue) + 'px)');
                 }
             }
         } else {
@@ -4910,7 +4923,7 @@ N2D('SmartSliderResponsive', function ($, undefined) {
                     /**
                      * We can detect every width changes with a dummy iframe.
                      */
-                    var iframe = $('<iframe sandbox="allow-same-origin allow-scripts" style="margin:0;padding:0;border:0;display:block;width:100%;height:0;"/>')
+                    var iframe = $('<iframe class="bt_skip_resize" sandbox="allow-same-origin allow-scripts" style="margin:0;padding:0;border:0;display:block;width:100%;height:0;min-height:0;max-height:0px;"/>')
                         .on('load', $.proxy(function (e) {
                             var width = 0,
                                 $frame = $(e.target.contentWindow ? e.target.contentWindow : e.target.contentDocument.defaultView).on('resize', $.proxy(function (e) {
@@ -5283,7 +5296,15 @@ N2D('SmartSliderResponsive', function ($, undefined) {
                     clientHeight = window.n2ClientHeight || clientHeight;
 
                     var time = $.now();
-                    if (!isOrientationChanged && Math.abs(clientHeight - this.lastClientHeight) < 100 && time - this.lastClientHeightTime > 400) {
+                    /**
+                     * If screen height change smaller than this value, then we will skip that resize.
+                     * @type {number}
+                     */
+                    var dismissDeltaChange = 100;
+                    if ((/SamsungBrowser/i).test(navigator.userAgent)) {
+                        dismissDeltaChange = 150;
+                    }
+                    if (!isOrientationChanged && Math.abs(clientHeight - this.lastClientHeight) < dismissDeltaChange && time - this.lastClientHeightTime > 400) {
                         clientHeight = this.lastClientHeight;
                     } else {
                         this.lastClientHeight = clientHeight;
@@ -6212,12 +6233,9 @@ N2D('FrontendItemYouTube', function ($, undefined) {
             youtubecode: "MKmIwHAFjSU",
             center: 0,
             autoplay: "1",
-            theme: "dark",
             related: "1",
-            vq: "default",
             volume: "-1",
             loop: 0,
-            showinfo: 1,
             modestbranding: 1,
             reset: 0,
             query: [],
@@ -6286,12 +6304,9 @@ N2D('FrontendItemYouTube', function ($, undefined) {
         var vars = {
             enablejsapi: 1,
             origin: window.location.protocol + "//" + window.location.host,
-            theme: this.parameters.theme,
             wmode: "opaque",
             rel: this.parameters.related,
-            vq: this.parameters.vq,
             start: this.parameters.start,
-            showinfo: this.parameters.showinfo,
             modestbranding: this.parameters.modestbranding,
             playsinline: this.parameters.playsinline
         };
@@ -6319,7 +6334,6 @@ N2D('FrontendItemYouTube', function ($, undefined) {
 
         if (this.parameters.center == 1) {
             vars.controls = 0;
-            vars.showinfo = 0;
         }
         if (this.parameters.controls != 1) {
             vars.autohide = 1;
