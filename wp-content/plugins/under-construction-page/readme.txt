@@ -4,7 +4,7 @@ Tags: maintenance mode, maintenance page, coming soon page, landing page, under 
 Requires at least: 4.0
 Requires PHP: 5.2
 Tested up to: 5.0
-Stable tag: 3.25
+Stable tag: 3.30
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -134,6 +134,14 @@ Or if needed, upload manually;
 
 
 == Changelog ==
+
+= 3.30 =
+* 2018/12/18
+* minor security fixes in admin
+* moved SN & MailOptin to the beginning of featured plugins list
+* new cache busting for SiteGround SuperCacher
+* removed "add media" from content field
+* moved "show some love" up in admin, below content
 
 = 3.25 =
 * 2018/11/27

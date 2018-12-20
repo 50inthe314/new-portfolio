@@ -4,7 +4,7 @@
   Plugin URI: https://underconstructionpage.com/
   Description: Put your site behind a great looking under construction, coming soon, maintenance mode or landing page.
   Author: WebFactory Ltd
-  Version: 3.25
+  Version: 3.30
   Author URI: https://www.webfactoryltd.com/
   Text Domain: under-construction-page
   Domain Path: lang
@@ -862,7 +862,7 @@ class UCP {
       $shown = true;
     }
 
-    // todo: ask for translation
+    // ask for translation
     // disabled till further notice
     if (false && self::is_plugin_page() &&
         empty($notices['dismiss_translate']) &&
@@ -964,7 +964,7 @@ class UCP {
 
   // change status via admin bar
   static function change_status() {
-    if (empty($_GET['new_status'])) {
+    if (false === current_user_can('administrator') || empty($_GET['new_status']) || false === check_admin_referer('ucp_change_status')) {
       wp_safe_redirect(admin_url());
       exit;
     }
@@ -1015,12 +1015,14 @@ class UCP {
       $main_label = '<img style="height: 17px; margin-bottom: -4px; padding-right: 3px;" src="' . UCP_PLUGIN_URL . 'images/ucp_icon.png" alt="' . __('Under construction mode is enabled', 'under-construction-page') . '" title="' . __('Under construction mode is enabled', 'under-construction-page') . '"> <span class="ab-label">' . __('UnderConstruction', 'under-construction-page') . ' <i class="ucp-status-dot ucp-status-dot-enabled">&#9679;</i></span>';
       $class = 'ucp-enabled';
       $action_url = add_query_arg(array('action' => 'ucp_change_status', 'new_status' => 'disabled', 'redirect' => urlencode($_SERVER['REQUEST_URI'])), admin_url('admin.php'));
+      $action_url = wp_nonce_url($action_url, 'ucp_change_status');
       $action = __('Under Construction Mode', 'under-construction-page');
       $action .= '<a href="' . $action_url . '" id="ucp-status-wrapper" class="on"><span id="ucp-status-off" class="ucp-status-btn">OFF</span><span id="ucp-status-on" class="ucp-status-btn">ON</span></a>';
     } else {
       $main_label = '<img style="height: 17px; margin-bottom: -4px; padding-right: 3px;" src="' . UCP_PLUGIN_URL . 'images/ucp_icon.png" alt="' . __('Under construction mode is disabled', 'under-construction-page') . '" title="' . __('Under construction mode is disabled', 'under-construction-page') . '"> <span class="ab-label">' . __('UnderConstruction', 'under-construction-page') . ' <i class="ucp-status-dot ucp-status-dot-disabled">&#9679;</i></span>';
       $class = 'ucp-disabled';
       $action_url = add_query_arg(array('action' => 'ucp_change_status', 'new_status' => 'enabled', 'redirect' => urlencode($_SERVER['REQUEST_URI'])), admin_url('admin.php'));
+      $action_url = wp_nonce_url($action_url, 'ucp_change_status');
       $action = __('Under Construction Mode', 'under-construction-page');
       $action .= '<a href="' . $action_url . '" id="ucp-status-wrapper" class="off"><span id="ucp-status-off" class="ucp-status-btn">OFF</span><span id="ucp-status-on" class="ucp-status-btn">ON</span></a>';
     }
@@ -1313,6 +1315,9 @@ class UCP {
       if (class_exists('SG_CachePress_Supercacher') && method_exists('SG_CachePress_Supercacher', 'purge_cache')) {
         SG_CachePress_Supercacher::purge_cache(true);
       }
+      if (class_exists('SiteGround_Optimizer\Supercacher\Supercacher')) {
+        SiteGround_Optimizer\Supercacher\Supercacher::purge_cache();
+      }
       if (isset($GLOBALS['wp_fastest_cache']) && method_exists($GLOBALS['wp_fastest_cache'], 'deleteCache')) {
         $GLOBALS['wp_fastest_cache']->deleteCache(true);
       }
@@ -1523,6 +1528,15 @@ class UCP {
     echo '<p class="description">All HTML elements are allowed. Shortcodes are not parsed except <a href="#title">UC theme ones</a>. Default: ' . $default_options['content'] . '</p>';
     echo '</td></tr>';
 
+    echo '<tr valign="top">
+    <th scope="row"><label for="linkback">' . __('Show Some Love', 'under-construction-page') . '</label></th>
+    <td>';
+    echo '<div class="toggle-wrapper">
+      <input type="checkbox" id="linkback" ' . self::checked(1, $options['linkback']) . ' type="checkbox" value="1" name="' . UCP_OPTIONS_KEY . '[linkback]">
+      <label for="linkback" class="toggle"><span class="toggle_handler"></span></label>
+    </div>';
+    echo '<p class="description">Please help others learn about this free plugin by placing a small link in the footer. Thank you very much!</p>';
+    echo '</td></tr>';
 
     if (self::is_mailoptin_active()) {
       $mailoptin_campaigns = $wpdb->get_results('SELECT * FROM ' . $wpdb->prefix . 'mo_optin_campaigns');
@@ -1595,16 +1609,6 @@ class UCP {
       <label for="login_button" class="toggle"><span class="toggle_handler"></span></label>
     </div>';
     echo '<p class="description">Show a discrete link to the login form, or WP admin if you\'re logged in, in the lower right corner of the page.</p>';
-    echo '</td></tr>';
-
-    echo '<tr valign="top">
-    <th scope="row"><label for="linkback">' . __('Show Some Love', 'under-construction-page') . '</label></th>
-    <td>';
-    echo '<div class="toggle-wrapper">
-      <input type="checkbox" id="linkback" ' . self::checked(1, $options['linkback']) . ' type="checkbox" value="1" name="' . UCP_OPTIONS_KEY . '[linkback]">
-      <label for="linkback" class="toggle"><span class="toggle_handler"></span></label>
-    </div>';
-    echo '<p class="description">Please help others learn about this free plugin by placing a small link in the footer. Thank you very much!</p>';
     echo '</td></tr>';
 
     echo '<tr valign="top">
@@ -2417,7 +2421,7 @@ class UCP {
 
   // add single plugin to list of favs
   static function add_plugin_favs($plugin_slug, $res) {
-    if (is_array($res->plugins)) {
+    if (!empty($res->plugins) && is_array($res->plugins)) {
       foreach ($res->plugins as $plugin) {
         if ($plugin->slug == $plugin_slug) {
           return $res;
@@ -2426,7 +2430,7 @@ class UCP {
     }
 
     if ($plugin_info = get_transient('wf-plugin-info-' . $plugin_slug)) {
-      $res->plugins[] = $plugin_info;
+      array_unshift($res->plugins, $plugin_info);
     } else {
       $plugin_info = plugins_api('plugin_information', array(
         'slug'   => $plugin_slug,
@@ -2454,8 +2458,8 @@ class UCP {
   static function plugins_api_result($res, $action, $args) {
     remove_filter('plugins_api_result', array(__CLASS__, 'plugins_api_result'), 10, 3);
 
-    $res = self::add_plugin_favs('mailoptin', $res);
     $res = self::add_plugin_favs('security-ninja', $res);
+    $res = self::add_plugin_favs('mailoptin', $res);
 
     return $res;
   } // plugins_api_result

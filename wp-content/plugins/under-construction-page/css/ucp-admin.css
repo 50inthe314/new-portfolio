@@ -52,6 +52,10 @@
   margin-bottom: 30px;
 }
 
+#ucp_content #wp-content-media-buttons {
+  display: none;
+}
+
 .settings_page_ucp h1 a {
   color: black;
   text-decoration: none;
