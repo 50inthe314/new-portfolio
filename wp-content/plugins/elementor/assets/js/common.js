@@ -1,4 +1,4 @@
-/*! elementor - v2.3.6 - 17-12-2018 */
+/*! elementor - v2.3.8 - 20-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -1580,7 +1580,6 @@ var _class = function (_Module) {
 						}
 					}, options);
 
-					this.attr('target', '_blank');
 					this.attr('href', this.attr('href') + '&mode=popup');
 
 					jQuery(window).on('elementorConnected', settings.callback);

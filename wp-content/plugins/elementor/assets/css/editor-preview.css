@@ -1,4 +1,4 @@
-/*! elementor - v2.3.6 - 17-12-2018 */
+/*! elementor - v2.3.8 - 20-12-2018 */
 @charset "UTF-8";
 .elementor-panel-box {
   margin-top: 10px;
@@ -452,9 +452,9 @@
             -ms-transform: translateX(-50%);
                 transform: translateX(-50%); }
 
-.elementor-device-desktop #elementor-panel .elementor-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher {
+.elementor-device-desktop #elementor-panel .elementor-panel-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher {
   background: #c2cbd2; }
-  .elementor-device-desktop #elementor-panel .elementor-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher:not(.elementor-responsive-switcher-desktop) {
+  .elementor-device-desktop #elementor-panel .elementor-panel-controls-stack:not(.elementor-responsive-switchers-open) .elementor-responsive-switcher:not(.elementor-responsive-switcher-desktop) {
     display: none; }
 
 .elementor-device-mobile .elementor-responsive-switcher-mobile {

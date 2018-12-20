@@ -1,4 +1,4 @@
-/*! elementor - v2.3.6 - 17-12-2018 */
+/*! elementor - v2.3.8 - 20-12-2018 */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
@@ -555,9 +555,9 @@ ControlBaseDataView = ControlBaseView.extend({
 	onResponsiveSwitchersClick: function onResponsiveSwitchersClick(event) {
 		var device = jQuery(event.currentTarget).data('device');
 
-		elementor.changeDeviceMode(device);
-
 		this.triggerMethod('responsive:switcher:click', device);
+
+		elementor.changeDeviceMode(device);
 	},
 
 	renderResponsiveSwitchers: function renderResponsiveSwitchers() {
@@ -2645,7 +2645,9 @@ ControlsStack = Marionette.CompositeView.extend({
 	},
 
 	onDeviceModeChange: function onDeviceModeChange() {
-		this.$el.removeClass('elementor-responsive-switchers-open');
+		if ('desktop' === elementor.channels.deviceMode.request('currentMode')) {
+			this.$el.removeClass('elementor-responsive-switchers-open');
+		}
 	},
 
 	onChildviewControlSectionClicked: function onChildviewControlSectionClicked(childView) {
