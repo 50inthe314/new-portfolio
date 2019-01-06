@@ -2736,7 +2736,7 @@ var WPFormsBuilder = window.WPFormsBuilder || ( function( document, window, $ ) 
 					$icon.toggleClass('fa-check fa-cog fa-spin');
 					wpf.savedState = wpf.getFormState( '#wpforms-builder-form');
 					wpf.initialSave = false;
-					$builder.trigger('wpformsSaved');
+					$builder.trigger('wpformsSaved', res.data);
 					if (true === redirect ) {
 						window.location.href = wpforms_builder.exit_url;
 					}

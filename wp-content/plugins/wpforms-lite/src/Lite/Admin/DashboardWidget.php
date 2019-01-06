@@ -27,6 +27,15 @@ class DashboardWidget {
 	 */
 	public function __construct() {
 
+		// This widget should be displayed for certain high-level users only.
+		if ( ! wpforms_current_user_can() ) {
+			return;
+		}
+
+		if ( ! apply_filters( 'wpforms_admin_dashboardwidget', '__return_true' ) ) {
+			return;
+		}
+
 		$this->settings();
 		$this->hooks();
 	}
@@ -124,7 +133,9 @@ class DashboardWidget {
 			'wpforms-dashboard-widget',
 			'wpforms_dashboard_widget',
 			array(
-				'i18n' => array(
+				'show_more_html' => \esc_html__( 'Show More', 'wpforms-lite' ) . '<span class="dashicons dashicons-arrow-down"></span>',
+				'show_less_html' => \esc_html__( 'Show Less', 'wpforms-lite' ) . '<span class="dashicons dashicons-arrow-up"></span>',
+				'i18n'           => array(
 					'entries' => \esc_html__( 'Entries', 'wpforms-lite' ),
 				),
 			)
@@ -314,7 +325,7 @@ class DashboardWidget {
 		?>
 		<table id="wpforms-dash-widget-forms-list-table" cellspacing="0">
 			<?php foreach ( \array_values( $forms ) as $key => $form ) : ?>
-				<tr <?php echo $key >= $show_forms ? 'style="display: none;"' : ''; ?> data-form-id="<?php echo \absint( $form['form_id'] ); ?>">
+				<tr <?php echo $key >= $show_forms ? 'class="wpforms-dash-widget-forms-list-hidden-el"' : ''; ?> data-form-id="<?php echo \absint( $form['form_id'] ); ?>">
 					<td><span class="wpforms-dash-widget-form-title"><?php echo \esc_html( $form['title'] ); ?></span></td>
 					<td><?php echo \absint( $form['count'] ); ?></td>
 				</tr>
@@ -323,7 +334,7 @@ class DashboardWidget {
 
 		<?php if ( \count( $forms ) > $show_forms ) : ?>
 			<button type="button" id="wpforms-dash-widget-forms-more" class="wpforms-dash-widget-forms-more" title="<?php \esc_html_e( 'Show all forms', 'wpforms-lite' ); ?>">
-				<?php \esc_html_e( 'Show More', 'wpforms-lite' ); ?> <span class="dashicons dashicons-arrow-down-alt2"></span>
+				<?php \esc_html_e( 'Show More', 'wpforms-lite' ); ?> <span class="dashicons dashicons-arrow-down"></span>
 			</button>
 		<?php endif; ?>
 

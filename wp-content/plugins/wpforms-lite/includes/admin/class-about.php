@@ -274,7 +274,8 @@ class WPForms_About {
 				<figure>
 					<img src="<?php echo WPFORMS_PLUGIN_URL; ?>assets/images/about/team.jpg" alt="<?php esc_attr_e( 'The WPForms Team photo', 'wpforms-lite' ); ?>">
 					<figcaption>
-						<?php esc_html_e( 'The WPForms Team: Ethan, Jess, Slava, Syed, Jared, and Lindsay', 'wpforms-lite' ); ?>
+						<?php esc_html_e( 'The WPForms Team: Ethan, Jess, Slava, Syed, Jared, and Lindsay.', 'wpforms-lite' ); ?><br>
+						<?php esc_html_e( 'Not pictured: Pavlo, Matt, Calista, Daisy, Ijiene.', 'wpforms-lite' ); ?>
 					</figcaption>
 				</figure>
 			</div>
@@ -762,7 +763,7 @@ class WPForms_About {
 	protected function get_license_data( $feature, $license ) {
 
 		$data = array(
-			'entries' => array(
+			'entries'      => array(
 				'lite'  => array(
 					'status' => 'partial',
 					'text'   => array(
@@ -788,7 +789,7 @@ class WPForms_About {
 					),
 				),
 			),
-			'fields' => array(
+			'fields'       => array(
 				'lite'  => array(
 					'status' => 'partial',
 					'text'   => array(
@@ -889,7 +890,7 @@ class WPForms_About {
 					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( '6 Email Marketing Integrations', 'wpforms-lite' ) . '</strong>',
-						esc_html( 'Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip', 'wpforms-lite' ),
+						esc_html__( 'Constant Contact, Mailchimp, AWeber, GetResponse, Campaign Monitor, and Drip', 'wpforms-lite' ),
 					),
 				),
 				'pro'   => array(
@@ -907,7 +908,7 @@ class WPForms_About {
 					),
 				),
 			),
-			'payments'    => array(
+			'payments'     => array(
 				'lite'  => array(
 					'status' => 'none',
 					'text'   => array(
@@ -930,11 +931,11 @@ class WPForms_About {
 					'status' => 'full',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Create Payment Forms', 'wpforms-lite' ) . '</strong>',
-						esc_html__( 'Accept payments using Stripe (credit card_ and PayPal', 'wpforms-lite' ),
+						esc_html__( 'Accept payments using Stripe (credit card) and PayPal', 'wpforms-lite' ),
 					),
 				),
 			),
-			'surveys'    => array(
+			'surveys'      => array(
 				'lite'  => array(
 					'status' => 'none',
 					'text'   => array(
@@ -960,7 +961,7 @@ class WPForms_About {
 					),
 				),
 			),
-			'advanced'    => array(
+			'advanced'     => array(
 				'lite'  => array(
 					'status' => 'none',
 					'text'   => array(
@@ -971,25 +972,25 @@ class WPForms_About {
 					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
-						esc_html( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
+						esc_html__( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
 					),
 				),
 				'plus'  => array(
-					'status' => 'parial',
+					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
-						esc_html( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
+						esc_html__( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
 					),
 				),
 				'pro'   => array(
 					'status' => 'full',
 					'text'   => array(
 						'<strong>' . esc_html__( 'All Advanced Features', 'wpforms-lite' ) . '</strong>',
-						esc_html( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation, Custom CAPTCHA, Offline Forms, Signature Forms', 'wpforms-lite' ),
+						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation, Custom CAPTCHA, Offline Forms, Signature Forms', 'wpforms-lite' ),
 					),
 				),
 			),
-			'addons' => array(
+			'addons'       => array(
 				'lite'  => array(
 					'status' => 'none',
 					'text'   => array(
@@ -1003,7 +1004,7 @@ class WPForms_About {
 					),
 				),
 				'plus'  => array(
-					'status' => 'parial',
+					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Email Marketing Addons included', 'wpforms-lite' ) . '</strong>',
 					),
@@ -1012,11 +1013,11 @@ class WPForms_About {
 					'status' => 'full',
 					'text'   => array(
 						'<strong>' . esc_html__( 'All Addons Included', 'wpforms-lite' ) . '</strong>',
-						esc_html( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (17 total)', 'wpforms-lite' ),
+						esc_html__( 'Form Abandonment, Front-end Post Submission, User Registration, Geo-location, and more (17 total)', 'wpforms-lite' ),
 					),
 				),
 			),
-			'support' => array(
+			'support'      => array(
 				'lite'  => array(
 					'status' => 'none',
 					'text'   => array(
@@ -1030,7 +1031,7 @@ class WPForms_About {
 					),
 				),
 				'plus'  => array(
-					'status' => 'parial',
+					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Standard Support', 'wpforms-lite' ) . '</strong>',
 					),
@@ -1038,7 +1039,7 @@ class WPForms_About {
 				'pro'   => array(
 					'status' => 'full',
 					'text'   => array(
-						'<strong>' . esc_html__( 'Priority', 'wpforms-lite' ) . '</strong>',
+						'<strong>' . esc_html__( 'Priority Support', 'wpforms-lite' ) . '</strong>',
 					),
 				),
 			),

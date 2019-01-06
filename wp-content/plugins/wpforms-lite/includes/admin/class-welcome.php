@@ -80,7 +80,7 @@ class WPForms_Welcome {
 		}
 
 		// Only do this for single site installs.
-		if ( is_network_admin() || isset( $_GET['activate-multi'] ) ) { // WPCS: CSRF ok.
+		if ( isset( $_GET['activate-multi'] ) || is_network_admin() ) { // WPCS: CSRF ok.
 			return;
 		}
 
@@ -333,4 +333,5 @@ class WPForms_Welcome {
 		<?php
 	}
 }
+
 new WPForms_Welcome();

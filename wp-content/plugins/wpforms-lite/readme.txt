@@ -266,6 +266,10 @@ Syed Balkhi
 
 == Changelog ==
 
+= 1.5.0.4 =
+- Changed: Dashboard widget improvements.
+- Fixed: Various typos.
+
 = 1.5.0.3 =
 - Changed: Minor improvements to Gutenberg block for WordPress 5.0.
 - Fixed: Error when activating WPForms Pro if WPForms Lite is still activated.

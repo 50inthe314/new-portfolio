@@ -99,6 +99,7 @@ class FormSelector implements IntegrationInterface {
 		$i18n = array(
 			'title'            => \esc_html__( 'WPForms', 'wpforms-lite' ),
 			'description'      => \esc_html__( 'Select and display one of your forms.', 'wpforms-lite' ),
+			'form_keyword'     => \esc_html__( 'form', 'wpforms-lite' ),
 			'form_select'      => \esc_html__( 'Select a Form', 'wpforms-lite' ),
 			'form_settings'    => \esc_html__( 'Form Settings', 'wpforms-lite' ),
 			'form_selected'    => \esc_html__( 'Form', 'wpforms-lite' ),
