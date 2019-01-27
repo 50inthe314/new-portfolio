@@ -19,3 +19,10 @@ Updated: 2018-11-17 12:46:18
     font-family: Josefin Sans;
     font-size: 50px;
 }
+
+.blog-entry.grid-entry ul.meta {
+	margin-top: 10px;
+    margin-bottom: 8px;
+    font-size: 11px;
+	padding-top: 5px;
+}
