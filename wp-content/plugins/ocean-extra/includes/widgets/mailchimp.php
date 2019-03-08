@@ -27,7 +27,7 @@ if (!class_exists('Ocean_Extra_MailChimp_Widget')) {
                     )
             );
 
-            add_action('wp_enqueue_scripts', array($this, 'ocean_extra_mailchimp_js'));
+            add_action( 'wp_enqueue_scripts', array( $this, 'ocean_extra_mailchimp_js' ) );
             add_filter( 'ocean_localize_array', array( $this, 'localize_array' ) );
 
             add_action('wp_ajax_oceanwp_mailchimp_request', array($this, 'oceanwp_mailchimp_request_callback'));
@@ -280,7 +280,10 @@ if (!class_exists('Ocean_Extra_MailChimp_Widget')) {
          * Upload the Javascripts for mailchimp
          */
         public function ocean_extra_mailchimp_js() {
-            wp_enqueue_script('oe-mailchimp-script', OE_URL . '/includes/widgets/js/mailchimp.min.js', array('jquery'));
+            // Load only if the widget is used
+            if ( is_active_widget( '', '', 'ocean_mailchimp' ) ) {
+                wp_enqueue_script('oe-mailchimp-script', OE_URL . 'includes/widgets/js/mailchimp.min.js', array('jquery'), false, true);
+            }
         }
 
         /**

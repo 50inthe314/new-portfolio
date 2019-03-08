@@ -597,6 +597,7 @@ function wpforms_get_form_fields( $form = false, $whitelist = array() ) {
 		'signature',
 		'payment-single',
 		'payment-multiple',
+		'payment-checkbox',
 		'payment-select',
 		'payment-total',
 		'net_promoter_score',
@@ -1885,4 +1886,36 @@ function wpforms_is_empty_string( $string ) {
 	}
 
 	return false;
+}
+
+/**
+ * Return URL to form preview page.
+ *
+ * @since 1.5.1
+ *
+ * @param int  $form_id    Form ID.
+ * @param bool $new_window New window flag.
+ *
+ * @return string
+ */
+function wpforms_get_form_preview_url( $form_id, $new_window = false ) {
+
+
+	$url = add_query_arg(
+		array(
+			'wpforms_form_preview' => absint( $form_id ),
+		),
+		home_url()
+	);
+
+	if ( $new_window ) {
+		$url = add_query_arg(
+			array(
+				'new_window' => 1,
+			),
+			$url
+		);
+	}
+
+	return $url;
 }

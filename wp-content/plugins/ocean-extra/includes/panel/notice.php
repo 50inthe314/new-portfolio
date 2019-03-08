@@ -21,8 +21,8 @@ if ( ! class_exists( 'Ocean_Extra_Admin_Notice' ) ) {
          * Admin constructor
          */
         public function __construct() {
-            add_action( 'admin_notices', array( $this, 'admin_notice' ) );
-            add_action( 'admin_init', array( $this, 'dismiss_notice' ) );
+            //add_action( 'admin_notices', array( $this, 'admin_notice' ) );
+            //add_action( 'admin_init', array( $this, 'dismiss_notice' ) );
             add_action( 'admin_enqueue_scripts', array( $this, 'admin_scripts' ) );
             add_action( 'admin_notices', array( $this, 'rating_notice' ) );
             add_action( 'admin_init', array( $this, 'dismiss_rating_notice' ) );
@@ -52,7 +52,7 @@ if ( ! class_exists( 'Ocean_Extra_Admin_Notice' ) ) {
                     <span class="dashicons dashicons-heart icon-side"></span>
                     <div class="notice-content">
                         <p><?php echo sprintf(
-                            esc_html__( 'Thank you for installing OceanWP! As a gesture of our appreciation, here&rsquo;s your chance to win our best-selling %1$sCore Extension Bundle%2$s, which includes more than 14 premium extensions that&rsquo;ll enhance this website with state-of-the-art functionality. 10 winners are selected each month, so sign up today, you&rsquo;ve got nothing to lose!', 'ocean-extra' ),
+                            esc_html__( 'Thank you for installing OceanWP! As a gesture of our appreciation, here&rsquo;s your chance to win our best-selling %1$sCore Extension Bundle%2$s, which includes more than 14 premium extensions that&rsquo;ll enhance this website with state-of-the-art functionality. 5 winners are selected each month, so sign up today, you&rsquo;ve got nothing to lose!', 'ocean-extra' ),
                             '<a href="https://oceanwp.org/core-extensions-bundle/" target="_blank">', '</a>'
                             ); ?></p>
                         <p><a href="https://oceanwp.org/bundle-contest/" class="btn button-primary" target="_blank"><?php _e( 'I want to win', 'ocean-extra' ); ?></a><a href="<?php echo $no_thanks; ?>" class="btn button-secondary"><?php _e( 'No thanks', 'ocean-extra' ); ?></a></p>
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Ocean_Extra_Admin_Notice' ) ) {
                     <span class="dashicons dashicons-star-filled icon-side"></span>
                     <div class="notice-content">
                         <p><?php echo sprintf(
-                            esc_html__( 'Hello! we&rsquo;re grateful that you&rsquo;ve decided to join the OceanWP family.%1$sCould you please do us a BIG favor? If you could take 2 min of your time, we&rsquo;d really appreciate if you could give OceanWP a 5-star rating on WordPress. By spreading the love, we can create even greater free stuff in the future!', 'ocean-extra' ),
+                            esc_html__( 'Hello! We&rsquo;re really grateful that you&rsquo;re now a part of the OceanWP family. We hope you&rsquo;re happy with everything this theme has to offer.%1$sIf you can spare a minute, please help us by leaving a 5-star rating on WordPress.org. By spreading the love, we can continue to develop new amazing features in the future, for free!', 'ocean-extra' ),
                             '<br/>'
                             ); ?></p>
                         <p><a href="https://wordpress.org/support/theme/oceanwp/reviews/?filter=5#new-post" class="btn button-primary" target="_blank"><span class="dashicons dashicons-external"></span><span><?php _e( 'Ok, you deserve it', 'ocean-extra' ); ?></span></a><a href="<?php echo $no_thanks; ?>" class="btn button-secondary" target="_blank"><span class="dashicons dashicons-calendar"></span><span><?php _e( 'Nope, maybe later', 'ocean-extra' ); ?></span></a><a href="<?php echo $no_thanks; ?>" class="btn button-secondary"><span class="dashicons dashicons-smiley"></span><span><?php _e( 'I already did', 'ocean-extra' ); ?></span></a></p>

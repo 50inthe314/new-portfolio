@@ -879,8 +879,9 @@ abstract class WPForms_Field {
 			 * Choices for payments.
 			 */
 			case 'choices_payments':
-				$values = ! empty( $field['choices'] ) ? $field['choices'] : $this->defaults;
-				$class  = array();
+				$values     = ! empty( $field['choices'] ) ? $field['choices'] : $this->defaults;
+				$class      = array();
+				$input_type = 'payment-multiple' === $field['type'] ? 'radio' : 'checkbox';
 
 				if ( ! empty( $field['choices_images'] ) ) {
 					$class[] = 'show-images';
@@ -914,7 +915,8 @@ abstract class WPForms_Field {
 
 					$fld .= '<li data-key="' . absint( $key ) . '">';
 					$fld .= sprintf(
-						'<input type="radio" name="%s[default]" class="default" value="1" %s>',
+						'<input type="%s" name="%s[default]" class="default" value="1" %s>',
+						$input_type,
 						$base,
 						checked( '1', $default, false )
 					);
@@ -925,7 +927,7 @@ abstract class WPForms_Field {
 						esc_attr( $value['label'] )
 					);
 					$fld .= sprintf(
-						'<input type="text" name="%s[value]" value="%s" class="value value wpforms-money-input" placeholder="%s">',
+						'<input type="text" name="%s[value]" value="%s" class="value wpforms-money-input" placeholder="%s">',
 						$base,
 						esc_attr( $value['value'] ),
 						wpforms_format_amount( 0 )
@@ -1329,7 +1331,7 @@ abstract class WPForms_Field {
 				break;
 
 			case 'choices':
-				$fields_w_choices = array( 'checkbox', 'gdpr-checkbox', 'select', 'payment-select', 'radio', 'payment-multiple' );
+				$fields_w_choices = array( 'checkbox', 'gdpr-checkbox', 'select', 'payment-select', 'radio', 'payment-multiple', 'payment-checkbox' );
 
 				$values  = ! empty( $field['choices'] ) ? $field['choices'] : $this->defaults;
 				$dynamic = ! empty( $field['dynamic_choices'] ) ? $field['dynamic_choices'] : false;
@@ -1409,6 +1411,7 @@ abstract class WPForms_Field {
 				switch ( $field['type'] ) {
 					case 'checkbox':
 					case 'gdpr-checkbox':
+					case 'payment-checkbox':
 						$type = 'checkbox';
 						break;
 
@@ -1727,7 +1730,7 @@ abstract class WPForms_Field {
 	 * @since 1.0.0
 	 *
 	 * @param int   $field_id     Field ID.
-	 * @param array $field_submit Field value that was submitted.
+	 * @param mixed $field_submit Field value that was submitted.
 	 * @param array $form_data    Form data and settings.
 	 */
 	public function format( $field_id, $field_submit, $form_data ) {

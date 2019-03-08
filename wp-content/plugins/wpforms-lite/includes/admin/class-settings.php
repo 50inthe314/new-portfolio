@@ -229,25 +229,8 @@ class WPForms_Settings {
 
 		// reCAPTCHA heading description is long so we define it separately.
 		$recaptcha_desc  = '<p>' . esc_html__( 'reCAPTCHA is a free anti-spam service from Google which helps to protect your website from spam and abuse while letting real people pass through with ease.', 'wpforms-lite' ) . '</p>';
-		$recaptcha_desc .=
-			'<p>' .
-			sprintf(
-				wp_kses(
-					/* translators: %1$s - Google reCAPTCHA Intro URL, %2$s - Google Invisible reCAPTCHA Intro URL. */
-					__( 'Google\'s original <a href="%1$s" target="_blank" rel="noopener noreferrer">v2 reCAPTCHA</a> prompts users to check a box to prove they\'re human, whereas <a href="%2$s" target="_blank" rel="noopener noreferrer">Invisible reCAPTCHA</a> uses advanced technology to detect real users without requiring any input.', 'wpforms-lite' ),
-					array(
-						'a' => array(
-							'href'   => array(),
-							'target' => array(),
-							'rel'    => array(),
-						),
-					)
-				),
-				'https://www.google.com/recaptcha/intro/',
-				'https://www.google.com/recaptcha/intro/invisible.html'
-			) .
-			'</p>';
-		$recaptcha_desc .= '<p>' . esc_html__( 'Sites already using v2 reCAPTCHA will need to create new site keys before switching to the Invisible reCAPTCHA.', 'wpforms-lite' ) . '</p>';
+		$recaptcha_desc .= '<p>' . esc_html__( 'Google\'s original checkbox reCAPTCHA prompts users to check a box to prove they\'re human, whereas the newer Invisible reCAPTCHA uses advanced technology to detect real users without requiring any input. WPForms supports both versions of Google\'s v2 reCAPTCHA.', 'wpforms-lite' ) . '</p>';
+		$recaptcha_desc .= '<p>' . esc_html__( 'Sites already using the original checkbox reCAPTCHA will need to create new site keys before switching to the Invisible reCAPTCHA.', 'wpforms-lite' ) . '</p>';
 		$recaptcha_desc .=
 			'<p>' .
 			sprintf(
@@ -402,8 +385,8 @@ class WPForms_Settings {
 					'type'    => 'radio',
 					'default' => 'default',
 					'options' => array(
-						'v2'        => esc_html__( 'v2 reCAPTCHA', 'wpforms-lite' ),
-						'invisible' => esc_html__( 'Invisible reCAPTCHA', 'wpforms-lite' ),
+						'v2'        => esc_html__( 'Checkbox reCAPTCHA v2', 'wpforms-lite' ),
+						'invisible' => esc_html__( 'Invisible reCAPTCHA v2', 'wpforms-lite' ),
 					),
 				),
 				'recaptcha-site-key'   => array(

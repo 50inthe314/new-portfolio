@@ -242,7 +242,7 @@ class WPForms_Tools {
 
 			<form method="post" enctype="multipart/form-data" action="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-tools&view=import' ) ); ?>">
 				<div class="wpforms-file-upload">
-					<input type="file" name="file" id="wpforms-tools-form-import" class="inputfile" data-multiple-caption="<?php esc_attr_e( '{count} files selected', 'wpforms-lite' ); ?>" accept=".json" />
+					<input type="file" name="file" id="wpforms-tools-form-import" class="inputfile" data-multiple-caption="{count} <?php esc_attr_e( 'files selected', 'wpforms-lite' ); ?>" accept=".json" />
 					<label for="wpforms-tools-form-import">
 						<span class="fld"><span class="placeholder"><?php esc_html_e( 'No file chosen', 'wpforms-lite' ); ?></span></span>
 						<strong class="wpforms-btn wpforms-btn-md wpforms-btn-light-grey">
@@ -382,7 +382,7 @@ class WPForms_Tools {
 					<a href="#" class="wpforms-btn wpforms-btn-md wpforms-btn-light-grey" id="wpforms-importer-continue-submit"><?php esc_html_e( 'Continue Import without Upgrading', 'wpforms-lite' ); ?></a>
 				</p>
 				<hr>
-				<p><?php esc_html_e( 'Below are the list of form fields that may be impacted:', 'wpforms-lite' ); ?></p>
+				<p><?php esc_html_e( 'Below is the list of form fields that may be impacted:', 'wpforms-lite' ); ?></p>
 			</div>
 		</div>
 

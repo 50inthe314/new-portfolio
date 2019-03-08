@@ -47,9 +47,6 @@ class WPForms_Overview {
 			// Load the class that builds the overview table.
 			require_once WPFORMS_PLUGIN_DIR . 'includes/admin/overview/class-overview-table.php';
 
-			// Preview page check.
-			wpforms()->preview->form_preview_check();
-
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueues' ) );
 			add_action( 'wpforms_admin_page', array( $this, 'output' ) );
 

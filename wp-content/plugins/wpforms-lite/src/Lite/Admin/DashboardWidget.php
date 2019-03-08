@@ -27,6 +27,15 @@ class DashboardWidget {
 	 */
 	public function __construct() {
 
+		// This widget should be displayed for certain high-level users only.
+		if ( ! wpforms_current_user_can() ) {
+			return;
+		}
+
+		if ( ! apply_filters( 'wpforms_admin_dashboardwidget', '__return_true' ) ) {
+			return;
+		}
+
 		$this->settings();
 		$this->hooks();
 	}
@@ -124,7 +133,9 @@ class DashboardWidget {
 			'wpforms-dashboard-widget',
 			'wpforms_dashboard_widget',
 			array(
-				'i18n' => array(
+				'show_more_html' => \esc_html__( 'Show More', 'wpforms-lite' ) . '<span class="dashicons dashicons-arrow-down"></span>',
+				'show_less_html' => \esc_html__( 'Show Less', 'wpforms-lite' ) . '<span class="dashicons dashicons-arrow-up"></span>',
+				'i18n'           => array(
 					'entries' => \esc_html__( 'Entries', 'wpforms-lite' ),
 				),
 			)
@@ -198,14 +209,14 @@ class DashboardWidget {
 
 		?>
 		<div class="wpforms-dash-widget-block wpforms-dash-widget-block-no-forms">
-			<img class="wpforms-dash-widget-block-sullie-logo" src="<?php echo \esc_url( WPFORMS_PLUGIN_URL . 'assets/images/sullie.png' ); ?>" alt="<?php \esc_attr_e( 'Sullie the WPForms mascot', 'wpforms' ); ?>">
-			<h2><?php \esc_html_e( 'Create Your First Form to Start Collecting Leads', 'wpforms' ); ?></h2>
-			<p><?php \esc_html_e( 'You can use WPForms to build contact forms, surveys, payment forms, and more with just a few clicks.', 'wpforms' ); ?></p>
+			<img class="wpforms-dash-widget-block-sullie-logo" src="<?php echo \esc_url( WPFORMS_PLUGIN_URL . 'assets/images/sullie.png' ); ?>" alt="<?php \esc_attr_e( 'Sullie the WPForms mascot', 'wpforms-lite' ); ?>">
+			<h2><?php \esc_html_e( 'Create Your First Form to Start Collecting Leads', 'wpforms-lite' ); ?></h2>
+			<p><?php \esc_html_e( 'You can use WPForms to build contact forms, surveys, payment forms, and more with just a few clicks.', 'wpforms-lite' ); ?></p>
 			<a href="<?php echo \esc_url( $create_form_url ); ?>" class="button button-primary">
-				<?php \esc_html_e( 'Create Your Form', 'wpforms' ); ?>
+				<?php \esc_html_e( 'Create Your Form', 'wpforms-lite' ); ?>
 			</a>
 			<a href="<?php echo \esc_url( $learn_more_url ); ?>" class="button" target="_blank" rel="noopener noreferrer">
-				<?php \esc_html_e( 'Learn More', 'wpforms' ); ?>
+				<?php \esc_html_e( 'Learn More', 'wpforms-lite' ); ?>
 			</a>
 		</div>
 		<?php
@@ -314,7 +325,7 @@ class DashboardWidget {
 		?>
 		<table id="wpforms-dash-widget-forms-list-table" cellspacing="0">
 			<?php foreach ( \array_values( $forms ) as $key => $form ) : ?>
-				<tr <?php echo $key >= $show_forms ? 'style="display: none;"' : ''; ?> data-form-id="<?php echo \absint( $form['form_id'] ); ?>">
+				<tr <?php echo $key >= $show_forms ? 'class="wpforms-dash-widget-forms-list-hidden-el"' : ''; ?> data-form-id="<?php echo \absint( $form['form_id'] ); ?>">
 					<td><span class="wpforms-dash-widget-form-title"><?php echo \esc_html( $form['title'] ); ?></span></td>
 					<td><?php echo \absint( $form['count'] ); ?></td>
 				</tr>
@@ -323,7 +334,7 @@ class DashboardWidget {
 
 		<?php if ( \count( $forms ) > $show_forms ) : ?>
 			<button type="button" id="wpforms-dash-widget-forms-more" class="wpforms-dash-widget-forms-more" title="<?php \esc_html_e( 'Show all forms', 'wpforms-lite' ); ?>">
-				<?php \esc_html_e( 'Show More', 'wpforms-lite' ); ?> <span class="dashicons dashicons-arrow-down-alt2"></span>
+				<?php \esc_html_e( 'Show More', 'wpforms-lite' ); ?> <span class="dashicons dashicons-arrow-down"></span>
 			</button>
 		<?php endif; ?>
 

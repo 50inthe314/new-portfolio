@@ -80,11 +80,7 @@ class WPForms_Install {
 	 */
 	public function run_install() {
 
-		$wpforms_install          = new stdClass();
-		$wpforms_install->preview = new WPForms_Preview();
-
-		// Create form preview page.
-		$wpforms_install->preview->form_preview_check();
+		$wpforms_install = new stdClass();
 
 		// Hook for Pro users.
 		do_action( 'wpforms_install' );

@@ -1207,11 +1207,11 @@ abstract class WPForms_Provider {
 
 		} else {
 
-			$account  = '<li>';
+			$account  = '<li class="wpforms-clear">';
 			$account .= '<span class="label">' . sanitize_text_field( $data['label'] ) . '</span>';
 			/* translators: %s - Connection date. */
 			$account .= '<span class="date">' . sprintf( esc_html__( 'Connected on: %s', 'wpforms-lite' ), date_i18n( get_option( 'date_format', time() ) ) ) . '</span>';
-			$account .= '<a href="#" data-provider="' . $this->slug . '" data-key="' . esc_attr( $auth ) . '">' . esc_html__( 'Disconnect', 'wpforms-lite' ) . '</a>';
+			$account .= '<span class="remove"><a href="#" data-provider="' . $this->slug . '" data-key="' . esc_attr( $auth ) . '">' . esc_html__( 'Disconnect', 'wpforms-lite' ) . '</a></span>';
 			$account .= '</li>';
 
 			wp_send_json_success(

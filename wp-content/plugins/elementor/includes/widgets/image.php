@@ -183,7 +183,7 @@ class Widget_Image extends Widget_Base {
 		$this->add_control(
 			'link_to',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => __( 'Link', 'elementor' ),
 				'type' => Controls_Manager::SELECT,
 				'default' => 'none',
 				'options' => [
@@ -197,7 +197,7 @@ class Widget_Image extends Widget_Base {
 		$this->add_control(
 			'link',
 			[
-				'label' => __( 'Link to', 'elementor' ),
+				'label' => __( 'Link', 'elementor' ),
 				'type' => Controls_Manager::URL,
 				'dynamic' => [
 					'active' => true,
@@ -453,7 +453,7 @@ class Widget_Image extends Widget_Base {
 				'label' => __( 'Caption', 'elementor' ),
 				'tab'   => Controls_Manager::TAB_STYLE,
 				'condition' => [
-					'caption!' => '',
+					'caption_source!' => 'none',
 				],
 			]
 		);
@@ -504,12 +504,31 @@ class Widget_Image extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'caption_background_color',
+			[
+				'label' => __( 'Background Color', 'elementor' ),
+				'type' => Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .widget-image-caption' => 'background-color: {{VALUE}};',
+				],
+			]
+		);
+
 		$this->add_group_control(
 			Group_Control_Typography::get_type(),
 			[
 				'name' => 'caption_typography',
 				'selector' => '{{WRAPPER}} .widget-image-caption',
 				'scheme' => Scheme_Typography::TYPOGRAPHY_3,
+			]
+		);
+
+		$this->add_group_control(
+			Group_Control_Text_Shadow::get_type(),
+			[
+				'name' => 'caption_text_shadow',
+				'selector' => '{{WRAPPER}} .widget-image-caption',
 			]
 		);
 

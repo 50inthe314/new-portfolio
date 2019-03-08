@@ -101,8 +101,8 @@
 
 .owp-demo-wrap .theme {
 	float: none;
-	width: 100%;
-	margin: 0;
+	width: 100% !important;
+	margin: 0 !important;
 }
 
 .owp-is-fadeout {

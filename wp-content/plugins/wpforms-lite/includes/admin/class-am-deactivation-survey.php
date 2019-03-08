@@ -316,7 +316,15 @@ if ( ! class_exists( 'AM_Deactivation_Survey', false ) ) {
 				<div class="am-deactivate-survey-wrap">
 					<form class="am-deactivate-survey" method="post">
 						<span class="am-deactivate-survey-title"><span class="dashicons dashicons-testimonial"></span><?php echo ' ' . esc_html__( 'Quick Feedback', 'wpforms-lite' ); ?></span>
-						<span class="am-deactivate-survey-desc"><?php echo sprintf( esc_html__( 'If you have a moment, please share why you are deactivating %s:', 'wpforms-lite' ), $this->name ); ?></span>
+						<span class="am-deactivate-survey-desc">
+							<?php
+							printf(
+								/* translators: %s - plugin name. */
+								esc_html__( 'If you have a moment, please share why you are deactivating %s:', 'wpforms-lite' ),
+								$this->name
+							);
+							?>
+						</span>
 						<div class="am-deactivate-survey-options">
 							<?php foreach ( $options as $id => $option ) : ?>
 							<div class="am-deactivate-survey-option">
@@ -331,8 +339,8 @@ if ( ! class_exists( 'AM_Deactivation_Survey', false ) ) {
 							<?php endforeach; ?>
 						</div>
 						<div class="am-deactivate-survey-footer">
-							<button type="submit" class="am-deactivate-survey-submit button button-primary button-large"><?php echo sprintf( esc_html__( 'Submit %s Deactivate', 'wpforms-lite' ), '&amp;' ); ?></button>
-							<a href="#" class="am-deactivate-survey-deactivate"><?php echo sprintf( esc_html__( 'Skip %s Deactivate', 'wpforms-lite' ), '&amp;' ); ?></a>
+							<button type="submit" class="am-deactivate-survey-submit button button-primary button-large"><?php echo esc_html__( 'Submit & Deactivate', 'wpforms-lite' ); ?></button>
+							<a href="#" class="am-deactivate-survey-deactivate"><?php echo esc_html__( 'Skip & Deactivate', 'wpforms-lite' ); ?></a>
 						</div>
 					</form>
 				</div>

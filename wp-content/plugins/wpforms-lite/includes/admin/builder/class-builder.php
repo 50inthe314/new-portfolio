@@ -102,9 +102,6 @@ class WPForms_Builder {
 				$this->view = isset( $_GET['view'] ) ? $_GET['view'] : 'setup';
 			}
 
-			// Preview page check.
-			wpforms()->preview->form_preview_check();
-
 			// Fetch form.
 			$this->form      = wpforms()->form->get( $form_id );
 			$this->form_data = $this->form ? wpforms_decode( $this->form->post_content ) : false;
@@ -415,12 +412,7 @@ class WPForms_Builder {
 		$strings = apply_filters( 'wpforms_builder_strings', $strings, $this->form );
 
 		if ( ! empty( $_GET['form_id'] ) ) {
-			$strings['preview_url'] = add_query_arg(
-				array(
-					'new_window' => 1,
-				),
-				wpforms()->preview->form_preview_url( $_GET['form_id'] )
-			);
+			$strings['preview_url'] = wpforms_get_form_preview_url( $_GET['form_id'] );
 			$strings['entries_url'] = esc_url_raw( admin_url( 'admin.php?page=wpforms-entries&view=list&form_id=' . intval( $_GET['form_id'] ) ) );
 		}
 

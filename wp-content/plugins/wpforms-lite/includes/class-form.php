@@ -25,6 +25,7 @@ class WPForms_Form_Handler {
 
 		// Add wpforms to new-content admin bar menu.
 		add_action( 'admin_bar_menu', array( $this, 'admin_bar' ), 99 );
+
 	}
 
 	/**
@@ -236,6 +237,9 @@ class WPForms_Form_Handler {
 		// This filter breaks forms if they contain HTML.
 		remove_filter( 'content_save_pre', 'balanceTags', 50 );
 
+		// Add filter of the link rel attr to avoid JSON damage.
+		add_filter( 'wp_targeted_link_rel', '__return_empty_string', 50, 1 );
+
 		// Check for permissions.
 		if ( ! wpforms_current_user_can() ) {
 			return false;
@@ -329,6 +333,9 @@ class WPForms_Form_Handler {
 	 * @return boolean
 	 */
 	public function duplicate( $ids = array() ) {
+
+		// Add filter of the link rel attr to avoid JSON damage.
+		add_filter( 'wp_targeted_link_rel', '__return_empty_string', 50, 1 );
 
 		// Check for permissions.
 		if ( ! wpforms_current_user_can() ) {
@@ -470,6 +477,9 @@ class WPForms_Form_Handler {
 	 */
 	public function update_meta( $form_id, $meta_key, $meta_value ) {
 
+		// Add filter of the link rel attr to avoid JSON damage.
+		add_filter( 'wp_targeted_link_rel', '__return_empty_string', 50, 1 );
+
 		// Check for permissions.
 		if ( ! wpforms_current_user_can() ) {
 			return false;
@@ -513,6 +523,9 @@ class WPForms_Form_Handler {
 	 * @return bool
 	 */
 	public function delete_meta( $form_id, $meta_key ) {
+
+		// Add filter of the link rel attr to avoid JSON damage.
+		add_filter( 'wp_targeted_link_rel', '__return_empty_string', 50, 1 );
 
 		// Check for permissions.
 		if ( ! wpforms_current_user_can() ) {

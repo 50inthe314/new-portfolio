@@ -451,6 +451,8 @@ class WPForms_Frontend {
 			$field = apply_filters( 'wpforms_creditcard_field_display', $field, $attributes, $form_data );
 		} elseif ( 'payment-multiple' === $field['type'] ) {
 			$field = apply_filters( 'wpforms_payment_multiple_field_display', $field, $attributes, $form_data );
+		} elseif ( 'payment-checkbox' === $field['type'] ) {
+			$field = apply_filters( 'wpforms_payment_checkbox_field_display', $field, $attributes, $form_data );
 		}
 
 		$form_id  = absint( $form_data['id'] );
@@ -714,7 +716,7 @@ class WPForms_Frontend {
 			}
 
 			if ( ! empty( $errors['recaptcha'] ) ) {
-				echo '<label id="wpforms-field_recaptcah-error" class="wpforms-error">' . esc_html( $errors['recaptcha'] ) . '</label>';
+				echo '<label id="wpforms-field_recaptcha-error" class="wpforms-error">' . esc_html( $errors['recaptcha'] ) . '</label>';
 			}
 
 		echo '</div>';
@@ -904,7 +906,7 @@ class WPForms_Frontend {
 		// Load jQuery input mask library - https://github.com/RobinHerbots/jquery.inputmask.
 		if (
 			$this->assets_global() ||
-			true === wpforms_has_field_type( array( 'phone', 'address' ), $this->forms, true ) ||
+			true === wpforms_has_field_type( array( 'phone', 'address', 'date-time' ), $this->forms, true ) ||
 			true === wpforms_has_field_setting( 'input_mask', $this->forms, true )
 		) {
 			wp_enqueue_script(
@@ -957,7 +959,7 @@ class WPForms_Frontend {
 				$recaptch_inline .= 'var wpformsRecaptchaCallback = function(el){var $form = jQuery(el).closest("form");$form.find("button[type=submit]").get(0).recaptchaID = false;$form.submit();};';
 			} else {
 				$recaptch_inline  = 'var wpformsRecaptchaLoad = function(){jQuery(".g-recaptcha").each(function(index, el){grecaptcha.render(el,{callback:function(){wpformsRecaptchaCallback(el);}},true);});};';
-				$recaptch_inline .= 'var wpformsRecaptchaCallback = function(el){jQuery(el).parent().find(".wpforms-recaptcha-hidden").val("1").valid();};';
+				$recaptch_inline .= 'var wpformsRecaptchaCallback = function(el){jQuery(el).parent().find(".wpforms-recaptcha-hidden").val("1").trigger("change").valid();};';
 			}
 			wp_add_inline_script( 'wpforms-recaptcha', $recaptch_inline );
 		}

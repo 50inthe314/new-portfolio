@@ -70,10 +70,15 @@ function wpforms_save_form() {
 	}
 
 	wp_send_json_success(
-		array(
-			'form_name' => esc_html( $data['settings']['form_title'] ),
-			'form_desc' => $data['settings']['form_desc'],
-			'redirect'  => admin_url( 'admin.php?page=wpforms-overview' ),
+		apply_filters(
+			'wpforms_builder_save_form_response_data',
+			array(
+				'form_name' => esc_html( $data['settings']['form_title'] ),
+				'form_desc' => $data['settings']['form_desc'],
+				'redirect'  => admin_url( 'admin.php?page=wpforms-overview' ),
+			),
+			$form_id,
+			$data
 		)
 	);
 }

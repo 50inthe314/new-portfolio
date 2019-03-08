@@ -394,7 +394,7 @@
 		},
 
 		//--------------------------------------------------------------------//
-		// Binds
+		// Binds.
 		//--------------------------------------------------------------------//
 
 		/**
@@ -404,7 +404,7 @@
 		 */
 		bindUIActions: function() {
 
-			// Pagebreak navigation
+			// Pagebreak navigation.
 			$(document).on('click', '.wpforms-page-button', function(event) {
 				event.preventDefault();
 				WPForms.pagebreakNav($(this));
@@ -415,14 +415,14 @@
 				WPForms.amountTotal(this, true);
 			});
 
-			// Payments: Restrict user input payment fields
+			// Payments: Restrict user input payment fields.
 			$(document).on('input', '.wpforms-payment-user-input', function() {
 				var $this = $(this),
 					amount = $this.val();
 				$this.val(amount.replace(/[^0-9.,]/g, ''));
 			});
 
-			// Payments: Sanitize/format user input amounts
+			// Payments: Sanitize/format user input amounts.
 			$(document).on('focusout', '.wpforms-payment-user-input', function() {
 				var $this     = $(this),
 					amount    = $this.val(),
@@ -431,9 +431,14 @@
 				$this.val(formatted);
 			});
 
-			// Payments: preselect the selected payment (from dynamic/fallback population).
+			// Payment radio/checkbox fields: preselect the selected payment (from dynamic/fallback population).
 			$( document ).ready( function () {
+				// Radios.
+				$( '.wpforms-field-radio .wpforms-image-choices-item input:checked' ).change();
 				$( '.wpforms-field-payment-multiple .wpforms-image-choices-item input:checked' ).change();
+				// Checkboxes.
+				$( '.wpforms-field-checkbox .wpforms-image-choices-item input' ).change();
+				$( '.wpforms-field-payment-checkbox .wpforms-image-choices-item input' ).change();
 			} );
 
 			// Rating field: hover effect.
@@ -465,15 +470,27 @@
 			} );
 
 			// Checkbox/Radio/Payment checkbox: toggle selected state class.
-			$( document ).on( 'change', '.wpforms-field-checkbox input, .wpforms-field-radio input, .wpforms-field-payment-multiple input', function() {
+			$( document ).on( 'change', '.wpforms-field-checkbox input, .wpforms-field-radio input, .wpforms-field-payment-multiple input, .wpforms-field-payment-checkbox input, .wpforms-field-gdpr-checkbox input', function() {
 
 				var $this = $( this );
 
-				if ( 'radio' === $this.attr( 'type' ) ) {
-					$( this ).closest( 'ul' ).find( 'li' ).removeClass( 'wpforms-selected' );
-					$( this ).closest( 'li' ).addClass( 'wpforms-selected' );
-				} else {
-					$( this ).closest( 'li' ).toggleClass( 'wpforms-selected' );
+				switch ( $this.attr( 'type' ) ) {
+					case 'radio':
+						$this.closest( 'ul' ).find( 'li' ).removeClass( 'wpforms-selected' ).find('input[type=radio]').removeProp( 'checked' );
+						$this
+							.prop( 'checked', true )
+							.closest( 'li' ).addClass( 'wpforms-selected' );
+						break;
+
+					case 'checkbox':
+						if ( $this.prop( 'checked' ) ) {
+							$this.closest( 'li' ).addClass( 'wpforms-selected' );
+							$this.prop( 'checked', true );
+						} else {
+							$this.closest( 'li' ).removeClass( 'wpforms-selected' );
+							$this.removeProp( 'checked' );
+						}
+						break;
 				}
 			} );
 		},
@@ -647,59 +664,63 @@
 		},
 
 		//--------------------------------------------------------------------//
-		// Other functions
+		// Other functions.
 		//--------------------------------------------------------------------//
 
 		/**
 		 * Payments: Calculate total.
 		 *
 		 * @since 1.2.3
+		 * @since 1.5.1 Added support for payment-checkbox field.
 		 */
-		amountTotal: function(el, validate) {
+		amountTotal: function ( el, validate ) {
 
-			var validate             = validate || false,
-				$form                = $(el).closest('.wpforms-form'),
-				total                = 0,
-				totalFormatted       = 0,
+			var validate = validate || false,
+				$form = $( el ).closest( '.wpforms-form' ),
+				total = 0,
+				totalFormatted = 0,
 				totalFormattedSymbol = 0,
-				currency             = WPForms.getCurrency();
+				currency = WPForms.getCurrency();
 
-			$('.wpforms-payment-price', $form).each(function(index, el) {
+			$( '.wpforms-payment-price', $form ).each( function ( index, el ) {
 
 				var amount = 0,
-					$this  = $(this);
+					$this = $( this );
 
-				if ($this.attr('type') === 'text' || $this.attr('type') === 'hidden' ) {
+				if ( $this.attr( 'type' ) === 'text' || $this.attr( 'type' ) === 'hidden' ) {
 					amount = $this.val();
-				} else if ($this.attr('type') === 'radio' && $this.is(':checked')) {
-					amount = $this.data('amount');
-				} else if ($this.is('select') && $this.find('option:selected').length > 0) {
-					amount = $this.find('option:selected').data('amount');
 				}
-				if (!WPForms.empty(amount)) {
-					amount = WPForms.amountSanitize(amount);
-					total  = Number(total)+Number(amount);
+				else if ( ( $this.attr( 'type' ) === 'radio' || $this.attr( 'type' ) === 'checkbox' ) && $this.is( ':checked' ) ) {
+					amount = $this.data( 'amount' );
 				}
-			});
+				else if ( $this.is( 'select' ) && $this.find( 'option:selected' ).length > 0 ) {
+					amount = $this.find( 'option:selected' ).data( 'amount' );
+				}
+				if ( ! WPForms.empty( amount ) ) {
+					amount = WPForms.amountSanitize( amount );
+					total = Number( total ) + Number( amount );
+				}
+			} );
 
-			totalFormatted = WPForms.amountFormat(total);
+			totalFormatted = WPForms.amountFormat( total );
 
-			if ( 'left' === currency.symbol_pos) {
-				totalFormattedSymbol = currency.symbol+' '+totalFormatted;
-			} else {
-				totalFormattedSymbol = totalFormatted+' '+currency.symbol;
+			if ( 'left' === currency.symbol_pos ) {
+				totalFormattedSymbol = currency.symbol + ' ' + totalFormatted;
+			}
+			else {
+				totalFormattedSymbol = totalFormatted + ' ' + currency.symbol;
 			}
 
-			$form.find('.wpforms-payment-total').each(function(index, el) {
-				if ( 'hidden' === $(this).attr('type') || 'text' === $(this).attr('type') ) {
-					$(this).val(totalFormattedSymbol);
-					if ( 'text' === $(this).attr('type') && validate && $form.data('validator') ) {
-						$(this).valid();
+			$form.find( '.wpforms-payment-total' ).each( function ( index, el ) {
+				if ( 'hidden' === $( this ).attr( 'type' ) || 'text' === $( this ).attr( 'type' ) ) {
+					$( this ).val( totalFormattedSymbol );
+					if ( 'text' === $( this ).attr( 'type' ) && validate && $form.data( 'validator' ) ) {
+						$( this ).valid();
 					}
 				} else {
-					$(this).text(totalFormattedSymbol);
+					$( this ).text( totalFormattedSymbol );
 				}
-			});
+			} );
 		},
 
 		/**
@@ -865,7 +886,7 @@
 		 */
 		setUserIndentifier: function() {
 
-			if ( typeof wpforms_settings !== 'undefined' && wpforms_settings.uuid_cookie && ! WPForms.getCookie('_wpfuuid') ) {
+			if ( ( ( ! window.hasRequiredConsent && typeof wpforms_settings !== 'undefined' && wpforms_settings.uuid_cookie ) || ( window.hasRequiredConsent && window.hasRequiredConsent() ) ) && ! WPForms.getCookie( '_wpfuuid' ) ) {
 
 				// Generate UUID - http://stackoverflow.com/a/873856/1489528
 				var s         = new Array(36),

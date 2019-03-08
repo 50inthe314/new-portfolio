@@ -457,7 +457,10 @@ if ( ! class_exists( 'Ocean_Extra_Social_Share_Widget' ) ) {
          * Scripts
          */
         public function scripts() {
-            wp_enqueue_script( 'oe-social-share', OE_URL . '/includes/widgets/js/share.min.js', array( 'jquery' ) );
+            // Load only if the widget is used
+            if ( is_active_widget( '', '', 'ocean_social_share' ) ) {
+            	wp_enqueue_script( 'oe-social-share', OE_URL . 'includes/widgets/js/share.min.js', array( 'jquery' ), false, true );
+            }
         }
 
 	}

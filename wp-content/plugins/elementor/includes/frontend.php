@@ -280,6 +280,16 @@ class Frontend extends App {
 		do_action( 'elementor/frontend/before_register_scripts' );
 
 		wp_register_script(
+			'elementor-frontend-modules',
+			ELEMENTOR_ASSETS_URL . 'js/frontend-modules.js',
+			[
+				'jquery',
+			],
+			ELEMENTOR_VERSION,
+			true
+		);
+
+		wp_register_script(
 			'elementor-waypoints',
 			$this->get_js_assets_url( 'waypoints', 'assets/lib/waypoints/' ),
 			[
@@ -320,12 +330,10 @@ class Frontend extends App {
 		);
 
 		wp_register_script(
-			'jquery-swiper',
-			$this->get_js_assets_url( 'swiper.jquery', 'assets/lib/swiper/' ),
-			[
-				'jquery',
-			],
-			'4.4.3',
+			'swiper',
+			$this->get_js_assets_url( 'swiper', 'assets/lib/swiper/' ),
+			[],
+			'4.4.6',
 			true
 		);
 
@@ -345,7 +353,7 @@ class Frontend extends App {
 			[
 				'jquery-ui-position',
 			],
-			'4.4.1',
+			'4.7.1',
 			true
 		);
 
@@ -353,9 +361,10 @@ class Frontend extends App {
 			'elementor-frontend',
 			$this->get_js_assets_url( 'frontend' ),
 			[
+				'elementor-frontend-modules',
 				'elementor-dialog',
 				'elementor-waypoints',
-				'jquery-swiper',
+				'swiper',
 			],
 			ELEMENTOR_VERSION,
 			true
@@ -395,7 +404,7 @@ class Frontend extends App {
 			'elementor-icons',
 			$this->get_css_assets_url( 'elementor-icons', 'assets/lib/eicons/css/' ),
 			[],
-			'4.0.0'
+			'4.3.0'
 		);
 
 		wp_register_style(
@@ -824,6 +833,8 @@ class Frontend extends App {
 
 		$content = ob_get_clean();
 
+		$content = $this->process_more_tag( $content );
+
 		/**
 		 * Frontend content.
 		 *
@@ -991,22 +1002,38 @@ class Frontend extends App {
 	}
 
 	/**
+	 * Has Elementor In Page
+	 *
+	 * Determine whether the current page is using Elementor.
+	 *
 	 * @since 2.0.9
+	 *
 	 * @access public
+	 * @return bool
 	 */
 	public function has_elementor_in_page() {
 		return $this->_has_elementor_in_page;
 	}
 
 	/**
+	 * Get Init Settings
+	 *
+	 * Used to define the default/initial settings of the object. Inheriting classes may implement this method to define
+	 * their own default/initial settings.
+	 *
 	 * @since 2.3.0
+	 *
 	 * @access protected
+	 * @return array
 	 */
 	protected function get_init_settings() {
 		$is_preview_mode = Plugin::$instance->preview->is_preview_mode( Plugin::$instance->preview->get_post_id() );
 
 		$settings = [
-			'isEditMode' => $is_preview_mode,
+			'environmentMode' => [
+				'edit' => $is_preview_mode,
+				'wpPreview' => is_preview(),
+			],
 			'is_rtl' => is_rtl(),
 			'breakpoints' => Responsive::get_breakpoints(),
 			'version' => ELEMENTOR_VERSION,
@@ -1032,21 +1059,24 @@ class Frontend extends App {
 			];
 		}
 
+		$empty_object = (object) [];
+
 		if ( $is_preview_mode ) {
-			$elements_manager = Plugin::$instance->elements_manager;
-
-			$elements_frontend_keys = [
-				'section' => $elements_manager->get_element_types( 'section' )->get_frontend_settings_keys(),
-				'column' => $elements_manager->get_element_types( 'column' )->get_frontend_settings_keys(),
-			];
-
-			$elements_frontend_keys += Plugin::$instance->widgets_manager->get_widgets_frontend_settings_keys();
-
 			$settings['elements'] = [
-				'data' => (object) [],
-				'editSettings' => (object) [],
-				'keys' => $elements_frontend_keys,
+				'data' => $empty_object,
+				'editSettings' => $empty_object,
+				'keys' => $empty_object,
 			];
+		}
+
+		if ( is_user_logged_in() ) {
+			$user = wp_get_current_user();
+
+			if ( ! empty( $user->roles ) ) {
+				$settings['user'] = [
+					'roles' => $user->roles,
+				];
+			}
 		}
 
 		return $settings;
@@ -1066,5 +1096,50 @@ class Frontend extends App {
 		}
 
 		$this->content_removed_filters = [];
+	}
+
+	/**
+	 * Process More Tag
+	 *
+	 * Respect the native WP (<!--more-->) tag
+	 *
+	 * @access private
+	 * @since 2.0.4
+	 *
+	 * @param $content
+	 *
+	 * @return string
+	 */
+	private function process_more_tag( $content ) {
+		$post = get_post();
+		$content = str_replace( '&lt;!--more--&gt;', '<!--more-->', $content );
+		$parts = get_extended( $content );
+		if ( empty( $parts['extended'] ) ) {
+			return $content;
+		}
+
+		if ( is_singular() ) {
+			return $parts['main'] . '<div id="more-' . $post->ID . '"></div>' . $parts['extended'];
+		}
+
+		if ( empty( $parts['more_text'] ) ) {
+			$parts['more_text'] = __( '(more&hellip;)', 'elementor' );
+		}
+
+		$more_link_text = sprintf(
+			'<span aria-label="%1$s">%2$s</span>',
+			sprintf(
+				/* translators: %s: Name of current post */
+				__( 'Continue reading %s', 'elementor' ),
+				the_title_attribute( [
+					'echo' => false,
+				] )
+			),
+			$parts['more_text']
+		);
+
+		$more_link = apply_filters( 'the_content_more_link', sprintf( ' <a href="%s#more-%s" class="more-link elementor-more-link">%s</a>', get_permalink(), $post->ID, $more_link_text ), $more_link_text );
+
+		return force_balance_tags( $parts['main'] ) . $more_link;
 	}
 }

@@ -444,7 +444,7 @@ class WPForms_Pirate_Forms extends WPForms_Importer {
 					1 => array(
 						'notification_name' => esc_html__( 'Default Notification', 'wpforms-lite' ),
 						'email'             => $pf_form['pirateformsopt_email_recipients'],
-						/* translators: %s - PirateForms form name. */
+						/* translators: %s - form name. */
 						'subject'           => sprintf( esc_html__( 'New Entry: %s', 'wpforms-lite' ), $pf_form_name ),
 						'sender_name'       => get_bloginfo( 'name' ),
 						'sender_address'    => $this->get_smarttags( $pf_form['pirateformsopt_email'], $fields ),
@@ -641,7 +641,7 @@ class WPForms_Pirate_Forms extends WPForms_Importer {
 
 		// We do not need any extra credentials if we have gotten this far, so let's install the plugin.
 		require_once ABSPATH . 'wp-admin/includes/class-wp-upgrader.php';
-		require_once dirname( __FILE__ ) . '/class-install-silent-skin.php';
+		require_once __DIR__ . '/class-install-silent-skin.php';
 
 		// Do not allow WordPress to search/download translations, as this will break JS output.
 		remove_action( 'upgrader_process_complete', array( 'Language_Pack_Upgrader', 'async_upgrade' ), 20 );

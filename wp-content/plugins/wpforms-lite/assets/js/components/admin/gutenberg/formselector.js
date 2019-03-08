@@ -17,7 +17,7 @@ registerBlockType( 'wpforms/form-selector', {
 	title: wpforms_gutenberg_form_selector.i18n.title,
 	description: wpforms_gutenberg_form_selector.i18n.description,
 	icon: wpformsIcon,
-	keywords: [ __( 'form' ) ],
+	keywords: [ wpforms_gutenberg_form_selector.i18n.form_keyword ],
 	category: 'widgets',
 	attributes: {
 		formId: {

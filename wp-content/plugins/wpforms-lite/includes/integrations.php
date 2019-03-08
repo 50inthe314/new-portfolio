@@ -81,7 +81,7 @@ function wpforms_visual_composer_shortcode() {
 						esc_html__( 'Yes', 'wpforms-lite' ) => 'true',
 					),
 					'save_always' => true,
-					'description' => esc_html__( 'Would you like to display the forms description?', 'wpforms-lite' ),
+					'description' => esc_html__( 'Would you like to display the form description?', 'wpforms-lite' ),
 					'dependency'  => array(
 						'element'   => 'id',
 						'not_empty' => true,

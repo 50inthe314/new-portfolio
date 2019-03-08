@@ -24,18 +24,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 class Documents_Manager {
 
 	/**
-	 * Registered document groups.
-	 *
-	 * Holds the list of all the registered document groups.
-	 *
-	 * @since 2.0.0
-	 * @access protected
-	 *
-	 * @var array
-	 */
-	protected $groups = [];
-
-	/**
 	 * Registered types.
 	 *
 	 * Holds the list of all the registered types.
@@ -79,7 +67,7 @@ class Documents_Manager {
 	 * @since 2.0.0
 	 * @access protected
 	 *
-	 * @var Document
+	 * @var array
 	 */
 	protected $switched_data = [];
 
@@ -99,6 +87,7 @@ class Documents_Manager {
 		add_filter( 'post_row_actions', [ $this, 'filter_post_row_actions' ], 11, 2 );
 		add_filter( 'page_row_actions', [ $this, 'filter_post_row_actions' ], 11, 2 );
 		add_filter( 'user_has_cap', [ $this, 'remove_user_edit_cap' ], 10, 3 );
+		add_filter( 'elementor/editor/localize_settings', [ $this, 'localize_settings' ] );
 	}
 
 	/**
@@ -154,6 +143,7 @@ class Documents_Manager {
 		$this->types[ $type ] = $class;
 
 		$cpt = $class::get_property( 'cpt' );
+
 		if ( $cpt ) {
 			foreach ( $cpt as $post_type ) {
 				$this->cpt[ $post_type ] = $type;
@@ -369,18 +359,23 @@ class Documents_Manager {
 			$update_title = true;
 		}
 
+		$meta_data['_elementor_edit_mode'] = 'builder';
+
+		// Save the type as-is for plugins that hooked at `wp_insert_post`.
+		$meta_data[ Document::TYPE_META_KEY ] = $type;
+
+		$post_data['meta_input'] = $meta_data;
+
 		$post_id = wp_insert_post( $post_data );
 
 		if ( ! empty( $update_title ) ) {
 			$post_data['ID'] = $post_id;
 			$post_data['post_title'] .= ' #' . $post_id;
+
+			// The meta doesn't need update.
+			unset( $post_data['meta_input'] );
+
 			wp_update_post( $post_data );
-		}
-
-		add_post_meta( $post_id, '_elementor_edit_mode', 'builder' );
-
-		foreach ( $meta_data as $key => $value ) {
-			add_post_meta( $post_id, $key, $value );
 		}
 
 		/** @var Document $document */
@@ -388,6 +383,7 @@ class Documents_Manager {
 			'post_id' => $post_id,
 		] );
 
+		// Let the $document to re-save the template type by his way.
 		$document->save_template_type();
 
 		return $document;
@@ -512,9 +508,11 @@ class Documents_Manager {
 
 		$return_data = [
 			'config' => [
-				'last_edited' => $document->get_last_edited(),
-				'wp_preview' => [
-					'url' => $document->get_wp_preview_url(),
+				'document' => [
+					'last_edited' => $document->get_last_edited(),
+					'urls' => [
+						'wp_preview' => $document->get_wp_preview_url(),
+					],
 				],
 			],
 		];
@@ -619,35 +617,28 @@ class Documents_Manager {
 	}
 
 	/**
-	 * Register group.
-	 *
-	 * Registers a single document group.
-	 *
-	 * @since 2.0.0
-	 * @access public
-	 *
-	 * @param string $id   Group ID.
-	 * @param array  $args Group data.
-	 *
-	 * @return Documents_Manager The updated document manager instance.
-	 */
-	public function register_group( $id, $args ) {
-		$this->groups[ $id ] = $args;
-		return $this;
-	}
-
-	/**
 	 * Get groups.
 	 *
-	 * Retrieve the list of all the registered document groups.
-	 *
 	 * @since 2.0.0
+	 * @deprecated 2.4.0
 	 * @access public
 	 *
-	 * @return array list of all the registered document groups.
+	 * @return array
 	 */
 	public function get_groups() {
-		return $this->groups;
+		return [];
+	}
+
+	public function localize_settings( $settings ) {
+		$translations = [];
+
+		foreach ( $this->get_document_types() as $type => $class ) {
+			$translations[ $type ] = $class::get_title();
+		}
+
+		return array_replace_recursive( $settings, [
+			'i18n' => $translations,
+		] );
 	}
 
 	private function register_types() {
