@@ -64,7 +64,7 @@ if ( ! class_exists( 'OceanWP_Dashboard_News' ) ) :
 			$owp = wp_get_theme( 'oceanwp' );
 
 			// OceanWP img url
-			$owp_img = OE_URL . '/assets/img/oceanwp.png'; ?>
+			$owp_img = OE_URL . 'assets/img/oceanwp.png'; ?>
 
 			<div class="owp-dashboard-widget">
 				<div class="owp-header">

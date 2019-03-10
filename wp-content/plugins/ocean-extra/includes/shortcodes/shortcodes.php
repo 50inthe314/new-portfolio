@@ -111,6 +111,7 @@ if ( ! function_exists( 'oceanwp_search_shortcode' ) ) {
 			'height' 		=> '',
 			'placeholder' 	=> esc_html__( 'Search', 'ocean-extra' ),
 			'btn_icon' 		=> 'icon-magnifier',
+			'post_type' 	=> 'any',
 		), $atts ) );
 
 		// Styles
@@ -130,6 +131,9 @@ if ( ! function_exists( 'oceanwp_search_shortcode' ) ) {
 
 		$html = '<form method="get" class="oceanwp-searchform" id="searchform" action="'. esc_url( home_url( '/' ) ) .'"'. $style .'>';
 			$html .= '<input type="text" class="field" name="s" id="s" placeholder="'. strip_tags( $placeholder ) .'">';
+			if ( 'any' != $post_type ) {
+				$html .= '<input type="hidden" name="post_type" value="'.esc_attr( $post_type ) .'">';
+			}
 			$html .= '<button type="submit" class="search-submit" value=""><i class="'. esc_attr( $btn_icon ) .'"></i></button>';
 		$html .= '</form>';
 
@@ -269,9 +273,9 @@ add_shortcode( 'oceanwp_current_user', 'oceanwp_current_user_shortcode' );
 if ( ! function_exists( 'oceanwp_woo_fragments' ) ) {
 
 	function oceanwp_woo_fragments( $fragments ) {
-		$fragments['.wcmenucart-shortcode .wcmenucart-total'] = '<span class="wcmenucart-total">'. WC()->cart->get_cart_total() .'</span>';
+		$fragments['.wcmenucart-shortcode .wcmenucart-total'] = '<span class="wcmenucart-total">'. WC()->cart->get_total() .'</span>';
 		$fragments['.wcmenucart-shortcode .wcmenucart-count'] = '<span class="wcmenucart-count">'. WC()->cart->get_cart_contents_count() .'</span>';
-		$fragments['.oceanwp-woo-total'] 			= '<span class="oceanwp-woo-total">' . WC()->cart->get_cart_total() . '</span>';
+		$fragments['.oceanwp-woo-total'] 			= '<span class="oceanwp-woo-total">' . WC()->cart->get_total() . '</span>';
 	    $fragments['.oceanwp-woo-cart-count'] 		= '<span class="oceanwp-woo-cart-count">' . WC()->cart->get_cart_contents_count() . '</span>';
 	    return $fragments;
 	}
@@ -403,7 +407,7 @@ if ( ! function_exists( 'oceanwp_woo_cart_icon_shortcode' ) ) {
 			<a href="<?php echo esc_url( $url ); ?>" class="wcmenucart-shortcode">
 				<?php
 				if ( true == $total ) { ?>
-					<span class="wcmenucart-total"><?php WC()->cart->get_cart_total(); ?></span>
+					<span class="wcmenucart-total"><?php WC()->cart->get_total(); ?></span>
 				<?php } ?>
 				<span class="wcmenucart-cart-icon">
 					<span class="wcmenucart-count"><?php WC()->cart->get_cart_contents_count(); ?></span>
@@ -451,7 +455,7 @@ if ( ! function_exists( 'oceanwp_woo_total_cart_shortcode' ) ) {
 		}
 
 		$html  = '<span class="oceanwp-woo-total">';
-	    $html .= WC()->cart->get_cart_total();
+	    $html .= WC()->cart->get_total();
 	    $html .= '</span>';
 			
 		return $html;

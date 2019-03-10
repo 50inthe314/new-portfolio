@@ -44,6 +44,7 @@ class Challenge {
 		\add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
 		\add_action( 'wpforms_builder_init', array( $this, 'start_challenge' ) );
 		\add_action( 'admin_footer', array( $this, 'challenge_html' ) );
+		\add_action( 'wpforms_welcome_intro_after', array( $this, 'welcome_html' ) );
 
 		\add_action( 'wp_ajax_wpforms_challenge_embed_page_url', array( $this, 'get_embed_page_url_ajax' ) );
 		\add_action( 'wp_ajax_wpforms_challenge_save_option', array( $this, 'save_challenge_option_ajax' ) );
@@ -467,10 +468,10 @@ class Challenge {
 					<?php
 					echo \wp_kses(
 						\sprintf(
-						/* translators: %1$d - Number of minutes; %2$s - Single or plural word 'minute'. */
-							\__( 'Complete the <b>WPForms Challenge</b> and get up and running within %1$d&nbsp;%2$s.', 'wpforms' ),
+							/* translators: %1$d - Number of minutes; %2$s - Single or plural word 'minute'. */
+							\__( 'Complete the <b>WPForms Challenge</b> and get up and running within %1$d&nbsp;%2$s.', 'wpforms-lite' ),
 							\absint( $this->minutes ),
-							\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms' )
+							\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms-lite' )
 						),
 						array( 'b' => array() )
 					);
@@ -482,30 +483,38 @@ class Challenge {
 				</div>
 
 				<ul class="wpforms-challenge-list">
-					<li class="wpforms-challenge-step1-item"><?php \esc_html_e( 'Name Your Form', 'wpforms' ); ?></li>
-					<li class="wpforms-challenge-step2-item"><?php \esc_html_e( 'Select a Template', 'wpforms' ); ?></li>
-					<li class="wpforms-challenge-step3-item"><?php \esc_html_e( 'Add Fields to Your Form', 'wpforms' ); ?></li>
-					<li class="wpforms-challenge-step4-item"><?php \esc_html_e( 'Check Notification Settings', 'wpforms' ); ?></li>
-					<li class="wpforms-challenge-step5-item"><?php \esc_html_e( 'Embed in a Page', 'wpforms' ); ?></li>
+					<li class="wpforms-challenge-step1-item"><?php \esc_html_e( 'Name Your Form', 'wpforms-lite' ); ?></li>
+					<li class="wpforms-challenge-step2-item"><?php \esc_html_e( 'Select a Template', 'wpforms-lite' ); ?></li>
+					<li class="wpforms-challenge-step3-item"><?php \esc_html_e( 'Add Fields to Your Form', 'wpforms-lite' ); ?></li>
+					<li class="wpforms-challenge-step4-item"><?php \esc_html_e( 'Check Notification Settings', 'wpforms-lite' ); ?></li>
+					<li class="wpforms-challenge-step5-item"><?php \esc_html_e( 'Embed in a Page', 'wpforms-lite' ); ?></li>
 				</ul>
 
 				<?php if ( 'start' === $state ) : ?>
 					<a href="<?php echo \esc_url( \admin_url( 'admin.php?page=wpforms-builder&challenge=start' ) ); ?>" class="wpforms-btn wpforms-btn-md wpforms-btn-orange wpforms-challenge-start">
-						<?php \esc_html_e( 'Start Challenge', 'wpforms' ); ?>
+						<?php \esc_html_e( 'Start Challenge', 'wpforms-lite' ); ?>
 					</a>
-					<a href="javascript:void(0);" class="wpforms-challenge-skip"><?php \esc_html_e( 'Skip Challenge', 'wpforms' ); ?></a>
+					<a href="javascript:void(0);" class="wpforms-challenge-skip"><?php \esc_html_e( 'Skip Challenge', 'wpforms-lite' ); ?></a>
 				<?php endif; ?>
 
 				<?php if ( 'progress' === $state ) : ?>
-					<a href="javascript:void(0);" class="wpforms-challenge-cancel"><?php \esc_html_e( 'Cancel Challenge', 'wpforms' ); ?></a>
+					<a href="javascript:void(0);" class="wpforms-challenge-cancel"><?php \esc_html_e( 'Cancel Challenge', 'wpforms-lite' ); ?></a>
 				<?php endif; ?>
 			</div>
 
 			<div class="block-timer">
-				<img src="<?php echo \esc_url( \WPFORMS_PLUGIN_URL . 'assets/images/challenge/sullie-circle.png' ); ?>" alt="<?php \esc_html_e( 'Sullie the WPForms mascot', 'wpforms' ); ?>">
+				<img src="<?php echo \esc_url( \WPFORMS_PLUGIN_URL . 'assets/images/challenge/sullie-circle.png' ); ?>" alt="<?php \esc_html_e( 'Sullie the WPForms mascot', 'wpforms-lite' ); ?>">
 				<div>
-					<h3><?php \esc_html_e( 'WPForms Challenge', 'wpforms' ); ?></h3>
-					<p><span id="wpforms-challenge-timer"><?php echo \absint( $this->minutes ); ?>:00</span> <?php \esc_html_e( 'remaining', 'wpforms' ); ?></p>
+					<h3><?php \esc_html_e( 'WPForms Challenge', 'wpforms-lite' ); ?></h3>
+					<p>
+						<?php
+						printf(
+							/* translators: %s - minutes in 2:00 format. */
+							esc_html__( '%s remaining', 'wpforms-lite' ),
+							'<span id="wpforms-challenge-timer">' . \absint( $this->minutes ) .':00</span>'
+						);
+						?>
+					</p>
 				</div>
 				<div class="caret-icon">
 					<i class="fa fa-caret-down"></i>
@@ -526,26 +535,26 @@ class Challenge {
 		<div class="wpforms-challenge-tooltips">
 
 			<div id="tooltip-content1">
-				<h3><?php \esc_html_e( 'Name Your Form', 'wpforms' ); ?></h3>
-				<p><?php \esc_html_e( 'Give your form a name so you can easily identify it.', 'wpforms' ); ?></p>
-				<button type="button" class="wpforms-challenge-step1-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms' ); ?></button>
+				<h3><?php \esc_html_e( 'Name Your Form', 'wpforms-lite' ); ?></h3>
+				<p><?php \esc_html_e( 'Give your form a name so you can easily identify it.', 'wpforms-lite' ); ?></p>
+				<button type="button" class="wpforms-challenge-step1-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms-lite' ); ?></button>
 			</div>
 
 			<div id="tooltip-content2">
-				<h3><?php \esc_html_e( 'Select a Template', 'wpforms' ); ?></h3>
-				<p><?php \esc_html_e( 'Build your form from scratch or use one of our pre-made templates.', 'wpforms' ); ?></p>
+				<h3><?php \esc_html_e( 'Select a Template', 'wpforms-lite' ); ?></h3>
+				<p><?php \esc_html_e( 'Build your form from scratch or use one of our pre-made templates.', 'wpforms-lite' ); ?></p>
 			</div>
 
 			<div id="tooltip-content3">
-				<h3><?php \esc_html_e( 'Add Fields to Your Form', 'wpforms' ); ?></h3>
-				<p><?php \esc_html_e( 'You can add additional fields to your form, if you need them. This step is optional.', 'wpforms' ); ?></p>
-				<button type="button" class="wpforms-challenge-step3-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms' ); ?></button>
+				<h3><?php \esc_html_e( 'Add Fields to Your Form', 'wpforms-lite' ); ?></h3>
+				<p><?php \esc_html_e( 'You can add additional fields to your form, if you need them. This step is optional.', 'wpforms-lite' ); ?></p>
+				<button type="button" class="wpforms-challenge-step3-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms-lite' ); ?></button>
 			</div>
 
 			<div id="tooltip-content4">
-				<h3><?php \esc_html_e( 'Check Notification Settings', 'wpforms' ); ?></h3>
-				<p><?php \esc_html_e( 'The default notification settings might be sufficient, but double&#8209;check to be sure.', 'wpforms' ); ?></p>
-				<button type="button" class="wpforms-challenge-step4-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms' ); ?></button>
+				<h3><?php \esc_html_e( 'Check Notification Settings', 'wpforms-lite' ); ?></h3>
+				<p><?php \esc_html_e( 'The default notification settings might be sufficient, but double&#8209;check to be sure.', 'wpforms-lite' ); ?></p>
+				<button type="button" class="wpforms-challenge-step4-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms-lite' ); ?></button>
 			</div>
 
 		</div>
@@ -564,13 +573,13 @@ class Challenge {
 
 			<div id="tooltip-content5">
 				<?php if ( \function_exists( 'register_block_type' ) ) : // Gutenberg content. ?>
-					<h3><?php \esc_html_e( 'Add a Block', 'wpforms' ); ?></h3>
-					<p><?php \esc_html_e( 'Click the “Add Block” button, search WPForms, select block to embed.', 'wpforms' ); ?></p>
+					<h3><?php \esc_html_e( 'Add a Block', 'wpforms-lite' ); ?></h3>
+					<p><?php \esc_html_e( 'Click the “Add Block” button, search WPForms, select block to embed.', 'wpforms-lite' ); ?></p>
 				<?php else : ?>
-					<h3><?php \esc_html_e( 'Embed in a Page', 'wpforms' ); ?></h3>
-					<p><?php \esc_html_e( 'Click the “Add Form” button, select your form, then add the embed code.', 'wpforms' ); ?></p>
+					<h3><?php \esc_html_e( 'Embed in a Page', 'wpforms-lite' ); ?></h3>
+					<p><?php \esc_html_e( 'Click the “Add Form” button, select your form, then add the embed code.', 'wpforms-lite' ); ?></p>
 				<?php endif; ?>
-				<button type="button" class="wpforms-challenge-step5-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms' ); ?></button>
+				<button type="button" class="wpforms-challenge-step5-done wpforms-challenge-done-btn"><?php \esc_html_e( 'Done', 'wpforms-lite' ); ?></button>
 			</div>
 		</div>
 
@@ -580,17 +589,17 @@ class Challenge {
 					<i class="wpforms-challenge-popup-close fa fa-times-circle fa-lg"></i>
 				</div>
 				<div class="wpforms-challenge-popup-content">
-					<h3><?php \esc_html_e( 'Congrats, you did it!', 'wpforms' ); ?></h3>
+					<h3><?php \esc_html_e( 'Congrats, you did it!', 'wpforms-lite' ); ?></h3>
 					<p>
 						<?php
 						echo \wp_kses(
 							\sprintf(
 								/* translators: %1$s - Number of minutes in HTML container; %2$s - Single or plural word 'minute'; %3$s - Number of seconds in HTML container; %4$s - Single or plural word 'second'; %5$s - 5 rating star symbols HTML. */
-								\__( 'You completed the WPForms Challenge in <b>%1$s %2$s %3$s %4$s</b>. Share your success story with other WPForms users and help us spread the word <b>by giving WPForms a 5-star rating (%5$s) on WordPress.org</b>. Thanks for your support and we look forward to bringing more awesome features.', 'wpforms' ),
+								\__( 'You completed the WPForms Challenge in <b>%1$s %2$s %3$s %4$s</b>. Share your success story with other WPForms users and help us spread the word <b>by giving WPForms a 5-star rating (%5$s) on WordPress.org</b>. Thanks for your support and we look forward to bringing more awesome features.', 'wpforms-lite' ),
 								'<span id="wpforms-challenge-congrats-minutes"></span>',
-								\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms' ),
+								\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms-lite' ),
 								'<span id="wpforms-challenge-congrats-seconds"></span>',
-								\_n( 'second', 'seconds', \absint( $this->minutes ), 'wpforms' ),
+								\_n( 'second', 'seconds', \absint( $this->minutes ), 'wpforms-lite' ),
 								'<span class="rating-stars"><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i></span>'
 							),
 							array(
@@ -606,7 +615,7 @@ class Challenge {
 						);
 						?>
 					</p>
-					<a href="https://wordpress.org/support/plugin/wpforms-lite/reviews/?filter=5#new-post" class="wpforms-challenge-popup-btn wpforms-challenge-popup-rate-btn" target="_blank" rel="noopener"><?php \esc_html_e( 'Rate WPForms on WordPress.org', 'wpforms' ); ?>
+					<a href="https://wordpress.org/support/plugin/wpforms-lite/reviews/?filter=5#new-post" class="wpforms-challenge-popup-btn wpforms-challenge-popup-rate-btn" target="_blank" rel="noopener"><?php \esc_html_e( 'Rate WPForms on WordPress.org', 'wpforms-lite' ); ?>
 						<span class="dashicons dashicons-external"></span></a>
 				</div>
 			</div>
@@ -617,29 +626,55 @@ class Challenge {
 				</div>
 				<div class="wpforms-challenge-popup-content">
 					<form id="wpforms-challenge-contact-form">
-						<h3><?php \esc_html_e( 'Help us improve WPForms', 'wpforms' ); ?></h3>
+						<h3><?php \esc_html_e( 'Help us improve WPForms', 'wpforms-lite' ); ?></h3>
 						<p>
 							<?php
 							echo \esc_html(
 								\sprintf(
 									/* translators: %1$d - Number of minutes; %2$s - Single or plural word 'minute'. */
-									\__( 'We`re sorry that it took longer than %1$d %2$s to create a form. Our goal is to create the most beginner friendly WordPress form plugin. Please take a moment to let us know how we can improve WPForms.', 'wpforms' ),
+									\__( 'We`re sorry that it took longer than %1$d %2$s to create a form. Our goal is to create the most beginner friendly WordPress form plugin. Please take a moment to let us know how we can improve WPForms.', 'wpforms-lite' ),
 									\absint( $this->minutes ),
-									\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms' )
+									\_n( 'minute', 'minutes', \absint( $this->minutes ), 'wpforms-lite' )
 								)
 							);
 							?>
 						</p>
 						<textarea class="wpforms-challenge-contact-message"></textarea>
 						<label>
-							<input type="checkbox" class="wpforms-challenge-contact-permission"><?php \esc_html_e( 'Yes, I give WPForms permission to contact me for any follow up questions.', 'wpforms' ); ?>
+							<input type="checkbox" class="wpforms-challenge-contact-permission"><?php \esc_html_e( 'Yes, I give WPForms permission to contact me for any follow up questions.', 'wpforms-lite' ); ?>
 						</label>
-						<button type="submit" class="wpforms-challenge-popup-btn wpforms-challenge-popup-contact-btn"><?php \esc_html_e( 'Submit Feedback', 'wpforms' ); ?></button>
+						<button type="submit" class="wpforms-challenge-popup-btn wpforms-challenge-popup-contact-btn"><?php \esc_html_e( 'Submit Feedback', 'wpforms-lite' ); ?></button>
 					</form>
 				</div>
 			</div>
 		</div>
 
+		<?php
+	}
+
+	/**
+	 * Include Challenge CTA on WPForms welcome activation screen.
+	 *
+	 * @since 1.5.0
+	 */
+	public function welcome_html() {
+
+		if ( $this->challenge_finished() ) {
+			return;
+		}
+
+		?>
+		<div class="challenge">
+			<div class="block">
+				<h1><?php esc_html_e( 'Take the WPForms Challenge', 'wpforms-lite' ); ?></h1>
+				<h6><?php esc_html_e( 'Create your first form with our guided setup wizard in less than 5 minutes to experience the WPForms difference.', 'wpforms-lite' ); ?></h6>
+				<div class="button-wrap">
+					<a href="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-builder&challenge=start' ) ); ?>" class="wpforms-btn wpforms-btn-lg wpforms-btn-orange">
+						<?php esc_html_e( 'Start the WPForms Challenge', 'wpforms-lite' ); ?>
+					</a>
+				</div>
+			</div>
+		</div>
 		<?php
 	}
 
@@ -656,7 +691,7 @@ class Challenge {
 
 		$page_id = \absint(
 			$wpdb->get_var(
-				"SELECT ID 
+				"SELECT ID
 					FROM $wpdb->posts
 					WHERE post_type = 'page'
 					AND post_name LIKE '%contact%';"

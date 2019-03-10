@@ -20,18 +20,27 @@ class OWP_Settings_Importer {
 			return $data;
 		}
 
-		// Decode file contents.
-	    $data = json_decode( $data, true );
+		// Get file contents and decode
+		$raw  = file_get_contents( $file );
+		$data = @unserialize( $raw );
+
+		// Delete import file
+		unlink( $file );
+
+		// If wp_css is set then import it.
+		if ( function_exists( 'wp_update_custom_css_post' ) && isset( $data['wp_css'] ) && '' !== $data['wp_css'] ) {
+			wp_update_custom_css_post( $data['wp_css'] );
+		}
 
 		// Import the data
-    	return $this->import_data( $data );
+    	return $this->import_data( $data['mods'] );
 
 	}
 
 	/**
-	 * Import JSON data
+	 * Sanitization callback
 	 *
-	 * @return array $results
+	 * @since 1.0.5
 	 */
 	private function import_data( $file ) {
 

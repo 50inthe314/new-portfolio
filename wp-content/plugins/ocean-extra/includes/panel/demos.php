@@ -33,10 +33,12 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				require_once( OE_PATH .'/includes/panel/classes/class-install-demos.php' );
 			}
 
-			// Disable Woo Wizard
-			add_filter( 'woocommerce_enable_setup_wizard', '__return_false' );
-			add_filter( 'woocommerce_show_admin_notice', '__return_false' );
-			add_filter( 'woocommerce_prevent_automatic_wizard_redirect', '__return_false' );
+			// Disable Woo Wizard if the Pro Demos plugin is activated
+			if ( class_exists( 'Ocean_Pro_Demos' ) ) {
+				add_filter( 'woocommerce_enable_setup_wizard', '__return_false' );
+				add_filter( 'woocommerce_show_admin_notice', '__return_false' );
+				add_filter( 'woocommerce_prevent_automatic_wizard_redirect', '__return_false' );
+	        }
 
 			// Start things
 			add_action( 'admin_init', array( $this, 'init' ) );
@@ -49,13 +51,6 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 
 			// Demos popup
 			add_action( 'admin_footer', array( $this, 'popup' ) );
-
-			// Display notice if the Demo Import and Pro Demos are activated
-			if ( class_exists( 'Ocean_Demo_Import' )
-				&& class_exists( 'Ocean_Pro_Demos' ) ) {
-				add_action( 'admin_notices', array( $this, 'demos_notice' ) );
-	            add_action( 'admin_init', array( $this, 'dismiss_demos_notice' ) );
-	        }
 
 		}
 
@@ -81,6 +76,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 
 			// Import widgets
 			add_action( 'wp_ajax_owp_ajax_import_widgets', array( $this, 'ajax_import_widgets' ) );
+
+			// Import forms
+			add_action( 'wp_ajax_owp_ajax_import_forms', array( $this, 'ajax_import_forms' ) );
 
 			// After import
 			add_action( 'wp_ajax_owp_after_import', array( $this, 'ajax_after_import' ) );
@@ -127,57 +125,6 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 			return $mimes;
 		}
 
-	    /**
-	     * Display notice if the Demo Import and Pro Demos are activatede
-	     *
-		 * @since 1.4.5
-	     */
-	    public static function demos_notice() {
-	    	global $pagenow;
-
-	        if ( '1' === get_option( 'owp_dismiss_demos_notice' )
-	            || ! current_user_can( 'manage_options' ) ) {
-	            return;
-	        }
-
-	        // Display on the plugins and demos pages
-	        if ( 'plugins.php' == $pagenow
-	            || ( 'admin.php' == $pagenow && 'oceanwp-panel-install-demos' == $_GET['page'] ) ) {
-
-		        $dismiss = wp_nonce_url( add_query_arg( 'owp_demos_notice', 'dismiss_btn' ), 'dismiss_btn' ); ?>
-		        
-		        <div class="notice notice-warning owp-demos-notice">
-		        	<p><?php echo sprintf(
-		        		esc_html__( 'As you use %1$sOcean Pro Demos%2$s, you don&rsquo;t need to use the %3$sOcean Demo Import%4$s plugin anymore, you can disable it. %5$sDismiss this notice%6$s.', 'ocean-extra' ),
-		        		'<strong>', '</strong>',
-		        		'<strong>', '</strong>',
-		        		'<a href="'. $dismiss .'">', '</a>'
-		        		); ?></p>
-		        </div>
-
-	    	<?php
-	    	}
-	    }
-
-	    /**
-	     * Dismiss demos admin notice
-	     *
-		 * @since 1.4.5
-	     */
-	    public static function dismiss_demos_notice() {
-	        if ( ! isset( $_GET['owp_demos_notice'] ) ) {
-	            return;
-	        }
-
-	        if ( 'dismiss_btn' === $_GET['owp_demos_notice'] ) {
-	            check_admin_referer( 'dismiss_btn' );
-	            update_option( 'owp_dismiss_demos_notice', '1' );
-	        }
-
-	        wp_redirect( remove_query_arg( 'owp_demos_notice' ) );
-	        exit;
-	    }
-
 		/**
 		 * Get demos data to add them in the Demo Import and Pro Demos plugins
 		 *
@@ -193,8 +140,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'architect' => array(
 					'categories'        => array( 'Business' ),
 					'xml_file'     		=> $url . 'architect/sample-data.xml',
-					'theme_settings' 	=> $url . 'architect/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'architect/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'architect/widgets.wie',
+					'form_file'  		=> $url . 'architect/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -240,8 +188,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'blogger' => array(
 					'categories'        => array( 'Blog' ),
 					'xml_file'     		=> $url . 'blogger/sample-data.xml',
-					'theme_settings' 	=> $url . 'blogger/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'blogger/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'blogger/widgets.wie',
+					'form_file'  		=> $url . 'blogger/form.json',
 					'home_title'  		=> '',
 					'blog_title'  		=> 'Home',
 					'posts_to_show'  	=> '12',
@@ -276,8 +225,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'coach' => array(
 					'categories'        => array( 'Business', 'Sport', 'One Page' ),
 					'xml_file'     		=> $url . 'coach/sample-data.xml',
-					'theme_settings' 	=> $url . 'coach/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'coach/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'coach/widgets.wie',
+					'form_file'  		=> $url . 'coach/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -317,8 +267,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'gym' => array(
 					'categories'        => array( 'Business', 'Sport' ),
 					'xml_file'     		=> $url . 'gym/sample-data.xml',
-					'theme_settings' 	=> $url . 'gym/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'gym/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'gym/widgets.wie',
+					'form_file'  		=> $url . 'gym/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'News',
 					'posts_to_show'  	=> '3',
@@ -364,8 +315,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'lawyer' => array(
 					'categories'        => array( 'Business' ),
 					'xml_file'     		=> $url . 'lawyer/sample-data.xml',
-					'theme_settings' 	=> $url . 'lawyer/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'lawyer/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'lawyer/widgets.wie',
+					'form_file'  		=> $url . 'lawyer/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -416,8 +368,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'megagym' => array(
 					'categories'        => array( 'Business', 'Sport', 'One Page' ),
 					'xml_file'     		=> $url . 'megagym/sample-data.xml',
-					'theme_settings' 	=> $url . 'megagym/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'megagym/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'megagym/widgets.wie',
+					'form_file'  		=> $url . 'megagym/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -457,8 +410,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'personal' => array(
 					'categories'        => array( 'Blog' ),
 					'xml_file'     		=> $url . 'personal/sample-data.xml',
-					'theme_settings' 	=> $url . 'personal/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'personal/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'personal/widgets.wie',
+					'form_file'  		=> $url . 'personal/form.json',
 					'home_title'  		=> '',
 					'blog_title'  		=> 'Home',
 					'posts_to_show'  	=> '3',
@@ -498,8 +452,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'simple' => array(
 					'categories'        => array( 'eCommerce' ),
 					'xml_file'     		=> $url . 'simple/sample-data.xml',
-					'theme_settings' 	=> $url . 'simple/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'simple/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'simple/widgets.wie',
+					'form_file'  		=> $url . 'simple/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -570,8 +525,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'store' => array(
 					'categories'        => array( 'eCommerce' ),
 					'xml_file'     		=> $url . 'store/sample-data.xml',
-					'theme_settings' 	=> $url . 'store/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'store/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'store/widgets.wie',
+					'form_file'  		=> $url . 'store/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '6',
@@ -652,7 +608,7 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'stylish' => array(
 					'categories'        => array( 'Business' ),
 					'xml_file'     		=> $url . 'stylish/sample-data.xml',
-					'theme_settings' 	=> $url . 'stylish/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'stylish/oceanwp-export.dat',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '12',
@@ -688,8 +644,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'travel' => array(
 					'categories'        => array( 'Blog' ),
 					'xml_file'     		=> $url . 'travel/sample-data.xml',
-					'theme_settings' 	=> $url . 'travel/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'travel/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'travel/widgets.wie',
+					'form_file'  		=> $url . 'travel/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '4',
@@ -740,8 +697,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'lingerie' => array(
 					'categories'        => array( 'eCommerce' ),
 					'xml_file'     		=> $url . 'lingerie/sample-data.xml',
-					'theme_settings' 	=> $url . 'lingerie/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'lingerie/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'lingerie/widgets.wie',
+					'form_file'  		=> $url . 'lingerie/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -812,8 +770,9 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 				'yoga' => array(
 					'categories'        => array( 'Business', 'Sport' ),
 					'xml_file'     		=> $url . 'yoga/sample-data.xml',
-					'theme_settings' 	=> $url . 'yoga/oceanwp-export.json',
+					'theme_settings' 	=> $url . 'yoga/oceanwp-export.dat',
 					'widgets_file'  	=> $url . 'yoga/widgets.wie',
+					'form_file'  		=> $url . 'yoga/form.json',
 					'home_title'  		=> 'Home',
 					'blog_title'  		=> 'Blog',
 					'posts_to_show'  	=> '3',
@@ -1016,6 +975,13 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 								<strong><?php esc_html_e( 'Import Widgets', 'ocean-extra' ); ?></strong>
 							</label>
 						</li>
+
+						<li>
+							<label for="owp_import_forms">
+								<input id="owp_import_forms" type="checkbox" name="owp_import_forms" checked="checked" />
+								<strong><?php esc_html_e( 'Import Contact Form', 'ocean-extra' ); ?></strong>
+							</label>
+						</li>
 					</ul>
 
 				</div>
@@ -1162,6 +1128,13 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 						'action' 		=> 'owp_ajax_import_widgets',
 						'method' 		=> 'ajax_import_widgets',
 						'loader' 		=> esc_html__( 'Importing Widgets', 'ocean-extra' )
+					),
+
+					array(
+						'input_name' 	=> 'owp_import_forms',
+						'action' 		=> 'owp_ajax_import_forms',
+						'method' 		=> 'ajax_import_forms',
+						'loader' 		=> esc_html__( 'Importing Form', 'ocean-extra' )
 					)
 				)
 			);
@@ -1272,6 +1245,41 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 			// Import settings.
 			$widgets_importer = new OWP_Widget_Importer();
 			$result = $widgets_importer->process_import_file( $widgets_file );
+			
+			if ( is_wp_error( $result ) ) {
+				echo json_encode( $result->errors );
+			} else {
+				echo 'successful import';
+			}
+
+			die();
+		}
+
+		/**
+		 * Import forms
+		 *
+		 * @since 1.4.5
+		 */
+		public function ajax_import_forms() {
+			if ( ! wp_verify_nonce( $_POST['owp_import_demo_data_nonce'], 'owp_import_demo_data_nonce' ) ) {
+				die( 'This action was stopped for security purposes.' );
+			}
+
+			// Include form importer
+			include OE_PATH . 'includes/panel/classes/importers/class-wpforms-importer.php';
+
+			// Get the selected demo
+			$demo_type 			= $_POST['owp_import_demo'];
+
+			// Get demos data
+			$demo 				= OceanWP_Demos::get_demos_data()[ $demo_type ];
+
+			// Widgets file
+			$form_file 			= isset( $demo['form_file'] ) ? $demo['form_file'] : '';
+
+			// Import settings.
+			$forms_importer = new OWP_WPForms_Importer();
+			$result = $forms_importer->process_import_file( $form_file );
 			
 			if ( is_wp_error( $result ) ) {
 				echo json_encode( $result->errors );
@@ -1426,7 +1434,7 @@ if ( ! class_exists( 'OceanWP_Demos' ) ) {
 
 			// No sample data found
 			if ( $response === false ) {
-				return new WP_Error( 'xml_import_error', __( 'Can not retrieve sample data xml file. Github may be down at the momment please try again later. If you still have issues contact the theme developer for assistance.', 'ocean-pro-demos' ) );
+				return new WP_Error( 'xml_import_error', __( 'Can not retrieve sample data xml file. GitHub may be down at the moment please try again later. If you still have issues contact the theme developer for assistance.', 'ocean-pro-demos' ) );
 			}
 
 			// Write sample data content to temp xml file

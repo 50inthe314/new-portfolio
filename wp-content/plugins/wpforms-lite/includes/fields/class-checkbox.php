@@ -70,7 +70,7 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 		// filter to disable fancy display.
 		if (
 			! empty( $field['value'] ) &&
-			'checkbox' === $field['type'] &&
+			$this->type === $field['type'] &&
 			! empty( $field['images'] ) &&
 			'entry-table' !== $context &&
 			apply_filters( 'wpforms_checkbox_field_html_value_images', true, $context )
@@ -138,6 +138,18 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 			// Used for dynamic choices.
 			$depth = isset( $choice['depth'] ) ? absint( $choice['depth'] ) : 1;
 
+			// Choice labels should not be left blank, but if they are we
+			// provide a basic value.
+			$value = isset( $field['show_values'] ) ? $choice['value'] : $choice['label'];
+			if ( '' === $value ) {
+				if ( 1 === count( $choices ) ) {
+					$value = esc_html__( 'Checked', 'wpforms-lite' );
+				} else {
+					/* translators: %s - choice number. */
+					$value = sprintf( esc_html__( 'Choice %s', 'wpforms-lite' ), $key );
+				}
+			}
+
 			$properties['inputs'][ $key ] = array(
 				'container' => array(
 					'attr'  => array(),
@@ -156,7 +168,7 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 				),
 				'attr'      => array(
 					'name'  => "wpforms[fields][{$field_id}][]",
-					'value' => isset( $field['show_values'] ) ? $choice['value'] : $choice['label'],
+					'value' => $value,
 				),
 				'class'     => array(),
 				'data'      => array(),
@@ -514,7 +526,8 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 
 			$data['value'] = ! empty( $posts ) ? wpforms_sanitize_array_combine( $posts ) : '';
 
-		} elseif ( 'taxonomy' === $dynamic && ! empty( $field['dynamic_taxonomy'] ) ) {
+		}
+		elseif ( 'taxonomy' === $dynamic && ! empty( $field['dynamic_taxonomy'] ) ) {
 
 			// Dynamic population is enabled using taxonomy.
 			$value_raw                = implode( ',', array_map( 'absint', $field_submit ) );
@@ -534,7 +547,8 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 
 			$data['value'] = ! empty( $terms ) ? wpforms_sanitize_array_combine( $terms ) : '';
 
-		} else {
+		}
+		else {
 
 			// Normal processing, dynamic population is off.
 			$choice_keys = array();
@@ -572,7 +586,7 @@ class WPForms_Field_Checkbox extends WPForms_Field {
 			}
 
 			// Images choices are enabled, lookup and store image URLs.
-			if ( ! empty( $field['choices_images'] ) && ! empty( $choice_keys ) ) {
+			if ( ! empty( $choice_keys ) && ! empty( $field['choices_images'] ) ) {
 
 				$data['images'] = array();
 

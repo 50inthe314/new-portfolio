@@ -3,7 +3,7 @@ Contributors: oceanwp
 Tags: widgets, meta box, metaboxes, metabox, oceanwp
 Requires at least: 4.6
 Tested up to: 5.0
-Stable tag: 1.4.30
+Stable tag: 1.5.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,8 +32,23 @@ This plugin will only work with the [OceanWP](https://oceanwp.org/) theme.
 
 == Changelog ==
 
-= 1.4.30 =
-- Fixed: Issue when importing the JSON file in Theme Panel > Import/Export.
+= 1.5.3 =
+- Fixed: White screen error with older PHP version.
+
+= 1.5.2 =
+- Fixed: White screen error.
+
+= 1.5.1 =
+- Added: Meta tags directly added to this plugin as it is not allowed in a theme.
+
+= 1.5.0 =
+- Added: Setup Wizard to help you to create very easily your website.
+- Tweak: You can now select a post type for the [oceanwp_search] shortcode.
+- Tweak: The WooCommerce shortcodes take into account the taxes calculation if activated.
+- Fixed: Import issue with the contact form of the demos.
+- Fixed: WPML issue to translate pages.
+- Fixed: The MailChimp and Social Share JS files are now only loaded if the widgets are used on a post.
+- Removed: First box in Theme Panel sidebar.
 
 = 1.4.29 =
 - Tweak: Some tweaks for an upcoming big update.

@@ -155,7 +155,7 @@ class WPForms_Builder_Panel_Settings extends WPForms_Builder_Panel {
 					'settings',
 					'recaptcha',
 					$this->form_data,
-					'invisible' === $recaptcha_type ? esc_html__( 'Enable Google invisible reCAPTCHA', 'wpforms-lite' ) : esc_html__( 'Enable Google reCAPTCHA (v2)', 'wpforms-lite' )
+					'invisible' === $recaptcha_type ? esc_html__( 'Enable Google Invisible v2 reCAPTCHA', 'wpforms-lite' ) : esc_html__( 'Enable Google Checkbox v2 reCAPTCHA', 'wpforms-lite' )
 				);
 			}
 			wpforms_panel_field(

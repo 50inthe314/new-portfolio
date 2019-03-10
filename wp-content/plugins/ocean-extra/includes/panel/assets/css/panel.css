@@ -8,7 +8,7 @@ body .button.owp-button:focus,
 body .button.owp-button:active { background-color: #0b7cac; color: #fff; }
 body .button.owp-button:active { -webkit-transform: none; -ms-transform: none; transform: none; }
 
-/* Settings Wrap */
+/* Settings wrap */
 .wrap.oceanwp-theme-panel { margin-right: 40px; }
 .oceanwp-settings .left { float: left; width: 75%; margin-top: 20px; }
 .oceanwp-settings .right { float: right; width: 23%; margin-top: 30px; }
@@ -37,6 +37,9 @@ body .button.owp-button:active { -webkit-transform: none; -ms-transform: none; t
 .oceanwp-options .bottom-column .option-link { font-size: 12px; font-weight: 600; line-height: 1.6; text-transform: uppercase; letter-spacing: .6px; text-decoration: none; }
 
 /* Sidebar */
+.oceanwp-wizard { margin-bottom: 15px; }
+.oceanwp-wizard a { width: 100%; }
+
 .oceanwp-bloc { display: inline-block; position: relative; width: 100%; background-color: #fff; margin: 0 auto 15px auto; border-radius: 3px; border: 1px solid #e5e5e5; -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.04); box-shadow: 0 1px 1px rgba(0,0,0,.04); -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; overflow: hidden; }
 .oceanwp-bloc h3 { display: block; font-size: 14px; font-weight: 600; padding: 12px 10px; background-color: #13aff0; color: #fff; text-transform: uppercase; letter-spacing: .4px; margin: 0 0 22px; text-align: center; }
 .oceanwp-bloc .content-wrap { position: relative; padding: 0 30px 25px; z-index: 2; text-align: center; }
@@ -44,9 +47,6 @@ body .button.owp-button:active { -webkit-transform: none; -ms-transform: none; t
 body .oceanwp-bloc .button.owp-button { margin: 22px 0 10px; }
 .oceanwp-bloc p.bottom-text { color: #5a5a5a; font-size: 12px; font-weight: 600; font-style: italic; margin: 0; }
 .oceanwp-bloc i { position: absolute; bottom: -30px; right: -26px; width: auto; height: auto; font-size: 120px; opacity: .07; z-index: 1; }
-
-.oceanwp-bloc.oceanwp-review h3 { position: relative; }
-.oceanwp-bloc.oceanwp-review h3 a { position: absolute; top: 50%; right: 8px; margin-top: -10px; color: #fff; text-decoration: none; }
 
 .oceanwp-bundle { background-color: #2794da; background: -moz-linear-gradient(4deg,#2386c5 58%,#2386c5 58%,#2386c5 58%); background: -webkit-linear-gradient(4deg,#2386c5 58%,#2386c5 58%,#2794da 58%); background: linear-gradient(4deg,#2386c5 58%,#2386c5 58%,#2794da 58%); color: #fff; }
 .oceanwp-bundle .owp-text { text-align: center; margin: 0; padding: 25px 10px; }

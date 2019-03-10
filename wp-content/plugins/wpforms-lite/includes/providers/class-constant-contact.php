@@ -747,7 +747,7 @@ class WPForms_Constant_Contact extends WPForms_Provider {
 		<div class="wrap about-wrap">
 			<h1><?php esc_html_e( 'Grow Your Website with WPForms + Email Marketing', 'wpforms-lite' ); ?></h1>
 			<p><?php esc_html_e( 'Wondering if email marketing is really worth your time?', 'wpforms-lite' ); ?></p>
-			<p><?php echo wp_kses( __( 'Email is hands-down the most effective way to nurture leads and turn them into customers, with a return on investment (ROI) of <strong>$44 back for every $1 spent</strong> according to Direct Marketing Association.', 'wpforms-lite' ), array( 'strong' => array() ) ); ?></p>
+			<p><?php echo wp_kses( __( 'Email is hands-down the most effective way to nurture leads and turn them into customers, with a return on investment (ROI) of <strong>$44 back for every $1 spent</strong> according to DMA.', 'wpforms-lite' ), array( 'strong' => array() ) ); ?></p>
 			<p><?php esc_html_e( 'Here are 3 big reasons why every smart business in the world has an email list:', 'wpforms-lite' ); ?></p>
 			<a href="<?php echo esc_url( $this->sign_up ); ?>" target="_blank" rel="noopener noreferrer">
 				<img src="<?php echo WPFORMS_PLUGIN_URL; ?>assets/images/cc-about-logo.png" class="logo">

@@ -264,7 +264,7 @@ if ( ! class_exists( 'Ocean_Extra_About_Me_Widget' ) ) {
 		public function form( $instance ) {
 			$instance = wp_parse_args( ( array ) $instance, array(
 				'title'       		=> esc_html__( 'About Me', 'ocean-extra' ),
-				'avatar' 			=> OE_URL .'/assets/img/about-avatar.png',
+				'avatar' 			=> OE_URL .'assets/img/about-avatar.png',
 				'name'  			=> esc_html__( 'John Doe', 'ocean-extra' ),
 				'text' 				=> 'Lorem ipsum ex vix illud nonummy novumtatio et his. At vix patrioque scribentur at fugitertissi ext scriptaset verterem molestiae.',
 				'social_style' 		=> 'color',

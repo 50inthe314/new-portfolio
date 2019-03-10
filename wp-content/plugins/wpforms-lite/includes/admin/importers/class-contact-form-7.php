@@ -120,7 +120,7 @@ class WPForms_Contact_Form_7 extends WPForms_Importer {
 					1 => array(
 						'notification_name' => esc_html__( 'Notification 1', 'wpforms-lite' ),
 						'email'             => '{admin_email}',
-						/* translators: %s - Contact Form 7 form name. */
+						/* translators: %s - form name. */
 						'subject'           => sprintf( esc_html__( 'New Entry: %s', 'wpforms-lite' ), $cf7_form_name ),
 						'sender_name'       => get_bloginfo( 'name' ),
 						'sender_address'    => '{admin_email}',
@@ -410,7 +410,7 @@ class WPForms_Contact_Form_7 extends WPForms_Importer {
 			$form['settings']['notifications'][2] = array(
 				'notification_name' => esc_html__( 'Notification 2', 'wpforms-lite' ),
 				'email'             => '{admin_email}',
-				/* translators: %s - Contact Form 7 form name. */
+				/* translators: %s - form name. */
 				'subject'           => sprintf( esc_html__( 'New Entry: %s', 'wpforms-lite' ), $cf7_form_name ),
 				'sender_name'       => get_bloginfo( 'name' ),
 				'sender_address'    => '{admin_email}',

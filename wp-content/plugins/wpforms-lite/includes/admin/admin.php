@@ -119,12 +119,12 @@ function wpforms_admin_scripts() {
 
 	$strings = array(
 		'addon_activate'                  => esc_html__( 'Activate', 'wpforms-lite' ),
-		'addon_activated'                 => esc_html__( 'Activated', 'wpforms' ),
+		'addon_activated'                 => esc_html__( 'Activated', 'wpforms-lite' ),
 		'addon_active'                    => esc_html__( 'Active', 'wpforms-lite' ),
 		'addon_deactivate'                => esc_html__( 'Deactivate', 'wpforms-lite' ),
 		'addon_inactive'                  => esc_html__( 'Inactive', 'wpforms-lite' ),
 		'addon_install'                   => esc_html__( 'Install Addon', 'wpforms-lite' ),
-		'addon_error'                     => esc_html__( 'Could not install an addon. Please download from wpforms.com and install manually.', 'wpforms' ),
+		'addon_error'                     => esc_html__( 'Could not install an addon. Please download from wpforms.com and install manually.', 'wpforms-lite' ),
 		'plugin_error'                    => esc_html__( 'Could not install a plugin. Please download from WordPress.org and install manually.', 'wpforms-lite' ),
 		'addon_search'                    => esc_html__( 'Searching Addons', 'wpforms-lite' ),
 		'ajax_url'                        => admin_url( 'admin-ajax.php' ),

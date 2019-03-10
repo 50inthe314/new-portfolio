@@ -151,7 +151,7 @@ class WPForms_Conditional_Logic_Core {
 	public function builder_block( $args = array(), $echo = true ) {
 
 		if ( ! empty( $args['form'] ) ) {
-			$form_fields = wpforms_get_form_fields( $args['form'], array( 'text', 'textarea', 'select', 'radio', 'email', 'url', 'checkbox', 'number', 'payment-multiple', 'payment-select', 'hidden', 'rating', 'net_promoter_score' ) );
+			$form_fields = wpforms_get_form_fields( $args['form'], array( 'text', 'textarea', 'select', 'radio', 'email', 'url', 'checkbox', 'number', 'payment-multiple', 'payment-checkbox', 'payment-select', 'hidden', 'rating', 'net_promoter_score' ) );
 		} else {
 			$form_fields = array();
 		}
@@ -634,13 +634,13 @@ class WPForms_Conditional_Logic_Core {
 						$provided_id = false;
 
 						if (
-							in_array( $fields[ $rule_field ]['type'], array( 'payment-multiple', 'payment-select' ), true ) &&
+							in_array( $fields[ $rule_field ]['type'], array( 'payment-multiple', 'payment-checkbox', 'payment-select' ), true ) &&
 							isset( $fields[ $rule_field ]['value_raw'] ) &&
 							'' != $fields[ $rule_field ]['value_raw']
 						) {
 
-							// Payment Multiple field stores the option key, so
-							// we can reference that easily.
+							// Payment Multiple/Checkbox fields store the option key,
+							// so we can reference that easily.
 							$provided_id = $fields[ $rule_field ]['value_raw'];
 
 						} elseif ( isset( $fields[ $rule_field ]['value'] ) && '' != $fields[ $rule_field ]['value'] ) {
@@ -650,7 +650,7 @@ class WPForms_Conditional_Logic_Core {
 							// it ourselves.
 							$provided_id = array();
 
-							if ( in_array( $fields[ $rule_field ]['type'], array( 'checkbox' ), true ) ) {
+							if ( 'checkbox' === $fields[ $rule_field ]['type'] ) {
 								$values = explode( "\n", $fields[ $rule_field ]['value'] );
 							} else {
 								$values = (array) $fields[ $rule_field ]['value'];
@@ -671,7 +671,7 @@ class WPForms_Conditional_Logic_Core {
 						}
 
 						$left  = (array) $provided_id;
-						$right = trim( strtolower( (int) $rule_value ) );
+						$right = strtolower( trim( (int) $rule_value ) );
 
 						switch ( $rule_operator ) {
 							case '==':

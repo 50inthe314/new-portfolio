@@ -53,24 +53,12 @@ class FormSelector implements IntegrationInterface {
 	 */
 	public function register_block() {
 
-		// Load CSS per global setting.
-		if ( \wpforms_setting( 'disable-css', '1' ) === '1' ) {
-			\wp_register_style(
-				'wpforms-gutenberg-form-selector',
-				WPFORMS_PLUGIN_URL . 'assets/css/wpforms-full.css',
-				array( 'wp-edit-blocks' ),
-				WPFORMS_VERSION
-			);
-		}
-
-		if ( \wpforms_setting( 'disable-css', '1' ) === '2' ) {
-			\wp_register_style(
-				'wpforms-gutenberg-form-selector',
-				WPFORMS_PLUGIN_URL . 'assets/css/wpforms-base.css',
-				array( 'wp-edit-blocks' ),
-				WPFORMS_VERSION
-			);
-		}
+		\wp_register_style(
+			'wpforms-gutenberg-form-selector',
+			WPFORMS_PLUGIN_URL . 'assets/css/wpforms-full.css',
+			array( 'wp-edit-blocks' ),
+			WPFORMS_VERSION
+		);
 
 		\register_block_type( 'wpforms/form-selector', array(
 			'attributes'      => array(
@@ -155,6 +143,7 @@ class FormSelector implements IntegrationInterface {
 		if ( $is_gb_editor ) {
 			\add_filter( 'wpforms_frontend_container_class', function ( $classes ) {
 				$classes[] = 'wpforms-gutenberg-form-selector';
+				$classes[] = 'wpforms-container-full';
 				return $classes;
 			} );
 			\add_action( 'wpforms_frontend_output', function () {

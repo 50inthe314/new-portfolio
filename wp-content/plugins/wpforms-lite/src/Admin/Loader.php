@@ -39,6 +39,8 @@ class Loader {
 		$core_class_names = array(
 			'DashboardWidget',
 			'Challenge',
+			'Builder\Education',
+			'Entries\PrintPreview',
 		);
 
 		$class_names = \apply_filters( 'wpforms_admin_classes_available', $core_class_names );

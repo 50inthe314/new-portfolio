@@ -70,6 +70,7 @@ class Widgets_Manager {
 			'html',
 			'menu-anchor',
 			'sidebar',
+			'read-more',
 		];
 
 		$this->_widget_types = [];
@@ -256,6 +257,23 @@ class Widgets_Manager {
 
 		foreach ( $this->get_widget_types() as $widget_key => $widget ) {
 			$config[ $widget_key ] = $widget->get_config();
+		}
+
+		return $config;
+	}
+
+	public function ajax_get_widget_types_controls_config( array $data ) {
+		$config = [];
+
+		foreach ( $this->get_widget_types() as $widget_key => $widget ) {
+			if ( isset( $data['exclude'][ $widget_key ] ) ) {
+				continue;
+			}
+
+			$config[ $widget_key ] = [
+				'controls' => $widget->get_stack( false )['controls'],
+				'tabs_controls' => $widget->get_tabs_controls(),
+			];
 		}
 
 		return $config;
@@ -487,8 +505,9 @@ class Widgets_Manager {
 	 *
 	 * @param Ajax $ajax_manager
 	 */
-	public function register_ajax_actions( $ajax_manager ) {
+	public function register_ajax_actions( Ajax $ajax_manager ) {
 		$ajax_manager->register_ajax_action( 'render_widget', [ $this, 'ajax_render_widget' ] );
 		$ajax_manager->register_ajax_action( 'editor_get_wp_widget_form', [ $this, 'ajax_get_wp_widget_form' ] );
+		$ajax_manager->register_ajax_action( 'get_widgets_config', [ $this, 'ajax_get_widget_types_controls_config' ] );
 	}
 }

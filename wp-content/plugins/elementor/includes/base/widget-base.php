@@ -221,9 +221,9 @@ abstract class Widget_Base extends Element_Base {
 	 * @access public
 	 *
 	 * @param string $section_id Section ID.
-	 * @param array  $args       Section arguments.
+	 * @param array  $args       Section arguments Optional.
 	 */
-	public function start_controls_section( $section_id, array $args ) {
+	public function start_controls_section( $section_id, array $args = [] ) {
 		parent::start_controls_section( $section_id, $args );
 
 		static $is_first_section = true;
@@ -363,6 +363,13 @@ abstract class Widget_Base extends Element_Base {
 			'html_wrapper_class' => $this->get_html_wrapper_class(),
 			'show_in_panel' => $this->show_in_panel(),
 		];
+
+		$stack = Plugin::$instance->controls_manager->get_element_stack( $this );
+
+		if ( $stack ) {
+			$config['controls'] = $this->get_stack( false )['controls'];
+			$config['tabs_controls'] = $this->get_tabs_controls();
+		}
 
 		return array_merge( parent::_get_initial_config(), $config );
 	}

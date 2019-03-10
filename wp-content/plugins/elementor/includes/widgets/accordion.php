@@ -92,7 +92,7 @@ class Widget_Accordion extends Widget_Base {
 		$repeater->add_control(
 			'tab_title',
 			[
-				'label' => __( 'Title & Content', 'elementor' ),
+				'label' => __( 'Title & Description', 'elementor' ),
 				'type' => Controls_Manager::TEXT,
 				'default' => __( 'Accordion Title', 'elementor' ),
 				'dynamic' => [
@@ -470,7 +470,6 @@ class Widget_Accordion extends Widget_Base {
 				$this->add_render_attribute( $tab_title_setting_key, [
 					'id' => 'elementor-tab-title-' . $id_int . $tab_count,
 					'class' => [ 'elementor-tab-title' ],
-					'tabindex' => $id_int . $tab_count,
 					'data-tab' => $tab_count,
 					'role' => 'tab',
 					'aria-controls' => 'elementor-tab-content-' . $id_int . $tab_count,

@@ -145,18 +145,7 @@ class WPForms_Welcome {
 
 				</div><!-- /.intro -->
 
-				<div class="challenge">
-
-					<div class="block">
-						<h1><?php esc_html_e( 'Take the WPForms Challenge', 'wpforms' ); ?></h1>
-						<h6><?php esc_html_e( 'Create your first form with our guided setup wizard in less than 5 minutes to experience the WPForms difference.', 'wpforms' ); ?></h6>
-						<div class="button-wrap">
-                            <a href="<?php echo esc_url( admin_url( 'admin.php?page=wpforms-builder&challenge=start' ) ); ?>" class="wpforms-btn wpforms-btn-lg wpforms-btn-orange">
-                                <?php esc_html_e( 'Start the WPForms Challenge', 'wpforms' ); ?>
-                            </a>
-						</div>
-					</div>
-				</div>
+				<?php do_action( 'wpforms_welcome_intro_after' ); ?>
 
 				<div class="features">
 

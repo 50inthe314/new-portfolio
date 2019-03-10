@@ -331,6 +331,7 @@ class WPForms_About {
 									<strong>
 										<?php
 										printf(
+											/* translators: %s - status text. */
 											esc_html__( 'Status: %s', 'wpforms-lite' ),
 											'<span class="status-label ' . $status_class . '">' . $status_text . '</span>'
 										);
@@ -490,7 +491,7 @@ class WPForms_About {
 								</li>
 								<li>
 									<i class="fa fa-check" aria-hidden="true"></i>
-									<?php esc_html_e( 'Accept user submitted content wit Post Submissions addon.', 'wpforms-lite' ); ?>
+									<?php esc_html_e( 'Accept user submitted content with Post Submissions addon.', 'wpforms-lite' ); ?>
 								</li>
 								<li>
 									<i class="fa fa-check" aria-hidden="true"></i>
@@ -972,14 +973,14 @@ class WPForms_About {
 					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
-						esc_html__( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
+						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
 					),
 				),
 				'plus'  => array(
 					'status' => 'partial',
 					'text'   => array(
 						'<strong>' . esc_html__( 'Limited Advanced Features', 'wpforms-lite' ) . '</strong>',
-						esc_html__( 'Multi-page Forms, File Upload Forms, Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
+						esc_html__( 'Multi-page Forms, File Upload Forms, Multiple Form Notifications, Conditional Form Confirmation', 'wpforms-lite' ),
 					),
 				),
 				'pro'   => array(

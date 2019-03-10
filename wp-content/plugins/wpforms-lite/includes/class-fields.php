@@ -40,32 +40,36 @@ class WPForms_Fields {
 	 */
 	public function load() {
 
-		$fields = apply_filters( 'wpforms_load_fields', array(
-			'text',
-			'textarea',
-			'select',
-			'radio',
-			'checkbox',
-			'divider',
-			'email',
-			'url',
-			'hidden',
-			'html',
-			'name',
-			'password',
-			'address',
-			'phone',
-			'date-time',
-			'number',
-			'page-break',
-			'rating',
-			'file-upload',
-			'payment-single',
-			'payment-multiple',
-			'payment-dropdown',
-			'payment-credit-card',
-			'payment-total',
-		) );
+		$fields = apply_filters(
+			'wpforms_load_fields',
+			array(
+				'text',
+				'textarea',
+				'select',
+				'radio',
+				'checkbox',
+				'divider',
+				'email',
+				'url',
+				'hidden',
+				'html',
+				'name',
+				'password',
+				'address',
+				'phone',
+				'date-time',
+				'number',
+				'page-break',
+				'rating',
+				'file-upload',
+				'payment-single',
+				'payment-multiple',
+				'payment-checkbox',
+				'payment-dropdown',
+				'payment-credit-card',
+				'payment-total',
+			)
+		);
 
 		// Include GDPR Checkbox field if GDPR enhancements are enabled.
 		if ( wpforms_setting( 'gdpr', false ) ) {

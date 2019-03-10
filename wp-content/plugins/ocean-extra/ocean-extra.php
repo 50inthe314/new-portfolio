@@ -3,7 +3,7 @@
  * Plugin Name:			Ocean Extra
  * Plugin URI:			https://oceanwp.org/extension/ocean-extra/
  * Description:			Add extra features like widgets, metaboxes, import/export and a panel to activate the premium extensions.
- * Version:				1.4.30
+ * Version:				1.5.3
  * Author:				OceanWP
  * Author URI:			https://oceanwp.org/
  * Requires at least:	4.5.0
@@ -86,18 +86,13 @@ final class Ocean_Extra {
 		$this->token 			= 'ocean-extra';
 		$this->plugin_url 		= plugin_dir_url( __FILE__ );
 		$this->plugin_path 		= plugin_dir_path( __FILE__ );
-		$this->version 			= '1.4.30';
+		$this->version 			= '1.5.3';
 
 		define( 'OE_URL', $this->plugin_url );
 		define( 'OE_PATH', $this->plugin_path );
 		define( 'OE_VERSION', $this->version );
+        define( 'OE_FILE_PATH', __FILE__ );
 		define( 'OE_ADMIN_PANEL_HOOK_PREFIX', 'theme-panel_page_oceanwp-panel' );
-
-		// Elementor partner ID
-		if ( class_exists( 'Elementor\Plugin' )
-			&& ! defined( 'ELEMENTOR_PARTNER_ID' ) ) {
-			define( 'ELEMENTOR_PARTNER_ID', 2121 );
-		}
 
 		// WPForms partner ID
 		add_filter( 'wpforms_upgrade_link', array( $this, 'wpforms_upgrade_link' ) );
@@ -127,7 +122,8 @@ final class Ocean_Extra {
 			require_once( OE_PATH .'/includes/panel/library-shortcode.php' );
 			require_once( OE_PATH .'/includes/panel/updater.php' );
 			require_once( OE_PATH .'/includes/menu-icons/menu-icons.php' );
-
+			require_once( OE_PATH .'/includes/wizard/wizard.php' );
+	        
 			// Outputs custom JS to the footer
 			add_action( 'wp_footer', array( $this, 'custom_js' ), 9999 );
 
@@ -142,6 +138,9 @@ final class Ocean_Extra {
 
 			// Load custom widgets
 			add_action( 'widgets_init', array( $this, 'custom_widgets' ), 10 );
+
+			// Add meta tags
+			add_filter( 'wp_head', array( $this, 'meta_tags' ), 1 );
 		}
 
 		// Allow shortcodes in text widgets
@@ -345,12 +344,7 @@ final class Ocean_Extra {
 			require_once( OE_PATH .'/includes/panel/notice.php' );
 			require_once( OE_PATH .'/includes/walker.php' );
 			require_once( OE_PATH .'/includes/dashboard.php' );
-
-			// If Demo Import or Pro Demos is activated
-			if ( class_exists( 'Ocean_Demo_Import' )
-				|| class_exists( 'Ocean_Pro_Demos' ) ) {
-				require_once( OE_PATH .'/includes/panel/demos.php' );
-			}
+			require_once( OE_PATH .'/includes/panel/demos.php' );
 			
 			add_action( 'wp_enqueue_scripts', array( $this, 'scripts' ), 999 );
 		}
@@ -397,6 +391,175 @@ final class Ocean_Extra {
 			}
 		}
 
+	}
+
+	/**
+	 * Add meta tags
+	 *
+	 * @since 1.5.1
+	 */
+	public static function meta_tags() {
+
+		// Return if disabled or if Yoast SEO enabled as they have their own meta tags
+		if ( false == get_theme_mod( 'ocean_open_graph', false )
+			|| defined( 'WPSEO_VERSION' ) ) {
+			return;
+		}
+
+		// Facebook URL
+		$facebook_url = get_theme_mod( 'ocean_facebook_page_url' );
+
+		// Disable Jetpack's Open Graph tags
+		add_filter( 'jetpack_enable_opengraph', '__return_false', 99 );
+		add_filter( 'jetpack_enable_open_graph', '__return_false', 99 );
+		add_filter( 'jetpack_disable_twitter_cards', '__return_true', 99 );
+
+		// Type
+		if ( is_front_page() || is_home() ) {
+			$type = 'website';
+		} else if ( is_singular() ) {
+			$type = 'article';
+		} else {
+			// We use "object" for archives etc. as article doesn't apply there.
+			$type = 'object';
+		}
+
+		// Title
+		if ( is_singular() ) {
+			$title = get_the_title();
+		} else {
+			$title = oceanwp_title();
+		}
+
+		// Description
+		if ( is_category() || is_tag() || is_tax() ) {
+			$description = strip_shortcodes( wp_strip_all_tags( term_description() ) );
+		} else {
+			$description = html_entity_decode( htmlspecialchars_decode( oceanwp_excerpt( 40 ) ) );
+		}
+
+		// Image
+		$image = '';
+		$has_img = false;
+		if ( OCEANWP_WOOCOMMERCE_ACTIVE
+			&& is_product_category() ) {
+		    global $wp_query;
+		    $cat = $wp_query->get_queried_object();
+		    $thumbnail_id = get_woocommerce_term_meta( $cat->term_id, 'thumbnail_id', true );
+		    $get_image = wp_get_attachment_url( $thumbnail_id );
+		    if ( $get_image ) {
+				$image = $get_image;
+				$has_img = true;
+			}
+		} else {
+			$get_image = wp_get_attachment_image_src( get_post_thumbnail_id( get_the_ID() ), 'full' );
+			$image = $get_image[0];
+			$has_img = true;
+		}
+
+		// Post author
+		if ( $facebook_url ) {
+			$author = $facebook_url;
+		}
+
+		// Facebook publisher URL
+		if ( ! empty( $facebook_url ) ) {
+			$publisher = $facebook_url;
+		}
+
+		// Facebook APP ID
+		$facebook_appid = get_theme_mod( 'ocean_facebook_appid' );
+		if ( ! empty( $facebook_appid ) ) {
+			$fb_app_id = $facebook_appid;
+		}
+
+		// Twiiter handle
+		$twitter_handle = '@' . str_replace( '@' , '' , get_theme_mod( 'ocean_twitter_handle' ) );
+
+		// Output
+		$output = self::opengraph_tag( 'property', 'og:type', trim( $type ) );
+		$output .= self::opengraph_tag( 'property', 'og:title', trim( $title ) );
+
+		if ( isset( $description ) && ! empty( $description ) ) {
+			$output .= self::opengraph_tag( 'property', 'og:description', trim( $description ) );
+		}
+
+		if ( has_post_thumbnail( oceanwp_post_id() ) && true == $has_img ) {
+			$output .= self::opengraph_tag( 'property', 'og:image', trim( $image ) );
+			$output .= self::opengraph_tag( 'property', 'og:image:width', absint( $get_image[1] ) );
+			$output .= self::opengraph_tag( 'property', 'og:image:height', absint( $get_image[2] ) );
+		}
+
+		$output .= self::opengraph_tag( 'property', 'og:url', trim( get_permalink() ) );
+		$output .= self::opengraph_tag( 'property', 'og:site_name', trim( get_bloginfo( 'name' ) ) );
+
+		if ( is_singular() && ! is_front_page() ) {
+
+			if ( isset( $author ) && ! empty( $author ) ) {
+				$output .= self::opengraph_tag( 'property', 'article:author', trim( $author ) );
+			}
+
+			if ( is_singular( 'post' ) ) {
+				$output .= self::opengraph_tag( 'property', 'article:published_time', trim( get_post_time( 'c' ) ) );
+				$output .= self::opengraph_tag( 'property', 'article:modified_time', trim( get_post_modified_time( 'c' ) ) );
+				$output .= self::opengraph_tag( 'property', 'og:updated_time', trim( get_post_modified_time( 'c' ) ) );
+			}
+
+		}
+
+		if ( is_singular() ) {
+
+			$tags = get_the_tags();
+			if ( ! is_wp_error( $tags ) && ( is_array( $tags ) && $tags !== array() ) ) {
+				foreach ( $tags as $tag ) {
+					$output .= self::opengraph_tag( 'property', 'article:tag', trim( $tag->name ) );
+				}
+			}
+
+			$terms = get_the_category();
+			if ( ! is_wp_error( $terms ) && ( is_array( $terms ) && $terms !== array() ) ) {
+				// We can only show one section here, so we take the first one.
+				$output .= self::opengraph_tag( 'property', 'article:section', trim( $terms[0]->name ) );
+			}
+
+		}
+
+		if ( isset( $publisher ) && ! empty( $publisher ) ) {
+			$output .= self::opengraph_tag( 'property', 'article:publisher', trim( $publisher ) );
+		}
+
+		if ( isset( $fb_app_id ) && ! empty( $fb_app_id ) ) {
+			$output .= self::opengraph_tag( 'property', 'fb:app_id', trim( $fb_app_id ) );
+		}
+
+		// Twitter
+		$output .= self::opengraph_tag( 'name', 'twitter:card', 'summary_large_image' );
+		$output .= self::opengraph_tag( 'name', 'twitter:title', trim( $title ) );
+
+		if ( isset( $description ) && ! empty( $description ) ) {
+			$output .= self::opengraph_tag( 'name', 'twitter:description', trim( $description ) );
+		}
+
+		if ( has_post_thumbnail( get_the_ID() ) && true == $has_img ) {
+			$output .= self::opengraph_tag( 'name', 'twitter:image', trim( $image ) );
+		}
+
+		if ( isset( $twitter_handle ) && ! empty( $twitter_handle ) ) {
+			$output .= self::opengraph_tag( 'name', 'twitter:site', trim( $twitter_handle ) );
+			$output .= self::opengraph_tag( 'name', 'twitter:creator', trim( $twitter_handle ) );
+		}
+
+		echo $output;
+
+	}
+
+	/**
+	 * Get meta tags
+	 *
+	 * @since 1.5.1
+	 */
+	public static function opengraph_tag( $attr, $property, $content ) {
+		echo '<meta ', esc_attr( $attr ), '="', esc_attr( $property ), '" content="', esc_attr( $content ), '" />', "\n";
 	}
 
 	/**

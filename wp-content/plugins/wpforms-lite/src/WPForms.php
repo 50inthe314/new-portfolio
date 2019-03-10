@@ -103,15 +103,6 @@ namespace WPForms {
 		public $logs;
 
 		/**
-		 * The Preview instance.
-		 *
-		 * @since 1.1.9
-		 *
-		 * @var \WPForms_Preview
-		 */
-		public $preview;
-
-		/**
 		 * The License class instance (Pro).
 		 *
 		 * @since 1.0.0
@@ -241,7 +232,6 @@ namespace WPForms {
 			require_once WPFORMS_PLUGIN_DIR . 'includes/class-smart-tags.php';
 			require_once WPFORMS_PLUGIN_DIR . 'includes/class-logging.php';
 			require_once WPFORMS_PLUGIN_DIR . 'includes/class-widget.php';
-			require_once WPFORMS_PLUGIN_DIR . 'includes/class-preview.php';
 			require_once WPFORMS_PLUGIN_DIR . 'includes/class-conditional-logic-core.php';
 			require_once WPFORMS_PLUGIN_DIR . 'includes/emails/class-emails.php';
 			require_once WPFORMS_PLUGIN_DIR . 'includes/integrations.php';
@@ -279,9 +269,16 @@ namespace WPForms {
 			require_once WPFORMS_PLUGIN_DIR . 'autoloader.php';
 
 			/*
-			 * Load admin components.
+			 * Load admin components. Exclude from frontend.
 			 */
-			add_action( 'wpforms_loaded', array( '\WPForms\Admin\Loader', 'get_instance' ) );
+			if ( is_admin() ) {
+				add_action( 'wpforms_loaded', array( '\WPForms\Admin\Loader', 'get_instance' ) );
+			}
+
+			/*
+			 * Load form components.
+			 */
+			add_action( 'wpforms_loaded', array( '\WPForms\Forms\Loader', 'get_instance' ) );
 
 			/*
 			 * Properly init the providers loader, that will handle all the related logic and further loading.
@@ -307,7 +304,6 @@ namespace WPForms {
 			$this->process    = new \WPForms_Process();
 			$this->smart_tags = new \WPForms_Smart_Tags();
 			$this->logs       = new \WPForms_Logging();
-			$this->preview    = new \WPForms_Preview();
 
 			if ( is_admin() ) {
 				if ( ! wpforms_setting( 'hide-announcements', false ) ) {
@@ -337,4 +333,16 @@ namespace {
 	function wpforms() {
 		return WPForms\WPForms::instance();
 	}
+
+	/**
+	 * Adding an alias for backward-compatibility with plugins
+	 * that still use class_exists('WPForms')
+	 * instead of function_exists('wpforms'), which is preferred.
+	 *
+	 * In 1.5.0 we removed support for PHP 5.2
+	 * and moved former WPForms class to a namespace: WPForms\WPForms.
+	 *
+	 * @since 1.5.1
+	 */
+	class_alias( 'WPForms\WPForms', 'WPForms' );
 }

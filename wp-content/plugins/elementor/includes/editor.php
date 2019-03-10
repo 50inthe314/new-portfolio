@@ -1,6 +1,7 @@
 <?php
 namespace Elementor;
 
+use Elementor\Core\Common\Modules\Ajax\Module as Ajax;
 use Elementor\Core\Responsive\Responsive;
 use Elementor\Core\Settings\Manager as SettingsManager;
 use Elementor\TemplateLibrary\Source_Local;
@@ -88,6 +89,10 @@ class Editor {
 		] );
 
 		Plugin::$instance->db->switch_to_post( $this->_post_id );
+
+		$document = Plugin::$instance->documents->get( $this->_post_id );
+
+		Plugin::$instance->documents->switch_to_document( $document );
 
 		add_filter( 'show_admin_bar', '__return_false' );
 
@@ -245,7 +250,7 @@ class Editor {
 	 */
 	public function lock_post( $post_id ) {
 		if ( ! function_exists( 'wp_set_post_lock' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/post.php' );
+			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 
 		wp_set_post_lock( $post_id );
@@ -265,7 +270,7 @@ class Editor {
 	 */
 	public function get_locked_user( $post_id ) {
 		if ( ! function_exists( 'wp_check_post_lock' ) ) {
-			require_once( ABSPATH . 'wp-admin/includes/post.php' );
+			require_once ABSPATH . 'wp-admin/includes/post.php';
 		}
 
 		$locked_user = wp_check_post_lock( $post_id );
@@ -300,7 +305,7 @@ class Editor {
 	 * @access public
 	 */
 	public function print_editor_template() {
-		include( 'editor-templates/editor-wrapper.php' );
+		include 'editor-templates/editor-wrapper.php';
 	}
 
 	/**
@@ -327,6 +332,15 @@ class Editor {
 
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG || defined( 'ELEMENTOR_TESTS' ) && ELEMENTOR_TESTS ) ? '' : '.min';
 
+		wp_register_script(
+			'elementor-editor-modules',
+			ELEMENTOR_ASSETS_URL . 'js/editor-modules.js',
+			[
+				'elementor-common-modules',
+			],
+			ELEMENTOR_VERSION,
+			true
+		);
 		// Hack for waypoint with editor mode.
 		wp_register_script(
 			'elementor-waypoints',
@@ -340,11 +354,9 @@ class Editor {
 
 		wp_register_script(
 			'perfect-scrollbar',
-			ELEMENTOR_ASSETS_URL . 'lib/perfect-scrollbar/perfect-scrollbar.jquery' . $suffix . '.js',
-			[
-				'jquery',
-			],
-			'0.6.12',
+			ELEMENTOR_ASSETS_URL . 'lib/perfect-scrollbar/js/perfect-scrollbar' . $suffix . '.js',
+			[],
+			'1.4.0',
 			true
 		);
 
@@ -423,10 +435,19 @@ class Editor {
 		);
 
 		wp_register_script(
+			'nouislider',
+			ELEMENTOR_ASSETS_URL . 'lib/nouislider/nouislider' . $suffix . '.js',
+			[],
+			'13.0.0',
+			true
+		);
+
+		wp_register_script(
 			'elementor-editor',
 			ELEMENTOR_ASSETS_URL . 'js/editor' . $suffix . '.js',
 			[
 				'elementor-common',
+				'elementor-editor-modules',
 				'wp-auth-check',
 				'jquery-ui-sortable',
 				'jquery-ui-resizable',
@@ -440,6 +461,7 @@ class Editor {
 				'ace',
 				'ace-language-tools',
 				'jquery-hover-intent',
+				'nouislider',
 			],
 			ELEMENTOR_VERSION,
 			true
@@ -505,11 +527,12 @@ class Editor {
 			'help_the_content_url' => 'https://go.elementor.com/the-content-missing/',
 			'help_preview_error_url' => 'https://go.elementor.com/preview-not-loaded/',
 			'help_right_click_url' => 'https://go.elementor.com/meet-right-click/',
+			'additional_shapes' => Shapes::get_additional_shapes_for_config(),
 			'locked_user' => $locked_user,
 			'user' => [
 				'restrictions' => $plugin->role_manager->get_user_restrictions_array(),
 				'is_administrator' => current_user_can( 'manage_options' ),
-				'introduction' => User::is_should_view_introduction(),
+				'introduction' => User::get_introduction_meta(),
 			],
 			// @deprecated since 2.3.0 - Use `elementorCommon.config.isRTL` instead
 			'is_rtl' => is_rtl(),
@@ -579,6 +602,9 @@ class Editor {
 				'templates_no_results_title' => __( 'No Results Found', 'elementor' ),
 				'templates_request_error' => __( 'The following error(s) occurred while processing the request:', 'elementor' ),
 				'yes' => __( 'Yes', 'elementor' ),
+				'blocks' => __( 'Blocks', 'elementor' ),
+				'pages' => __( 'Pages', 'elementor' ),
+				'my_templates' => __( 'My Templates', 'elementor' ),
 
 				// Incompatible Device.
 				'device_incompatible_header' => __( 'Your browser isn\'t compatible', 'elementor' ),
@@ -806,7 +832,7 @@ class Editor {
 		remove_all_filters( 'mce_external_plugins', 10 );
 
 		if ( ! class_exists( '\_WP_Editors', false ) ) {
-			require( ABSPATH . WPINC . '/class-wp-editor.php' );
+			require ABSPATH . WPINC . '/class-wp-editor.php';
 		}
 
 		// WordPress 4.8 and higher
