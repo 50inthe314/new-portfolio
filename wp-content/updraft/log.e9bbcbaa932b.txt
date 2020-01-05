@@ -1,0 +1,169 @@
+0000.000 (0) Opened log file at time: Mon, 30 Dec 2019 03:03:06 +0000 on http://50inthe314.com
+0000.019 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.16.17 WP: 5.1 PHP: 5.6.35 (cgi-fcgi, Linux michonne.asoshared.com 3.10.0-862.3.2.4.ELK.el6.x86_64 #1 SMP Thu May 24 16:26:56 CDT 2018 x86_64) MySQL: 5.6.41-84.1 WPLANG: en_US Server: Apache safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 75.3M | 76.5M) multisite: N openssl: OpenSSL 1.0.1e-fips 11 Feb 2013 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.452 (0) Free space on disk containing Updraft's temporary directory: 293715.2 MB
+0000.484 (0) Tasks: Backup files:  (schedule: fortnightly) Backup DB: 1 (schedule: weekly)
+0001.384 (0) Processed schedules. Tasks now: Backup files:  Backup DB: 1
+0001.513 (0) Requesting semaphore lock (d) (apparently via scheduler: last_scheduled_action_called_at=1577067791, seconds_ago=607197)
+0001.591 (0) Set semaphore last lock (d) time to 2019-12-30 03:03:08
+0001.616 (0) Semaphore lock (d) complete
+0001.730 (0) Backup run: resumption=0, nonce=e9bbcbaa932b, file_nonce=e9bbcbaa932b begun at=1577674986 (2s ago), job type=backup
+0001.754 (0) Scheduling a resumption (1) after 300 seconds (1577675288) in case this run gets aborted
+0001.805 (0) This backup run is not intended for files - skipping
+0001.823 (0) Beginning creation of database dump (WordPress DB)
+0001.865 (0) Testing potential mysqldump binary: /usr/bin/mysqldump
+0001.920 (0) Output: /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;\n/*!40103 SET TIME_ZONE='+00:00' */;\n/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;\n/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;\n/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;\n/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;\nDROP TABLE IF EXISTS `wp_options`;\n/*!40101 SET @saved_cs_client     = @@character_set_client */;\n/*!40101 SET character_set_client = utf8 */;\nCRE (truncated - 1207 bytes total)
+0001.969 (0) Working binary mysqldump found: /usr/bin/mysqldump
+0002.120 (0) Table wp_options: Total expected rows (approximate): 430
+0002.216 (0) Table wp_options: Total rows added: 438 in 0.05 seconds
+0002.239 (0) Table wp_options: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_options.table.gz - 152.7 KB)
+0002.327 (0) Table wp_users: Total expected rows (approximate): 1
+0002.367 (0) Table wp_users: Total rows added: 1 in 0.02 seconds
+0002.393 (0) Table wp_users: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_users.table.gz - 0.6 KB)
+0002.487 (0) Table wp_usermeta: Total expected rows (approximate): 41
+0002.517 (0) Table wp_usermeta: Total rows added: 41 in 0.00 seconds
+0002.538 (0) Table wp_usermeta: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_usermeta.table.gz - 2.4 KB)
+0002.659 (0) Table wp_commentmeta: Total expected rows (approximate): 0
+0002.711 (0) Table wp_commentmeta: Total rows added: 0 in 0.02 seconds
+0002.739 (0) Table wp_commentmeta: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_commentmeta.table.gz - 0.4 KB)
+0002.878 (0) Table wp_comments: Total expected rows (approximate): 0
+0002.914 (0) Table wp_comments: Total rows added: 0 in 0.01 seconds
+0002.950 (0) Table wp_comments: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_comments.table.gz - 0.5 KB)
+0003.117 (0) Table wp_links: Total expected rows (approximate): 0
+0003.144 (0) Table wp_links: Total rows added: 0 in 0.01 seconds
+0003.180 (0) Table wp_links: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_links.table.gz - 0.4 KB)
+0003.303 (0) Table wp_postmeta: Total expected rows (approximate): 2450
+0003.507 (0) Table wp_postmeta: Total rows added: 3006 in 0.16 seconds
+0003.557 (0) Table wp_postmeta: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_postmeta.table.gz - 117.8 KB)
+0003.736 (0) Table wp_posts: Total expected rows (approximate): 633
+0003.952 (0) Table wp_posts: Total rows added: 640 in 0.16 seconds
+0004.018 (0) Table wp_posts: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_posts.table.gz - 143.1 KB)
+0004.229 (0) Table wp_term_relationships: Total expected rows (approximate): 136
+0004.855 (0) Table wp_term_relationships: Total rows added: 136 in 0.01 seconds
+0005.115 (0) Table wp_term_relationships: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_term_relationships.table.gz - 0.7 KB)
+0005.311 (0) Table wp_term_taxonomy: Total expected rows (approximate): 30
+0005.381 (0) Table wp_term_taxonomy: Total rows added: 30 in 0.01 seconds
+0005.426 (0) Table wp_term_taxonomy: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_term_taxonomy.table.gz - 0.8 KB)
+0005.643 (0) Table wp_termmeta: Total expected rows (approximate): 0
+0005.717 (0) Table wp_termmeta: Total rows added: 0 in 0.00 seconds
+0005.801 (0) Table wp_termmeta: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_termmeta.table.gz - 0.4 KB)
+0005.965 (0) Table wp_terms: Total expected rows (approximate): 30
+0005.989 (0) Table wp_terms: Total rows added: 30 in 0.01 seconds
+0006.006 (0) Table wp_terms: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_terms.table.gz - 0.9 KB)
+0006.099 (0) Table wp_yoast_seo_links: Total expected rows (approximate): 190
+0006.136 (0) Table wp_yoast_seo_links: Total rows added: 190 in 0.01 seconds
+0006.193 (0) Table wp_yoast_seo_links: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_yoast_seo_links.table.gz - 2.2 KB)
+0006.279 (0) Table wp_yoast_seo_meta: Total expected rows (approximate): 126
+0006.333 (0) Table wp_yoast_seo_meta: Total rows added: 126 in 0.02 seconds
+0006.361 (0) Table wp_yoast_seo_meta: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_yoast_seo_meta.table.gz - 0.7 KB)
+0006.444 (0) Table wp_lockdowns: Total expected rows (approximate): 12
+0006.480 (0) Table wp_lockdowns: Total rows added: 12 in 0.01 seconds
+0006.498 (0) Table wp_lockdowns: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_lockdowns.table.gz - 0.6 KB)
+0006.571 (0) Table wp_login_fails: Total expected rows (approximate): 237
+0006.606 (0) Table wp_login_fails: Total rows added: 237 in 0.01 seconds
+0006.634 (0) Table wp_login_fails: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_login_fails.table.gz - 3.5 KB)
+0006.739 (0) Table wp_nextend2_image_storage: Total expected rows (approximate): 78
+0006.794 (0) Table wp_nextend2_image_storage: Total rows added: 78 in 0.03 seconds
+0006.816 (0) Table wp_nextend2_image_storage: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_image_storage.table.gz - 3.2 KB)
+0006.928 (0) Table wp_nextend2_section_storage: Total expected rows (approximate): 37
+0006.981 (0) Table wp_nextend2_section_storage: Total rows added: 37 in 0.02 seconds
+0007.007 (0) Table wp_nextend2_section_storage: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_section_storage.table.gz - 53.3 KB)
+0007.079 (0) Table wp_nextend2_smartslider3_generators: Total expected rows (approximate): 0
+0007.107 (0) Table wp_nextend2_smartslider3_generators: Total rows added: 0 in 0.01 seconds
+0007.129 (0) Table wp_nextend2_smartslider3_generators: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_generators.table.gz - 0.3 KB)
+0007.214 (0) Table wp_nextend2_smartslider3_sliders: Total expected rows (approximate): 10
+0007.257 (0) Table wp_nextend2_smartslider3_sliders: Total rows added: 10 in 0.02 seconds
+0007.280 (0) Table wp_nextend2_smartslider3_sliders: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_sliders.table.gz - 4.1 KB)
+0007.375 (0) Table wp_nextend2_smartslider3_sliders_xref: Total expected rows (approximate): 2
+0007.425 (0) Table wp_nextend2_smartslider3_sliders_xref: Total rows added: 2 in 0.02 seconds
+0007.449 (0) Table wp_nextend2_smartslider3_sliders_xref: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_sliders_xref.table.gz - 0.3 KB)
+0007.625 (0) Table wp_nextend2_smartslider3_slides: Total expected rows (approximate): 80
+0007.677 (0) Table wp_nextend2_smartslider3_slides: Total rows added: 80 in 0.02 seconds
+0007.707 (0) Table wp_nextend2_smartslider3_slides: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_slides.table.gz - 4.2 KB)
+0007.831 (0) Table wp_revisr: Total expected rows (approximate): 214
+0007.893 (0) Table wp_revisr: Total rows added: 214 in 0.02 seconds
+0007.934 (0) Table wp_revisr: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_revisr.table.gz - 2.9 KB)
+0008.101 (0) Table wp_wpmm_subscribers: Total expected rows (approximate): 0
+0008.133 (0) Table wp_wpmm_subscribers: Total rows added: 0 in 0.00 seconds
+0008.159 (0) Table wp_wpmm_subscribers: finishing file (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_wpmm_subscribers.table.gz - 0.3 KB)
+0008.206 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_options.table.gz (1/24): adding to final database dump
+0008.261 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_users.table.gz (2/24): adding to final database dump
+0008.279 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_usermeta.table.gz (3/24): adding to final database dump
+0008.303 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_commentmeta.table.gz (4/24): adding to final database dump
+0008.329 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_comments.table.gz (5/24): adding to final database dump
+0008.364 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_links.table.gz (6/24): adding to final database dump
+0008.401 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_postmeta.table.gz (7/24): adding to final database dump
+0008.494 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_posts.table.gz (8/24): adding to final database dump
+0008.571 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_term_relationships.table.gz (9/24): adding to final database dump
+0008.592 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_term_taxonomy.table.gz (10/24): adding to final database dump
+0008.616 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_termmeta.table.gz (11/24): adding to final database dump
+0008.640 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_terms.table.gz (12/24): adding to final database dump
+0008.664 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_yoast_seo_links.table.gz (13/24): adding to final database dump
+0008.696 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_yoast_seo_meta.table.gz (14/24): adding to final database dump
+0008.725 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_lockdowns.table.gz (15/24): adding to final database dump
+0008.743 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_login_fails.table.gz (16/24): adding to final database dump
+0008.763 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_image_storage.table.gz (17/24): adding to final database dump
+0008.785 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_section_storage.table.gz (18/24): adding to final database dump
+0008.820 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_generators.table.gz (19/24): adding to final database dump
+0008.845 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_sliders.table.gz (20/24): adding to final database dump
+0008.876 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_sliders_xref.table.gz (21/24): adding to final database dump
+0008.899 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_nextend2_smartslider3_slides.table.gz (22/24): adding to final database dump
+0008.925 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_revisr.table.gz (23/24): adding to final database dump
+0008.949 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db-table-wp_wpmm_subscribers.table.gz (24/24): adding to final database dump
+0008.972 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz: finished writing out complete database file (464 KB)
+0009.073 (0) Total database tables backed up: 24 (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz, size: 502850, sha1: 11d5c470cc99d5578a7a1f278395d4f448f1077c, sha256: 6fd78e362739e40b92ce69cb06c6d0ab18864e8bd93f5f806a8fb0b0e782e2c9)
+0009.145 (0) backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz: db: This file has not yet been successfully uploaded: will queue
+0009.176 (0) Saving backup history. Total backup size: 491.1 KB
+0009.240 (0) Requesting upload of the files that have not yet been successfully uploaded (1)
+0009.340 (0) Cloud backup selection (1/1): dropbox with instance (1/1) (last)
+0009.364 (0) Beginning dispatch of backup to remote (dropbox) (instance identifier s-fbef29720b403fabc5acb42a28456913)
+0009.398 (0) Dropbox: begin cloud upload (using API version 2 with OAuth v2 token)
+0009.446 (0) Dropbox: access gained; setting chunk size to: 10240 KB
+0009.676 (0) Dropbox: quota usage: used=470.4 MB, total=2048 MB, available=1577.6 MB
+0009.709 (0) Dropbox: Attempt to upload: backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz to: backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz
+0010.430 (0) Dropbox chunked upload: 100 % uploaded (AAAAAAAAADeF8yCXCUcyIA, 502850, 10240 KB)
+0011.669 (0) Recording as successfully uploaded: backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz
+0011.785 (0) Deleting local file: backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz: OK
+0011.820 (0) Dropbox: File upload success (backup_2019-12-29-2203_50_in_the_314_e9bbcbaa932b-db.gz): 491 KB in 2s (232 KB/s)
+0011.921 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0011.942 (0) Number of backup sets in history: 6; groups (db): 1
+0011.959 (0) Examining (for databases) backup set with group_id=0, nonce=e9bbcbaa932b, datestamp=1577674986 (Dec 30 2019 03:03:06)
+0011.977 (0) This backup set is the backup set just made, so will not be deleted.
+0011.977 (0) Examining (for databases) backup set with group_id=0, nonce=9582d18edb33, datestamp=1577674899 (Dec 30 2019 03:01:39)
+0011.977 (0) Examining (for databases) backup set with group_id=0, nonce=dc2dcdc701e0, datestamp=1577067790 (Dec 23 2019 02:23:10)
+0011.977 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0012.007 (0) Examining (for databases) backup set with group_id=0, nonce=adf4129a7887, datestamp=1576465757 (Dec 16 2019 03:09:17)
+0012.007 (0) 1576465757: db: this set includes a database (backup_2019-12-15-2209_50_in_the_314_adf4129a7887-db.gz); db count is now 2
+0012.007 (0) 1576465757: db: over retain limit (2); will delete this database
+0012.007 (0) Delete file: backup_2019-12-15-2209_50_in_the_314_adf4129a7887-db.gz, service=dropbox
+0012.042 (0) Dropbox: request deletion: backup_2019-12-15-2209_50_in_the_314_adf4129a7887-db.gz
+0012.565 (0) Dropbox: delete succeeded
+0012.614 (0) This backup set is now empty; will remove from history
+0012.663 (0) Deleting log file (log.adf4129a7887.txt)
+0012.690 (0) Retain: saving new backup history, because at least 10 seconds have passed since the last save (sets now: 5)
+0012.765 (0) Examining (for databases) backup set with group_id=0, nonce=846fe4d328d7, datestamp=1576465686 (Dec 16 2019 03:08:06)
+0012.765 (0) Examining (for databases) backup set with group_id=0, nonce=2e1c8f42a67a, datestamp=1571624507 (Oct 21 2019 02:21:47)
+0012.765 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0012.765 (0) Number of backup sets in history: 5; groups (files): 1
+0012.789 (0) Examining (for files) backup set with nonce=e9bbcbaa932b, datestamp=1577674986 (Dec 30 2019 03:03:06)
+0012.789 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0012.817 (0) Examining (for files) backup set with nonce=9582d18edb33, datestamp=1577674899 (Dec 30 2019 03:01:39)
+0012.817 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0012.837 (0) Examining (for files) backup set with nonce=dc2dcdc701e0, datestamp=1577067790 (Dec 23 2019 02:23:10)
+0012.837 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0012.861 (0) Examining (for files) backup set with nonce=846fe4d328d7, datestamp=1576465686 (Dec 16 2019 03:08:06)
+0012.861 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0012.879 (0) Examining (for files) backup set with nonce=2e1c8f42a67a, datestamp=1571624507 (Oct 21 2019 02:21:47)
+0012.879 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0012.879 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0012.879 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0012.879 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0012.879 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0012.897 (0) Retain: saving new backup history (sets now: 5) and finishing retain operation
+0012.958 (0) Resume backup (e9bbcbaa932b, 0): finish run
+0013.114 (0) Decremented the semaphore (d) by 1
+0013.148 (0) Semaphore (d) unlocked
+0013.168 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0013.266 (0) Fetching RSS news feed
+0013.302 (0) Fetched RSS news feed; result is a: SimplePie
+0013.343 (0) Sending email ('Database only (files were not part of this particular schedule)') report (attachments: 0, size: 0 KB) to: matt@...
+0013.552 (0) The backup apparently succeeded and is now complete

@@ -1,0 +1,278 @@
+0000.020 (0) Opened log file at time: Mon, 30 Dec 2019 03:01:39 +0000 on http://50inthe314.com
+0000.049 (0) UpdraftPlus WordPress backup plugin (https://updraftplus.com): 1.16.17 WP: 5.1 PHP: 5.6.35 (cgi-fcgi, Linux michonne.asoshared.com 3.10.0-862.3.2.4.ELK.el6.x86_64 #1 SMP Thu May 24 16:26:56 CDT 2018 x86_64) MySQL: 5.6.41-84.1 WPLANG: en_US Server: Apache safe_mode: 0 max_execution_time: 900 memory_limit: 256M (used: 67.4M | 69M) multisite: N openssl: OpenSSL 1.0.1e-fips 11 Feb 2013 mcrypt: Y LANG:  ZipArchive::addFile: Y
+0000.699 (0) Free space on disk containing Updraft's temporary directory: 293718.5 MB
+0000.729 (0) Tasks: Backup files: 1 (schedule: fortnightly) Backup DB:  (schedule: weekly)
+0000.778 (0) Processed schedules. Tasks now: Backup files: 1 Backup DB: 
+0000.820 (0) Requesting semaphore lock (f) (apparently via scheduler: last_scheduled_action_called_at=1576465686, seconds_ago=1209214)
+0000.892 (0) Set semaphore last lock (f) time to 2019-12-30 03:01:40
+0000.949 (0) Semaphore lock (f) complete
+0001.022 (0) Backup run: resumption=0, nonce=9582d18edb33, file_nonce=9582d18edb33 begun at=1577674899 (1s ago), job type=backup
+0001.100 (0) Scheduling a resumption (1) after 300 seconds (1577675200) in case this run gets aborted
+0001.187 (0) Checking if we have a zip executable available
+0001.207 (0) Testing: /usr/bin/zip
+0001.545 (0) Output: zip warning: binziptest/test.zip not found or empty
+0001.576 (0) Output: adding: binziptest/subdir1/	(in=0) (out=0) (stored 0%)
+0001.606 (0) Output: adding: binziptest/subdir1/subdir2/	(in=0) (out=0) (stored 0%)
+0001.653 (0) Output: adding: binziptest/subdir1/subdir2/test.html	(in=131) (out=107) (deflated 18%)
+0001.683 (0) Output: total bytes=131, compressed=107 -> 18% savings
+0001.715 (0) Output: adding: binziptest/subdir1/subdir2/test2.html	(in=138) (out=113) (deflated 18%)
+0001.742 (0) Output: total bytes=269, compressed=220 -> 18% savings
+0001.779 (0) Working binary zip found: /usr/bin/zip
+0001.851 (0) Zip engine: found/will use a binary zip: /usr/bin/zip
+0001.887 (0) Creation of backups of directories: beginning
+0001.946 (0) Beginning creation of dump of plugins (split every: 400 MB)
+0002.755 (0) Total entities for the zip file: 1290 directories, 6186 files (0 skipped as non-modified), 94.8 MB
+0002.793 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 100 files added (on-disk size: 0 KB)
+0002.816 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 200 files added (on-disk size: 0 KB)
+0002.834 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 300 files added (on-disk size: 0 KB)
+0002.854 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 400 files added (on-disk size: 0 KB)
+0002.878 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 500 files added (on-disk size: 0 KB)
+0002.905 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (11.5 MB, 6186 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0004.778 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: size is now: 8.10 MB
+0004.836 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 600 files added (on-disk size: 8262 KB)
+0004.870 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 700 files added (on-disk size: 8262 KB)
+0004.888 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 800 files added (on-disk size: 8262 KB)
+0004.912 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 900 files added (on-disk size: 8262 KB)
+0004.930 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1000 files added (on-disk size: 8262 KB)
+0004.945 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (14 MB, 6186 files batched, 501 (1002) added so far); re-opening (prior size: 8262 KB)
+0006.911 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: size is now: 13.00 MB
+0006.992 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1100 files added (on-disk size: 13305.8 KB)
+0007.017 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1200 files added (on-disk size: 13305.8 KB)
+0007.050 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1300 files added (on-disk size: 13305.8 KB)
+0007.080 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1400 files added (on-disk size: 13305.8 KB)
+0007.110 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1500 files added (on-disk size: 13305.8 KB)
+0007.191 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (3.2 MB, 6186 files batched, 501 (1503) added so far); re-opening (prior size: 13305.8 KB)
+0008.575 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1600 files added (on-disk size: 14389.9 KB)
+0008.615 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1700 files added (on-disk size: 14389.9 KB)
+0008.675 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1800 files added (on-disk size: 14389.9 KB)
+0008.726 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 1900 files added (on-disk size: 14389.9 KB)
+0008.888 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2000 files added (on-disk size: 14389.9 KB)
+0008.988 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (9.2 MB, 6186 files batched, 501 (2004) added so far); re-opening (prior size: 14389.9 KB)
+0010.592 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2100 files added (on-disk size: 17005.5 KB)
+0010.634 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2200 files added (on-disk size: 17005.5 KB)
+0010.674 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2300 files added (on-disk size: 17005.5 KB)
+0010.705 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2400 files added (on-disk size: 17005.5 KB)
+0010.735 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2500 files added (on-disk size: 17005.5 KB)
+0010.766 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.1 MB, 6186 files batched, 501 (2505) added so far); re-opening (prior size: 17005.5 KB)
+0011.541 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2600 files added (on-disk size: 18808.6 KB)
+0011.584 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2700 files added (on-disk size: 18808.6 KB)
+0011.613 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2800 files added (on-disk size: 18808.6 KB)
+0011.649 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 2900 files added (on-disk size: 18808.6 KB)
+0011.684 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3000 files added (on-disk size: 18808.6 KB)
+0011.709 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (1.8 MB, 6186 files batched, 501 (3006) added so far); re-opening (prior size: 18808.6 KB)
+0012.285 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3100 files added (on-disk size: 19547.1 KB)
+0012.310 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3200 files added (on-disk size: 19547.1 KB)
+0012.333 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3300 files added (on-disk size: 19547.1 KB)
+0012.359 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3400 files added (on-disk size: 19547.1 KB)
+0012.389 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3500 files added (on-disk size: 19547.1 KB)
+0012.410 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (16.4 MB, 6186 files batched, 501 (3507) added so far); re-opening (prior size: 19547.1 KB)
+0015.916 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: size is now: 23.60 MB
+0015.979 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3600 files added (on-disk size: 24145.4 KB)
+0016.008 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3700 files added (on-disk size: 24145.4 KB)
+0016.037 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3800 files added (on-disk size: 24145.4 KB)
+0016.068 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 3900 files added (on-disk size: 24145.4 KB)
+0016.105 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4000 files added (on-disk size: 24145.4 KB)
+0016.138 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.6 MB, 6186 files batched, 501 (4008) added so far); re-opening (prior size: 24145.4 KB)
+0016.917 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4100 files added (on-disk size: 26575.5 KB)
+0016.947 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4200 files added (on-disk size: 26575.5 KB)
+0016.997 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4300 files added (on-disk size: 26575.5 KB)
+0017.027 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4400 files added (on-disk size: 26575.5 KB)
+0017.068 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4500 files added (on-disk size: 26575.5 KB)
+0017.108 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.7 MB, 6186 files batched, 501 (4509) added so far); re-opening (prior size: 26575.5 KB)
+0019.323 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4600 files added (on-disk size: 29030.7 KB)
+0019.414 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4700 files added (on-disk size: 29030.7 KB)
+0019.500 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4800 files added (on-disk size: 29030.7 KB)
+0019.551 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 4900 files added (on-disk size: 29030.7 KB)
+0019.619 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5000 files added (on-disk size: 29030.7 KB)
+0019.650 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (6.5 MB, 6186 files batched, 501 (5010) added so far); re-opening (prior size: 29030.7 KB)
+0021.634 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5100 files added (on-disk size: 31236.2 KB)
+0021.710 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5200 files added (on-disk size: 31236.2 KB)
+0021.768 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5300 files added (on-disk size: 31236.2 KB)
+0021.832 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5400 files added (on-disk size: 31236.2 KB)
+0021.865 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5500 files added (on-disk size: 31236.2 KB)
+0021.886 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (5.8 MB, 6186 files batched, 501 (5511) added so far); re-opening (prior size: 31236.2 KB)
+0023.263 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5600 files added (on-disk size: 33464.2 KB)
+0023.291 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5700 files added (on-disk size: 33464.2 KB)
+0023.321 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5800 files added (on-disk size: 33464.2 KB)
+0023.358 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 5900 files added (on-disk size: 33464.2 KB)
+0023.387 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 6000 files added (on-disk size: 33464.2 KB)
+0023.412 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.1 MB, 6186 files batched, 501 (6012) added so far); re-opening (prior size: 33464.2 KB)
+0024.902 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip.tmp: 6100 files added (on-disk size: 36584.8 KB)
+0026.784 (0) Created plugins zip (0) - 37524.6 KB in 24.7 s (1516.3 KB/s) (sha1: 397524e09daf4de614685ac5a4aa0404a0304ffb, sha256: dc9b9d75d13bc7afe092236afdc4c0bb5e768e0784b343f68675d93eaf2b80c0)
+0026.838 (0) Beginning creation of dump of themes (split every: 400 MB)
+0027.027 (0) Total entities for the zip file: 136 directories, 676 files (0 skipped as non-modified), 11.1 MB
+0027.058 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 100 files added (on-disk size: 0 KB)
+0027.082 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 200 files added (on-disk size: 0 KB)
+0027.106 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 300 files added (on-disk size: 0 KB)
+0027.130 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 400 files added (on-disk size: 0 KB)
+0027.153 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 500 files added (on-disk size: 0 KB)
+0027.174 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (7.5 MB, 676 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0028.420 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: size is now: 2.30 MB
+0028.475 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: 600 files added (on-disk size: 2362.9 KB)
+0028.958 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip.tmp: size is now: 3.90 MB
+0029.385 (0) Created themes zip (0) - 3954.8 KB in 2.4 s (1622.6 KB/s) (sha1: 32966fcf255172fd7a1da84574eb03c26c241fde, sha256: c75e32ed4a9048b4d893252e8198ecf6fc5842bebf35ee2dead1e52e3547bc86)
+0029.439 (0) Exclusion option setting (uploads): backup*,*backups,backwpup*,wp-clone,snapshots
+0029.460 (0) Looking for candidates to backup in: /home/intheco1/public_html/wp-content/uploads
+0029.484 (0) finding files: elementor: adding to list (1)
+0029.503 (0) finding files: 2016: adding to list (2)
+0029.518 (0) finding files: resized: adding to list (3)
+0029.539 (0) finding files: 2019: adding to list (4)
+0029.584 (0) finding files: homepage-background: adding to list (5)
+0029.621 (0) finding files: 2018: adding to list (6)
+0029.651 (0) finding files: 2013: adding to list (7)
+0029.674 (0) finding files: 2015: adding to list (8)
+0029.692 (0) finding files: wp-sync-db: adding to list (9)
+0029.722 (0) finding files: revisr-backups: skipping: excluded by options (glob)
+0029.753 (0) finding files: .DS_Store: adding to list (10)
+0029.777 (0) finding files: 2017: adding to list (11)
+0029.801 (0) Beginning creation of dump of uploads (split every: 400 MB)
+0030.758 (0) Total entities for the zip file: 51 directories, 1113 files (0 skipped as non-modified), 120.7 MB
+0030.784 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 100 files added (on-disk size: 0 KB)
+0030.808 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 200 files added (on-disk size: 0 KB)
+0030.831 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 25 MB added on this batch (25 MB, 1113 files batched, 258 (258) added so far); re-opening (prior size: 0 KB)
+0031.491 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: size is now: 24.20 MB
+0031.581 (0) A useful amount of data was added after this amount of zip processing: 1.1 s (normalised: 1.1 s, rate: 23405.8 KB/s)
+0031.646 (0) Performance is good - will increase the amount of data we attempt to batch (time=1.0949769020081, normalised_time=1.093745236992, max_time=31.584732055664, data points known=1, old_max_bytes=26214400, new_max_bytes=209715200)
+0031.713 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 300 files added (on-disk size: 24779.6 KB)
+0031.748 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 400 files added (on-disk size: 24779.6 KB)
+0031.790 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 500 files added (on-disk size: 24779.6 KB)
+0031.824 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 600 files added (on-disk size: 24779.6 KB)
+0031.884 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 700 files added (on-disk size: 24779.6 KB)
+0031.912 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (40.2 MB, 1113 files batched, 501 (759) added so far); re-opening (prior size: 24779.6 KB)
+0033.879 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: size is now: 63.90 MB
+0033.937 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 800 files added (on-disk size: 65428.5 KB)
+0033.956 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 900 files added (on-disk size: 65428.5 KB)
+0033.975 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 1000 files added (on-disk size: 65428.5 KB)
+0034.007 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: 1100 files added (on-disk size: 65428.5 KB)
+0036.466 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip.tmp: size is now: 115.70 MB
+0038.528 (0) Created uploads zip (0) - 118489 KB in 7.9 s (15036.1 KB/s) (sha1: 19e535720ff081b310c5af72823b2c377189d47b, sha256: 29b2374c92a767320d3817cabdd4039ca8006faea3951b1051c03282923353e9)
+0038.600 (0) Beginning backup of other directories found in the content directory (index: 0)
+0038.635 (0) Exclusion option setting (others): upgrade,cache,updraft,backup*,*backups,mysql.sql,debug.log
+0038.658 (0) Looking for candidates to backup in: /home/intheco1/public_html/wp-content
+0038.679 (0) finding files: themes: skipping: this is the themes directory
+0038.701 (0) finding files: uploads: skipping: this is the uploads directory
+0038.731 (0) finding files: updraft: skipping: this is the updraft directory
+0038.762 (0) finding files: upgrade: skipping: excluded by options
+0038.798 (0) finding files: index.php: adding to list (1)
+0038.822 (0) finding files: plugins: skipping: this is the plugins directory
+0038.845 (0) finding files: vpcache: adding to list (2)
+0038.866 (0) finding files: vpdb: adding to list (3)
+0039.832 (0) Total entities for the zip file: 326 directories, 618 files (0 skipped as non-modified), 2.9 MB
+0039.927 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 100 files added (on-disk size: 0 KB)
+0039.961 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 200 files added (on-disk size: 0 KB)
+0039.999 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 300 files added (on-disk size: 0 KB)
+0040.048 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 400 files added (on-disk size: 0 KB)
+0040.072 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 500 files added (on-disk size: 0 KB)
+0040.123 (0) Adding batch to zip file (UpdraftPlus_BinZip): over 500 files added on this batch (2.6 MB, 618 files batched, 501 (501) added so far); re-opening (prior size: 0 KB)
+0041.020 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: size is now: 0.60 MB
+0041.084 (0) Zip: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip.tmp: 600 files added (on-disk size: 583.1 KB)
+0041.781 (0) Created others zip (0) - 693.3 KB in 2.1 s (327.1 KB/s) (sha1: 6eb8d0f2e023938bff1ea9691576ace554c64edb, sha256: a1660ff9fc795d82dcea2bca84abc39179cdeafc4f42969138f4187ec8963cee)
+0041.884 (0) Saving backup status to database (elements: 8)
+0041.931 (0) No database backup (wp) - not part of this run
+0041.986 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip: plugins: This file has not yet been successfully uploaded: will queue
+0042.010 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip: themes: This file has not yet been successfully uploaded: will queue
+0042.029 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip: uploads: This file has not yet been successfully uploaded: will queue
+0042.053 (0) backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip: others: This file has not yet been successfully uploaded: will queue
+0042.072 (0) Saving backup history. Total backup size: 156.9 MB
+0042.131 (0) Requesting upload of the files that have not yet been successfully uploaded (4)
+0042.201 (0) Cloud backup selection (1/1): dropbox with instance (1/1) (last)
+0042.226 (0) Beginning dispatch of backup to remote (dropbox) (instance identifier s-fbef29720b403fabc5acb42a28456913)
+0042.250 (0) Dropbox: begin cloud upload (using API version 2 with OAuth v2 token)
+0042.303 (0) Dropbox: access gained; setting chunk size to: 1024 KB
+0042.568 (0) Dropbox: quota usage: used=469.8 MB, total=2048 MB, available=1578.2 MB
+0042.609 (0) Dropbox: Attempt to upload: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip to: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip
+0043.404 (0) Dropbox chunked upload: 2.7 % uploaded (AAAAAAAAADMa9eM0uTJc6w, 1048576, 9216 KB)
+0045.933 (0) Dropbox chunked upload: 27.3 % uploaded (AAAAAAAAADMa9eM0uTJc6w, 10485760, 10240 KB)
+0047.728 (0) Dropbox chunked upload: 54.6 % uploaded (AAAAAAAAADMa9eM0uTJc6w, 20971520, 10240 KB)
+0049.367 (0) Dropbox chunked upload: 81.9 % uploaded (AAAAAAAAADMa9eM0uTJc6w, 31457280, 10240 KB)
+0051.883 (0) Dropbox chunked upload: 100 % uploaded (AAAAAAAAADMa9eM0uTJc6w, 38425175, 10240 KB)
+0052.916 (0) Recording as successfully uploaded: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip
+0052.974 (0) Deleting local file: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip: OK
+0053.002 (0) Dropbox: File upload success (backup_2019-12-29-2201_50_in_the_314_9582d18edb33-plugins.zip): 37524 KB in 10s (3610 KB/s)
+0053.284 (0) Dropbox: quota usage: used=506.5 MB, total=2048 MB, available=1541.5 MB
+0053.333 (0) Dropbox: Attempt to upload: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip to: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip
+0054.460 (0) Dropbox chunked upload: 100 % uploaded (AAAAAAAAADQons7NSeNsDw, 4049668, 10240 KB)
+0055.919 (0) Recording as successfully uploaded: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip
+0055.964 (0) Deleting local file: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip: OK
+0055.999 (0) Dropbox: File upload success (backup_2019-12-29-2201_50_in_the_314_9582d18edb33-themes.zip): 3954 KB in 2s (1483 KB/s)
+0056.336 (0) Dropbox: quota usage: used=510.3 MB, total=2048 MB, available=1537.7 MB
+0056.360 (0) Dropbox: Attempt to upload: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip to: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip
+0057.898 (0) Dropbox chunked upload: 8.6 % uploaded (AAAAAAAAADVQpODTpKmAyA, 10485760, 10240 KB)
+0059.544 (0) Dropbox chunked upload: 17.3 % uploaded (AAAAAAAAADVQpODTpKmAyA, 20971520, 10240 KB)
+0062.557 (0) Dropbox chunked upload: 25.9 % uploaded (AAAAAAAAADVQpODTpKmAyA, 31457280, 10240 KB)
+0064.013 (0) Dropbox chunked upload: 34.6 % uploaded (AAAAAAAAADVQpODTpKmAyA, 41943040, 10240 KB)
+0065.495 (0) Dropbox chunked upload: 43.2 % uploaded (AAAAAAAAADVQpODTpKmAyA, 52428800, 10240 KB)
+0067.315 (0) Dropbox chunked upload: 51.9 % uploaded (AAAAAAAAADVQpODTpKmAyA, 62914560, 10240 KB)
+0069.213 (0) Dropbox chunked upload: 60.5 % uploaded (AAAAAAAAADVQpODTpKmAyA, 73400320, 10240 KB)
+0070.848 (0) Dropbox chunked upload: 69.1 % uploaded (AAAAAAAAADVQpODTpKmAyA, 83886080, 10240 KB)
+0072.495 (0) Dropbox chunked upload: 77.8 % uploaded (AAAAAAAAADVQpODTpKmAyA, 94371840, 10240 KB)
+0073.822 (0) Dropbox chunked upload: 86.4 % uploaded (AAAAAAAAADVQpODTpKmAyA, 104857600, 10240 KB)
+0075.418 (0) Dropbox chunked upload: 95.1 % uploaded (AAAAAAAAADVQpODTpKmAyA, 115343360, 10240 KB)
+0077.307 (0) Dropbox chunked upload: 100 % uploaded (AAAAAAAAADVQpODTpKmAyA, 121332711, 10240 KB)
+0078.926 (0) Recording as successfully uploaded: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip
+0079.105 (0) Deleting local file: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip: OK
+0079.145 (0) Dropbox: File upload success (backup_2019-12-29-2201_50_in_the_314_9582d18edb33-uploads.zip): 118488 KB in 22s (5200 KB/s)
+0079.509 (0) Dropbox: quota usage: used=626.1 MB, total=2048 MB, available=1421.9 MB
+0079.532 (0) Dropbox: Attempt to upload: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip to: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip
+0080.466 (0) Dropbox chunked upload: 100 % uploaded (AAAAAAAAADYJw825lUyz-g, 709902, 10240 KB)
+0081.400 (0) Recording as successfully uploaded: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip
+0081.454 (0) Deleting local file: backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip: OK
+0081.478 (0) Dropbox: File upload success (backup_2019-12-29-2201_50_in_the_314_9582d18edb33-others.zip): 693 KB in 1s (356 KB/s)
+0081.605 (0) Retain: beginning examination of existing backup sets; user setting: retain_files=2, retain_db=2
+0081.631 (0) Number of backup sets in history: 6; groups (db): 1
+0081.661 (0) Examining (for databases) backup set with group_id=0, nonce=9582d18edb33, datestamp=1577674899 (Dec 30 2019 03:01:39)
+0081.680 (0) Examining (for databases) backup set with group_id=0, nonce=dc2dcdc701e0, datestamp=1577067790 (Dec 23 2019 02:23:10)
+0081.680 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0081.698 (0) Examining (for databases) backup set with group_id=0, nonce=adf4129a7887, datestamp=1576465757 (Dec 16 2019 03:09:17)
+0081.698 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0081.699 (0) Examining (for databases) backup set with group_id=0, nonce=846fe4d328d7, datestamp=1576465686 (Dec 16 2019 03:08:06)
+0081.699 (0) Examining (for databases) backup set with group_id=0, nonce=0735753c6750, datestamp=1575253513 (Dec 02 2019 02:25:13)
+0081.699 (0) Examining (for databases) backup set with group_id=0, nonce=2e1c8f42a67a, datestamp=1571624507 (Oct 21 2019 02:21:47)
+0081.699 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0081.699 (0) Number of backup sets in history: 6; groups (files): 1
+0081.717 (0) Examining (for files) backup set with nonce=9582d18edb33, datestamp=1577674899 (Dec 30 2019 03:01:39)
+0081.717 (0) This backup set is the backup set just made, so will not be deleted.
+0081.820 (0) This backup set is the backup set just made, so will not be deleted.
+0081.820 (0) This backup set is the backup set just made, so will not be deleted.
+0081.821 (0) This backup set is the backup set just made, so will not be deleted.
+0081.821 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0081.849 (0) Examining (for files) backup set with nonce=dc2dcdc701e0, datestamp=1577067790 (Dec 23 2019 02:23:10)
+0081.849 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0081.872 (0) Examining (for files) backup set with nonce=adf4129a7887, datestamp=1576465757 (Dec 16 2019 03:09:17)
+0081.872 (0) This backup set remains non-empty (f=0/d=1); will retain in history
+0081.872 (0) Examining (for files) backup set with nonce=846fe4d328d7, datestamp=1576465686 (Dec 16 2019 03:08:06)
+0081.872 (0) This backup set remains non-empty (f=1/d=0); will retain in history
+0081.890 (0) Examining (for files) backup set with nonce=0735753c6750, datestamp=1575253513 (Dec 02 2019 02:25:13)
+0081.890 (0) plugins: over retain limit (2); will delete this file entity
+0081.890 (0) themes: over retain limit (2); will delete this file entity
+0081.890 (0) uploads: over retain limit (2); will delete this file entity
+0081.890 (0) others: over retain limit (2); will delete this file entity
+0081.890 (0) Delete file: backup_2019-12-01-2125_50_in_the_314_0735753c6750-plugins.zip, service=dropbox
+0081.908 (0) Delete file: backup_2019-12-01-2125_50_in_the_314_0735753c6750-themes.zip, service=dropbox
+0081.928 (0) Delete file: backup_2019-12-01-2125_50_in_the_314_0735753c6750-uploads.zip, service=dropbox
+0081.952 (0) Delete file: backup_2019-12-01-2125_50_in_the_314_0735753c6750-others.zip, service=dropbox
+0082.174 (0) Dropbox: request deletion: backup_2019-12-01-2125_50_in_the_314_0735753c6750-plugins.zip
+0082.901 (0) Dropbox: delete succeeded
+0082.929 (0) Dropbox: request deletion: backup_2019-12-01-2125_50_in_the_314_0735753c6750-themes.zip
+0083.497 (0) Dropbox: delete succeeded
+0083.521 (0) Dropbox: request deletion: backup_2019-12-01-2125_50_in_the_314_0735753c6750-uploads.zip
+0084.074 (0) Dropbox: delete succeeded
+0084.098 (0) Dropbox: request deletion: backup_2019-12-01-2125_50_in_the_314_0735753c6750-others.zip
+0084.691 (0) Dropbox: delete succeeded
+0085.693 (0) This backup set is now empty; will remove from history
+0085.720 (0) Deleting log file (log.0735753c6750.txt)
+0085.744 (0) Examining (for files) backup set with nonce=2e1c8f42a67a, datestamp=1571624507 (Oct 21 2019 02:21:47)
+0085.761 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0085.761 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0085.761 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0085.761 (0) This backup set (1571624507) was an 'Always Keep' backup, so it will not be pruned. Skipping.
+0085.761 (0) This backup set remains non-empty (f=1/d=1); will retain in history
+0085.774 (0) Retain: saving new backup history (sets now: 5) and finishing retain operation
+0085.841 (0) Resume backup (9582d18edb33, 0): finish run
+0085.908 (0) Decremented the semaphore (f) by 1
+0085.946 (0) Semaphore (f) unlocked
+0085.966 (0) There were no errors in the uploads, so the 'resume' event (1) is being unscheduled
+0086.047 (0) Fetching RSS news feed
+0086.701 (0) Fetched RSS news feed; result is a: SimplePie
+0086.776 (0) Sending email ('Files only (database was not part of this particular schedule) (Full backup)') report (attachments: 0, size: 0 KB) to: matt@...
+0086.960 (0) The backup apparently succeeded and is now complete
